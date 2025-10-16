@@ -15,7 +15,7 @@ import SellerPage from "./pages/SellerPage/SellerPage.jsx";
 import SellerMarketPage from "./pages/SellerMarketPage/SellerMarketPage.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
-import Page404 from './pages/Page404/Page404.jsx';
+import Page404 from "./pages/Page404/Page404.jsx";
 
 function PrivateRoute({ children }) {
   const { user } = useAuth();
