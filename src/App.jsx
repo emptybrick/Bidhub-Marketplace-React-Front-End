@@ -1,6 +1,8 @@
 // frontend/src/App.jsx
 import { Routes, Route, Link, Navigate } from "react-router";
 import { UserContext } from "./contexts/UserContext";
+import { useContext } from "react";
+
 import Dashboard from "./components/Views/Dashboard/Dashboard.jsx";
 import Landing from "./components/Views/Landing/Landing.jsx";
 import LoginPage from "./components/Forms/LoginForm/LoginForm.jsx";
@@ -17,7 +19,6 @@ import NavBar from "./components/Components/NavBar/NavBar.jsx";
 import Footer from "./components/Components/Footer/Footer.jsx";
 import Page404 from "./components/Views/Page404/Page404.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import { useContext } from "react";
 
 const App = () => {
   const { user } = useContext(UserContext);
