@@ -1,11 +1,9 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
+// import { login } from "../../services/authService";
+import { UserContext } from "../../../contexts/UserContext";
 
-import { login } from "../../services/authService";
-
-import { UserContext } from "../../contexts/UserContext";
-
-const LoginPage = () => {
+const LoginForm = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   const [message, setMessage] = useState("");
@@ -69,4 +67,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginForm;

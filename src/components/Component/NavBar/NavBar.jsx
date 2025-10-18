@@ -5,7 +5,7 @@
 import { useContext } from "react";
 import { Link } from "react-router";
 
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../../../contexts/UserContext";
 import "./navbar.css";
 
 const NavBar = () => {
@@ -18,7 +18,8 @@ const NavBar = () => {
 
   return (
     <nav>
-      {user ? (
+      { user ? (
+        <div>
         <h2>Welcome, {user.username}</h2>
         <ul>
           <li>
@@ -29,7 +30,8 @@ const NavBar = () => {
               Sign Out
             </Link>
           </li>
-        </ul>
+          </ul>
+        </div>
       ) : (
         <ul>
           <li>

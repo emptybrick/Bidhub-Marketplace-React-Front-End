@@ -1,10 +1,10 @@
 // frontend/src/pages/ItemDetailPage.jsx (Bid placement)
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import api from "../lib/api.js";
-import { useAuth } from "../state/AuthContext.jsx";
+import { useParams } from "react-router";
+// import api from "../lib/api.js";
+import { useAuth } from "../../../contexts/UserContext.jsx";
 
-const ItemDetailPage = () => {
+const ItemDetail = () => {
   const { id } = useParams();
   const { user } = useAuth();
   const [item, setItem] = useState(null);
@@ -63,4 +63,4 @@ const ItemDetailPage = () => {
   );
 }
 
-export default ItemDetailPage
+export default ItemDetail

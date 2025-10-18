@@ -3,11 +3,11 @@
 // re-useable components: item-card
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import api from "../lib/api.js";
-import ItemCard from '../../components/ItemCard/ItemCard.jsx'
+import { Link } from "react-router";
+// import api from "../lib/api.js";
+import ItemCard from '../../Component/ItemCard/ItemCard.jsx'
 
-const ItemListPage = () => {
+const ItemList = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,7 +30,7 @@ const ItemListPage = () => {
   );
 }
 
-export default ItemListPage
+export default ItemList
 
 // class item-card is unique to product listing page to show details, image, current bid of each item (need to build css for item-card)
 // class product-listing-container is unique to product listing page to contain all the product item cards, will be right of categories and under header

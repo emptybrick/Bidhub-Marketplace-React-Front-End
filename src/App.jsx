@@ -1,21 +1,21 @@
 // frontend/src/App.jsx
-import { Routes, Route, Link, Navigate } from "react-router-dom";
-import { useAuth } from "./state/AuthContext.jsx";
-import Dashboard from "./pages/Dashboard/Dashboard.jsx";
-import Landing from "./pages/Landing/Landing.jsx";
-import LoginPage from "./pages/LoginPage/LoginPage.jsx";
-import RegisterPage from "./pages/RegisterPage/RegisterPage.jsx";
-import Account from "./pages/Account/Account.jsx";
-import ItemListPage from "./pages/ItemListPage/ItemListPage.jsx";
-import ItemDetailPage from "./pages/ItemDetailPage/ItemDetailPage.jsx";
-import PurchasesPage from "./pages/PurchasesPage/PurchasesPage.jsx";
-import BidsPage from "./pages/BidsPage/BidsPage.jsx";
-import NotificationsBadge from "./components/NotificationsBadge.jsx";
-import SellerPage from "./pages/SellerPage/SellerPage.jsx";
-import SellerMarketPage from "./pages/SellerMarketPage/SellerMarketPage.jsx";
-import NavBar from "./components/NavBar/NavBar.jsx";
-import Footer from "./components/Footer/Footer.jsx";
-import Page404 from "./pages/Page404/Page404.jsx";
+import { Routes, Route, Link, Navigate } from "react-router";
+import { useAuth } from "./contexts/AuthContext.js";
+import Dashboard from "./components/Views/Dashboard/Dashboard.js";
+import Landing from "./components/Views/Landing/Landing.js";
+import LoginPage from "./components/Forms/LoginForm/LoginForm.jsx";
+import RegisterPage from "./components/Forms/RegisterForm/RegisterForm.jsx";
+import AccountPage from "./components/Views/Account/Account.jsx";
+import ItemListPage from "./components/Views/ItemList/ItemList.jsx";
+import ItemDetailPage from "./components/Views/ItemDetail/ItemDetail.jsx";
+import PurchasesPage from "./components/Views/Purchases/Purchases.jsx";
+import BidsPage from "./components/Views/BidsPage/BidsPage.js";
+// import NotificationsBadge from "./components/NotificationsBadge.jsx";
+import SellerPage from "./components/Views/SellerView/SellerView.jsx";
+import SellerMarketPage from "./unused/SellerMarketPage/SellerMarketPage.jsx";
+import NavBar from "./components/Component/NavBar/NavBar.jsx";
+import Footer from "./components/Component/Footer/Footer.jsx";
+import Page404 from "./components/Views/Page404/Page404.js";
 
 function PrivateRoute({ children }) {
   const { user } = useAuth();
@@ -33,7 +33,7 @@ export default function App() {
       </header>
       <main>
         <Routes>
-          <Route path="/" element={user ? <Dashboard /> : <Landing />} />
+          <Route path="/bidhub/home/" element={user ? <Dashboard /> : <Landing />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route
@@ -56,7 +56,7 @@ export default function App() {
             path="/users/:userId/account"
             element={
               <PrivateRoute>
-                <Account />
+                <AccountPage />
               </PrivateRoute>
             }
           />

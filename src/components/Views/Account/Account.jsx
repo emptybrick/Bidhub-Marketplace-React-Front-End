@@ -2,15 +2,15 @@
 // wallet with ability to add funds
 // re-useable components: 
 
-import { useAuth } from "../state/AuthContext.jsx";
+import { useAuth } from "../../../contexts/UserContext.jsx";
 
-const AccountPage = () => {
+const Account = () => {
     const { user } = useAuth();
     // need to limit access to userId = logged in user
     return (<h1>User Account Page</h1>)
 }
 
-export default AccountPage;
+export default Account;
 
 
 
