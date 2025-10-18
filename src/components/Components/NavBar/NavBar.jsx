@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router";
 
 import { UserContext } from "../../../contexts/UserContext";
-import "./navbar.css";
+// import "./navbar.css";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
