@@ -1,8 +1,8 @@
 const Landing = () => {
   return (
-    <main>
-      <h1>Welcome to Bidaro.</h1>
-    </main>
+    <div>
+      <h1>Welcome to BidHub.</h1>
+    </div>
   );
 };
 

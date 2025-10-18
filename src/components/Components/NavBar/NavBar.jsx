@@ -1,7 +1,3 @@
-// add support for notifications icon and popup showing current notifications
-// how to track when user is outbid/auction won by user?
-// should we implement messaging between user/seller?
-
 import { useContext } from "react";
 import { Link } from "react-router";
 
@@ -48,26 +44,5 @@ const NavBar = () => {
     </nav>
   );
 };
-
-      // <nav>
-      //   <Link to="/">Bidhub</Link>
-      //   <Link to="/">Items</Link>
-      //   <Link to="/orders">Orders</Link>
-      //   <Link to="/account">Account</Link>
-      //   <Link to="/notifications">Notifications</Link>
-      //   <div className="spacer" />
-      //   <NotificationsBadge />
-      //   {user ? (
-      //     <>
-      //       <span>Hi, {user.username}</span>
-      //       <button onClick={logout}>Sign out</button>
-      //     </>
-      //   ) : (
-      //     <>
-      //       <Link to="/login">Login</Link>
-      //       <Link to="/register">Register</Link>
-      //     </>
-      //   )}
-      // </nav>
 
 export default NavBar;
