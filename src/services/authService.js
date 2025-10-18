@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getUser } from "./userService";
 
-const BASE_URL = `${ import.meta.env.VITE_BACK_END_SERVER_URL }/api/auth`;
+const BASE_URL = `${ import.meta.env.VITE_BACK_END_SERVER_URL }/bidhub/auth`;
 
 const register = async (formData) => {
     try {

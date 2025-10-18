@@ -64,14 +64,14 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/users/:userId/bids"
             element={
               <ProtectedRoute>
                 <BidsPage />
               </ProtectedRoute>
             }
-          />
+          /> */}
           <Route
             path="/users/:sellerId"
             element={
@@ -80,14 +80,14 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/users/:sellerId/marketplace"
             element={
               <ProtectedRoute>
                 <SellerMarketPage />
               </ProtectedRoute>
             }
-          />
+          /> */}
           <Route path="*" element={<Page404 />} />
         </Routes>
       </main>
