@@ -13,8 +13,8 @@ import BidsPage from "./components/Views/BidsPage/BidsPage.js";
 // import NotificationsBadge from "./components/NotificationsBadge.jsx";
 import SellerPage from "./components/Views/SellerView/SellerView.jsx";
 import SellerMarketPage from "./unused/SellerMarketPage/SellerMarketPage.jsx";
-import NavBar from "./components/Component/NavBar/NavBar.jsx";
-import Footer from "./components/Component/Footer/Footer.jsx";
+import NavBar from "./components/Components/NavBar/NavBar.jsx";
+import Footer from "./components/Components/Footer/Footer.jsx";
 import Page404 from "./components/Views/Page404/Page404.js";
 
 function PrivateRoute({ children }) {

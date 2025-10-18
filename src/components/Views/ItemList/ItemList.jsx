@@ -5,7 +5,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 // import api from "../lib/api.js";
-import ItemCard from '../../Component/ItemCard/ItemCard.jsx'
+import ItemCard from '../../Components/ItemCard/ItemCard.jsx'
 
 const ItemList = () => {
   const [items, setItems] = useState([]);
