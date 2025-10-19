@@ -20,15 +20,16 @@ const ItemCard = (item) => {
 
   return (
     <div className="item-card" key={item.id}>
-      <h3>
+      {/* <h3>
         <Link to={`/items/${item.id}`}>{item.title}</Link>
-      </h3>
+      </h3> */}
       {/* show product.image[0] + product name + product current bid*/}
-      {item.category && <span className="badge">{item.category.name}</span>}
+      {/* {item.category && <span className="badge">{item.category.name}</span>} */ }
+      <p>{ item.name }</p>
       <p>{item.description}</p>
-      <button className="product-quickview" onClick={showModal}>
+      {/* <button className="product-quickview" onClick={showModal}>
         Quick View
-      </button>
+      </button> */}
       {/* on quickview show product details and product images */}
     </div>
   );

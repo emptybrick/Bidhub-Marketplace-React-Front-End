@@ -82,7 +82,7 @@ const NavBar = () => {
                 </button>
               </li>
               <li>
-                <button onClick={[showRegister(), () => setMenuOpen(false)]}>
+                <button onClick={() => setMenuOpen(false)}>
                   Register
                 </button>
               </li>
