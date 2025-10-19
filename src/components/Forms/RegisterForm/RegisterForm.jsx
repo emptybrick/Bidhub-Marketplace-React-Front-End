@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { UserContext } from "../../../contexts/UserContext";
 import { register } from "../../../services/authService";
 
-const RegisterPage = () => {
+const RegisterForm = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   const [message, setMessage] = useState("");
@@ -78,7 +78,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <main>
+    <div>
       <h1>Register</h1>
       <p>{message}</p>
       <form onSubmit={handleSubmit}>
@@ -232,8 +232,8 @@ const RegisterPage = () => {
           <button onClick={() => navigate("/")}>Cancel</button>
         </div>
       </form>
-    </main>
+    </div>
   );
 };
 
-export default RegisterPage;
+export default RegisterForm;

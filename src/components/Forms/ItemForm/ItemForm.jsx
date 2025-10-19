@@ -1,60 +1,88 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
-// import { register } from "../../services/authService";
-import { UserContext } from "../../../contexts/UserContext";
-import { register } from "../../../services/authService";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { createItem } from "../../../services/itemService";
 
-const RegisterForm = () => {
+const ItemForm = () => {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    password_confirmation: "",
-    first_name: "",
-    last_name: "",
-    // profile_image: "",
-    username: "",
-    street_address: "",
-    city: "",
-    state: "",
-    postal_code: "",
-    country: "",
-    phone_number: "",
-    wallet: "",
-    user_rating: "",
+    item_name: "",
+    category: "MISCELLANEOUS",
+    condition: "NEW",
+    manufacture_year: "",
+    country_of_origin: "",
+    height: "",
+    width: "",
+    length: "",
+    weight: "",
+    description: "",
+    initial_bid: "",
+    end_time: null,
   });
 
   const {
-    email,
-    password,
-    password_confirmation,
-    first_name,
-    last_name,
-    // profile_image,
-    username,
-    street_address,
-    city,
-    state,
-    postal_code,
-    country,
-    phone_number,
-    wallet,
-    user_rating,
+    item_name,
+    category,
+    condition,
+    manufacture_year,
+    country_of_origin,
+    height,
+    width,
+    length,
+    weight,
+    description,
+    initial_bid,
+    end_time,
   } = formData;
+
+  const categories = [
+    { value: "ELECTRONICS", label: "Electronics" },
+    { value: "COMPUTERS", label: "Computers & Accessories" },
+    { value: "CLOTHING", label: "Clothing, Shoes & Jewelry" },
+    { value: "HOME", label: "Home & Kitchen" },
+    { value: "BOOKS", label: "Books" },
+    { value: "TOYS", label: "Toys & Games" },
+    { value: "BEAUTY", label: "Beauty & Personal Care" },
+    { value: "SPORTS", label: "Sports & Outdoors" },
+    { value: "AUTOMOTIVE", label: "Automotive" },
+    { value: "TOOLS", label: "Tools & Home Improvement" },
+    { value: "HEALTH", label: "Health & Household" },
+    { value: "CELLPHONES", label: "Cell Phones & Accessories" },
+    { value: "PETS", label: "Pet Supplies" },
+    { value: "VIDEO_GAMES", label: "Video Games" },
+    { value: "OFFICE", label: "Office Products" },
+    { value: "GARDEN", label: "Patio, Lawn & Garden" },
+    { value: "MUSIC", label: "Musical Instruments" },
+    { value: "COLLECTIBLES", label: "Collectibles & Fine Art" },
+    { value: "MISCELLANEOUS", label: "Miscellaneous" },
+  ];
+
+  //   const [selectedCategory, setSelectedCategory] = useState("MISCELLANEOUS");
+
+  //   const handleCategoryChange = (event) => {
+  //     setSelectedCategory(event.target.value);
+  //   };
 
   const handleChange = (evt) => {
     setMessage("");
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
+  const handleDateChange = (date) => {
+    setFormData({ ...formData, end_time: date });
+  };
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      const newUser = await register(formData);
-      setUser(newUser);
-      navigate("/");
+      const formattedFormData = {
+        ...formData,
+        end_time: end_time ? end_time.toISOString() : null, // Convert to ISO string
+      };
+      const newItem = await createItem(formattedFormData);
+      navigate(`bidhub/marketplace/${newItem.id}`);
     } catch (err) {
       setMessage(err.message);
     }
@@ -62,18 +90,16 @@ const RegisterForm = () => {
 
   const isFormInvalid = () => {
     return !(
-      email &&
-      username &&
-      password &&
-      password === password_confirmation &&
-      first_name &&
-      last_name &&
-      street_address &&
-      city &&
-      state &&
-      postal_code &&
-      country &&
-      phone_number
+      item_name &&
+      category &&
+      condition &&
+      height &&
+      width &&
+      length &&
+      weight &&
+      description &&
+      initial_bid &&
+      end_time
     );
   };
 
@@ -83,152 +109,145 @@ const RegisterForm = () => {
       <p>{message}</p>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            name="email"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="item_name">Item Name:</label>
           <input
             type="text"
-            id="username"
-            value={username}
-            name="username"
+            id="item_name"
+            value={item_name}
+            name="item_name"
             onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label htmlFor="first_name">First Name:</label>
+          <label htmlFor="category">Category:</label>
+          <select
+            id="category"
+            name="category"
+            value={category}
+            onChange={handleChange}
+          >
+            {categories.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="condition">Condition:</label>
+          <select
+            id="condition"
+            value={condition}
+            name="condition"
+            onChange={handleChange}
+            required
+          >
+            <option value="NEW">New</option>
+            <option value="USED">Used</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="manufacture_year">Manufacture Year:</label>
           <input
             type="text"
-            id="first_name"
-            value={first_name}
-            name="first_name"
+            id="manufacture_year"
+            value={manufacture_year}
+            name="manufacture_year"
             onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label htmlFor="last_name">Last Name:</label>
+          <label htmlFor="country_of_origin">Country of Origin:</label>
           <input
             type="text"
-            id="last_name"
-            value={last_name}
-            name="last_name"
+            id="country_of_origin"
+            value={country_of_origin}
+            name="country_of_origin"
             onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            name="password"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password_confirmation">Confirm Password:</label>
-          <input
-            type="password"
-            id="password_confirmation"
-            value={password_confirmation}
-            name="password_confirmation"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <h1>Address</h1>
-        </div>
-        <div>
-          <label htmlFor="street_address">Street Address:</label>
+          <label htmlFor="height">Height (cm):</label>
           <input
             type="text"
-            id="street_address"
-            value={street_address}
-            name="street_address"
+            id="height"
+            value={height}
+            name="height"
             onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label htmlFor="city">City:</label>
+          <label htmlFor="width">Width (cm):</label>
           <input
             type="text"
-            id="city"
-            value={city}
-            name="city"
+            id="width"
+            value={width}
+            name="width"
             onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label htmlFor="state">State:</label>
+          <label htmlFor="length">Length (cm):</label>
           <input
             type="text"
-            id="state"
-            value={state}
-            name="state"
+            id="length"
+            value={length}
+            name="length"
             onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label htmlFor="postal_code">Postal Code:</label>
+          <label htmlFor="weight">Weight (kg):</label>
           <input
             type="text"
-            id="postal_code"
-            value={postal_code}
-            name="postal_code"
+            id="weight"
+            value={weight}
+            name="weight"
             onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label htmlFor="country">Country:</label>
+          <label htmlFor="description">Description:</label>
           <input
             type="text"
-            id="country"
-            value={country}
-            name="country"
+            id="description"
+            value={description}
+            name="description"
             onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label htmlFor="phone_number">Phone Number:</label>
+          <label htmlFor="initial_bid">Starting Bid:</label>
           <input
             type="text"
-            id="phone_number"
-            value={phone_number}
-            name="phone_number"
+            id="initial_bid"
+            value={initial_bid}
+            name="initial_bid"
             onChange={handleChange}
             required
           />
         </div>
-        {/* <div>
-          <label htmlFor="profile_image">Profile Image URL:</label>
-          <input
-            type="text"
-            id="profile_image"
-            value={profile_image}
-            name="profile_image"
-            onChange={handleChange}
-          />
-        </div> */}
         <div>
-          <button disabled={isFormInvalid()}>Register</button>
+          <label htmlFor="end_time">Auction End Time:</label>
+          <DatePicker
+            selected={end_time}
+            onChange={handleDateChange}
+            showTimeSelect
+            dateFormat="Pp"
+            placeholderText="Select Date and Time"
+            required
+          />
+        </div>
+        <div>
+          <button disabled={isFormInvalid()}>Create</button>
           <button onClick={() => navigate("/")}>Cancel</button>
         </div>
       </form>
@@ -236,4 +255,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default ItemForm;

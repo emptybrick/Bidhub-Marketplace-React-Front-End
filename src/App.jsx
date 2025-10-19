@@ -19,6 +19,7 @@ import NavBar from "./components/Component/NavBar/NavBar.jsx";
 import Footer from "./components/Component/Footer/Footer.jsx";
 import Page404 from "./components/Views/Page404/Page404.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import SellerMarketPage from "./components/Views/SellerMarketPage/SellerMarketPage.jsx";
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -33,10 +34,10 @@ const App = () => {
             path="/bidhub/home"
             element={user ? <Dashboard /> : <Landing />}
           />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
+          {/* <Route path="/bidhub/login" element={<LoginForm />} />
+          <Route path="/bidhub/register" element={<RegisterForm />} /> */}
           <Route
-            path="/marketplace"
+            path="/bidhub/marketplace"
             element={
               <ProtectedRoute>
                 <ItemListPage />
@@ -44,7 +45,7 @@ const App = () => {
             }
           />
           <Route
-            path="/marketplace/:itemId"
+            path="/bidhub/marketplace/:itemId"
             element={
               <ProtectedRoute>
                 <ItemDetail />
@@ -52,7 +53,7 @@ const App = () => {
             }
           />
           <Route
-            path="/users/:userId/account"
+            path="/bidhub/user/account"
             element={
               <ProtectedRoute>
                 <Account />
@@ -60,37 +61,30 @@ const App = () => {
             }
           />
           <Route
-            path="/users/:userId/purchases"
+            path="/bidhub/user/account/purchases"
             element={
               <ProtectedRoute>
                 <Purchases />
               </ProtectedRoute>
             }
           />
-          {/* <Route
-            path="/users/:userId/bids"
+          {/* should be able to just filter by seller id and reuse itemlist page */}
+          <Route
+            path="/bidhub/seller/:sellerId/marketplace"
             element={
               <ProtectedRoute>
-                <BidsPage />
+                <SellerMarketPage />
               </ProtectedRoute>
             }
-          /> */}
+          />
           <Route
-            path="/users/:sellerId"
+            path="/bidhub/seller/:sellerId/reviews"
             element={
               <ProtectedRoute>
                 <SellerView />
               </ProtectedRoute>
             }
           />
-          {/* <Route
-            path="/users/:sellerId/marketplace"
-            element={
-              <ProtectedRoute>
-                <SellerMarketPage />
-              </ProtectedRoute>
-            }
-          /> */}
           <Route path="*" element={<Page404 />} />
         </Routes>
       </main>
