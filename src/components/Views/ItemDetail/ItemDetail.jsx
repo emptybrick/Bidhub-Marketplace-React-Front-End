@@ -1,9 +1,10 @@
 // frontend/src/pages/ItemDetailPage.jsx (Bid placement)
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import api from "../../../services/axiosConfig.js";
 import { useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext.jsx";
+import { getItemById } from "../../../services/itemService.js";
+import { createBid } from "../../../services/bidService.js";
 
 const ItemDetail = () => {
   const { itemId } = useParams();
@@ -15,8 +16,8 @@ const ItemDetail = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const response = await api.get(`/api/items/${itemId}/`);
-        setItem(response.data);
+        const response = await getItemById(itemId);
+        setItem(response);
       } catch (error) {
         console.error("Error fetching item:", error);
       } finally {
@@ -30,13 +31,11 @@ const ItemDetail = () => {
   const handleSubmitBid = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/api/items/${itemId}/bids/`, {
-        amount: bidAmount,
-      });
+      await createBid(itemId, bidAmount);
       alert("Bid placed successfully!");
       // Refresh item data to show updated bids
-      const response = await api.get(`/api/items/${itemId}/`);
-      setItem(response.data);
+      const response = await getItemById(itemId);
+      setItem(response);
       setBidAmount("");
     } catch (error) {
       alert(

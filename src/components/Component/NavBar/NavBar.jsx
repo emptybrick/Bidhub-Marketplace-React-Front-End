@@ -77,14 +77,14 @@ const NavBar = () => {
           ) : (
             <>
               <li>
-                <Link to="/bidhub/login" onClick={() => setMenuOpen(false)}>
+                <button onClick={() => setMenuOpen(false)}>
                   Login
-                </Link>
+                </button>
               </li>
               <li>
-                <Link to="/bidhub/register" onClick={() => setMenuOpen(false)}>
+                <button onClick={[showRegister(), () => setMenuOpen(false)]}>
                   Register
-                </Link>
+                </button>
               </li>
             </>
           )}

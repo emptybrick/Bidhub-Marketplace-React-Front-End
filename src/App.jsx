@@ -34,8 +34,8 @@ const App = () => {
             path="/bidhub/home"
             element={user ? <Dashboard /> : <Landing />}
           />
-          <Route path="/bidhub/login" element={<LoginForm />} />
-          <Route path="/bidhub/register" element={<RegisterForm />} />
+          {/* <Route path="/bidhub/login" element={<LoginForm />} /> */}
+          {/* <Route path="/bidhub/register" element={<RegisterForm />} /> */}
           <Route
             path="/bidhub/marketplace"
             element={
@@ -47,9 +47,9 @@ const App = () => {
           <Route
             path="/bidhub/marketplace/:itemId"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <ItemDetail />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           />
           <Route
