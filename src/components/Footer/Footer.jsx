@@ -33,16 +33,19 @@ const Footer = () => {
           <h3>Quick Links</h3>
           <ul>
             <li>
-              <Link to="/marketplace">Marketplace</Link>
+              <Link to="/marketplace/about">About Us</Link>
             </li>
             <li>
-              <Link to="/marketplace/about">About Us</Link>
+              <Link to="/marketplace">Marketplace</Link>
             </li>
             <li>
               <Link to="/login">Login</Link>
             </li>
             <li>
               <Link to="/register">Register</Link>
+            </li>
+             <li>
+              <Link to="http://localhost:8000/admin/login/?next=/admin/">Admin</Link>
             </li>
           </ul>
         </div>
