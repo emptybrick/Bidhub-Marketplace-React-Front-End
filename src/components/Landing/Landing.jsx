@@ -1,9 +1,20 @@
+import { Link } from "react-router-dom";
+import "./landing.css";
+
 const Landing = () => {
   return (
-    <main>
-      <h1>Welcome to Bidhub.</h1>
-      <p>Your premier marketplace for auctions and direct sales.</p>
-    </main>
+    <div className="home">
+      <div className="home-content">
+        <h1 className="home-title">Welcome to Bidhub</h1>
+        <p className="home-subtitle">
+          Your premier marketplace for auctions and direct sales. Find unique
+          items, place bids, and connect with buyers and sellers worldwide.
+        </p>
+        <Link to="/marketplace" className="home-button">
+          Browse Marketplace
+        </Link>
+      </div>
+    </div>
   );
 };
 
