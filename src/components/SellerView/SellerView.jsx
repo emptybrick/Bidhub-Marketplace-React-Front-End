@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import api from "../../../unused/lib/api";
+import api from "../../unused/lib/api";
 
 const SellerView = () => {
   const [reviews, setReviews] = useState([]);

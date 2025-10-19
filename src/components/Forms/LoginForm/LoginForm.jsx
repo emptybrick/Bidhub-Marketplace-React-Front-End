@@ -1,84 +1,64 @@
 import { useState, useContext } from "react";
-<<<<<<< HEAD:src/pages/LoginPage/LoginPage.jsx
 import { useNavigate } from "react-router-dom";
-
-import { login } from "../../auth/authService";
-
-import { useAuth } from "../../state/AuthContext.jsx";
-
-const LoginPage = () => {
-=======
-import { useNavigate } from "react-router";
-import { login } from "../../../services/authService";
-import { UserContext } from "../../../contexts/UserContext";
+import { UserContext } from "../../../contexts/UserContext.jsx";
 
 const LoginForm = () => {
->>>>>>> 7eddabd556862b7a8eaf4731fb7fe97ab66d63d7:src/components/Forms/LoginForm/LoginForm.jsx
-  const navigate = useNavigate();
-  const { user, setUser } = useAuth();
-  const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
-  const handleChange = (evt) => {
-    setMessage("");
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const signedInUser = await login(formData);
-
-      setUser(signedInUser);
+      // Replace with your actual login logic
+      // const response = await login(formData);
+      // setUser(response.user);
       navigate("/");
     } catch (err) {
-      setMessage(err.message);
+      setError("Invalid credentials");
     }
   };
 
   return (
-    <main>
-      <h1>Login</h1>
-      <p>{message}</p>
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="text"
-            autoComplete="off"
-            id="email"
-            value={formData.email}
-            name="email"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            autoComplete="off"
-            id="password"
-            value={formData.password}
-            name="password"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <button>Login</button>
-          <button onClick={() => navigate("/")}>Cancel</button>
-        </div>
-      </form>
-    </main>
+    <form onSubmit={handleSubmit}>
+      <h2>Login</h2>
+      {error && <p className="error">{error}</p>}
+      <div>
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <button type="submit">Login</button>
+    </form>
   );
 };
 
-<<<<<<< HEAD:src/pages/LoginPage/LoginPage.jsx
-export default LoginPage;
-=======
 export default LoginForm;
->>>>>>> 7eddabd556862b7a8eaf4731fb7fe97ab66d63d7:src/components/Forms/LoginForm/LoginForm.jsx

@@ -1,53 +1,49 @@
-// add support for notifications icon and popup showing current notifications
-// how to track when user is outbid/auction won by user?
-// should we implement messaging between user/seller?
-
-import { useAuth } from "../../state/AuthContext.jsx";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext.jsx";
 
 const NavBar = () => {
-  const { user, setUser } = useAuth();
+  const { user, setUser } = useContext(UserContext);
 
   const handleSignOut = () => {
-    localStorage.removeItem("token");
+    // Clear user data from context
     setUser(null);
+    // Clear any tokens from local storage
+    localStorage.removeItem("token");
   };
 
   return (
-    <nav>
-      {user ? (
-        <>
-          {" "}
-          {/* Added fragment wrapper */}
-          <h2>Welcome, {user.username}</h2>
-          <ul>
-            <li>
-              <Link to="/">
-                <img
-                  src="/src/assets/Bidhub-Logo-Negative.png"
-                  alt="Bidhub Logo"
-                />
-              </Link>
+    <nav className="navbar">
+      <div className="navbar-brand">
+        <Link to="/">BidHub</Link>
+      </div>
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <Link to="/marketplace">Marketplace</Link>
+        </li>
+        {user ? (
+          <>
+            <li className="nav-item">
+              <Link to="/account">Account</Link>
             </li>
-            <li>
-              <Link to="/" onClick={handleSignOut}>
-                Sign Out
-              </Link>
+            <li className="nav-item">
+              <Link to="/purchases">Purchases</Link>
             </li>
-          </ul>
-        </>
-      ) : (
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-        </ul>
-      )}
+            <li className="nav-item">
+              <button onClick={handleSignOut}>Sign Out</button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="nav-item">
+              <Link to="/login">Login</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/register">Register</Link>
+            </li>
+          </>
+        )}
+      </ul>
     </nav>
   );
 };

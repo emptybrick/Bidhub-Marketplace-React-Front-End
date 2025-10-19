@@ -1,14 +1,6 @@
 import { useState, useContext } from "react";
-<<<<<<< HEAD:src/pages/RegisterPage/RegisterPage.jsx
 import { useNavigate } from "react-router-dom";
-import { register } from "../../auth/authService";
-import { useAuth } from "../../state/AuthContext.jsx";
-=======
-import { useNavigate } from "react-router";
-// import { register } from "../../services/authService";
-import { UserContext } from "../../../contexts/UserContext";
-import { register } from "../../../services/authService";
->>>>>>> 7eddabd556862b7a8eaf4731fb7fe97ab66d63d7:src/components/Forms/RegisterForm/RegisterForm.jsx
+import { UserContext } from "../../../contexts/UserContext.jsx";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
