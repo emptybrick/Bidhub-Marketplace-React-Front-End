@@ -1,7 +1,14 @@
 import { useState, useContext } from "react";
+<<<<<<< HEAD:src/pages/RegisterPage/RegisterPage.jsx
 import { useNavigate } from "react-router-dom";
 import { register } from "../../auth/authService";
 import { useAuth } from "../../state/AuthContext.jsx";
+=======
+import { useNavigate } from "react-router";
+// import { register } from "../../services/authService";
+import { UserContext } from "../../../contexts/UserContext";
+import { register } from "../../../services/authService";
+>>>>>>> 7eddabd556862b7a8eaf4731fb7fe97ab66d63d7:src/components/Forms/RegisterForm/RegisterForm.jsx
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -13,8 +20,16 @@ const RegisterPage = () => {
     password_confirmation: "",
     first_name: "",
     last_name: "",
-    profile_image: "",
+    // profile_image: "",
     username: "",
+    street_address: "",
+    city: "",
+    state: "",
+    postal_code: "",
+    country: "",
+    phone_number: "",
+    wallet: "",
+    user_rating: "",
   });
 
   const {
@@ -23,8 +38,16 @@ const RegisterPage = () => {
     password_confirmation,
     first_name,
     last_name,
-    profile_image,
+    // profile_image,
     username,
+    street_address,
+    city,
+    state,
+    postal_code,
+    country,
+    phone_number,
+    wallet,
+    user_rating,
   } = formData;
 
   const handleChange = (evt) => {
@@ -50,7 +73,13 @@ const RegisterPage = () => {
       password &&
       password === password_confirmation &&
       first_name &&
-      last_name
+      last_name &&
+      street_address &&
+      city &&
+      state &&
+      postal_code &&
+      country &&
+      phone_number
     );
   };
 
@@ -126,6 +155,75 @@ const RegisterPage = () => {
           />
         </div>
         <div>
+          <h1>Address</h1>
+        </div>
+        <div>
+          <label htmlFor="street_address">Street Address:</label>
+          <input
+            type="text"
+            id="street_address"
+            value={street_address}
+            name="street_address"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="city">City:</label>
+          <input
+            type="text"
+            id="city"
+            value={city}
+            name="city"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="state">State:</label>
+          <input
+            type="text"
+            id="state"
+            value={state}
+            name="state"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="postal_code">Postal Code:</label>
+          <input
+            type="text"
+            id="postal_code"
+            value={postal_code}
+            name="postal_code"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="country">Country:</label>
+          <input
+            type="text"
+            id="country"
+            value={country}
+            name="country"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="phone_number">Phone Number:</label>
+          <input
+            type="text"
+            id="phone_number"
+            value={phone_number}
+            name="phone_number"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        {/* <div>
           <label htmlFor="profile_image">Profile Image URL:</label>
           <input
             type="text"
@@ -134,7 +232,7 @@ const RegisterPage = () => {
             name="profile_image"
             onChange={handleChange}
           />
-        </div>
+        </div> */}
         <div>
           <button disabled={isFormInvalid()}>Register</button>
           <button onClick={() => navigate("/")}>Cancel</button>

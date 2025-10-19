@@ -2,6 +2,7 @@
 // wallet with ability to add funds
 // re-useable components:
 
+<<<<<<< HEAD:src/pages/AccountPage/AccountPage.jsx
 import { useAuth } from "../../state/AuthContext.jsx";
 
 const AccountPage = () => {
@@ -9,8 +10,18 @@ const AccountPage = () => {
   // need to limit access to userId = logged in user
   return <h1>User Account Page</h1>;
 };
+=======
+import { useContext } from "react";
+import { UserContext } from "../../../contexts/UserContext.jsx";
 
-export default AccountPage;
+const Account = () => {
+    const { user } = useContext(UserContext);
+    // need to limit access to userId = logged in user
+    return (<h1>User Account Page</h1>)
+}
+>>>>>>> 7eddabd556862b7a8eaf4731fb7fe97ab66d63d7:src/components/Views/Account/Account.jsx
+
+export default Account;
 
 // ================================================================
 // WALLET CODE UNUSED FOR NOW

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import api from "../../lib/api";
+import { useParams } from "react-router";
+import api from "../../../unused/lib/api";
 
-const SellerPage = () => {
+const SellerView = () => {
   const [reviews, setReviews] = useState([]);
   const [sortOrder, setSortOrder] = useState("-rating"); // Default to highest first
   const { sellerId } = useParams(); // Get seller ID from URL
@@ -63,4 +63,4 @@ const SellerPage = () => {
   );
 };
 
-export default SellerPage;
+export default SellerView;

@@ -1,12 +1,18 @@
 // frontend/src/pages/ItemDetailPage.jsx (Bid placement)
 import { useEffect, useState } from "react";
+<<<<<<< HEAD:src/pages/ItemDetailPage/ItemDetailPage.jsx
 import { useParams } from "react-router-dom";
 import api from "../../lib/api.js";
 import { useAuth } from "../../state/AuthContext.jsx";
+=======
+import { useParams } from "react-router";
+// import api from "../lib/api.js";
+import { UserContext } from "../../../contexts/UserContext.jsx";
+>>>>>>> 7eddabd556862b7a8eaf4731fb7fe97ab66d63d7:src/components/Views/ItemDetail/ItemDetail.jsx
 
-const ItemDetailPage = () => {
+const ItemDetail = () => {
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user } = useContext(UserContext);
   const [item, setItem] = useState(null);
   const [bids, setBids] = useState([]);
   const [amount, setAmount] = useState("");
@@ -76,4 +82,8 @@ const ItemDetailPage = () => {
   );
 };
 
+<<<<<<< HEAD:src/pages/ItemDetailPage/ItemDetailPage.jsx
 export default ItemDetailPage;
+=======
+export default ItemDetail;
+>>>>>>> 7eddabd556862b7a8eaf4731fb7fe97ab66d63d7:src/components/Views/ItemDetail/ItemDetail.jsx

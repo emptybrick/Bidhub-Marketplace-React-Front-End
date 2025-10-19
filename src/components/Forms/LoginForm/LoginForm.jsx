@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+<<<<<<< HEAD:src/pages/LoginPage/LoginPage.jsx
 import { useNavigate } from "react-router-dom";
 
 import { login } from "../../auth/authService";
@@ -6,6 +7,13 @@ import { login } from "../../auth/authService";
 import { useAuth } from "../../state/AuthContext.jsx";
 
 const LoginPage = () => {
+=======
+import { useNavigate } from "react-router";
+import { login } from "../../../services/authService";
+import { UserContext } from "../../../contexts/UserContext";
+
+const LoginForm = () => {
+>>>>>>> 7eddabd556862b7a8eaf4731fb7fe97ab66d63d7:src/components/Forms/LoginForm/LoginForm.jsx
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
   const [message, setMessage] = useState("");
@@ -69,4 +77,8 @@ const LoginPage = () => {
   );
 };
 
+<<<<<<< HEAD:src/pages/LoginPage/LoginPage.jsx
 export default LoginPage;
+=======
+export default LoginForm;
+>>>>>>> 7eddabd556862b7a8eaf4731fb7fe97ab66d63d7:src/components/Forms/LoginForm/LoginForm.jsx
