@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { UserContext } from "../../contexts/UserContext.jsx";
+import { Link } from "react-router";
+import { UserContext } from "../../../contexts/UserContext.jsx";
 import "./navbar.css";
 
 const NavBar = () => {
@@ -40,20 +40,20 @@ const NavBar = () => {
   return (
     <nav className={`nav ${scrolled ? "affix" : ""}`}>
       <div className="logo">
-        <Link to="/">BidHub</Link>
+        <Link to="/bidhub/home">BidHub</Link>
       </div>
 
       <div className={`main_list ${menuOpen ? "show_list" : ""}`}>
         <ul>
 
           <li>
-            <Link to="/marketplace/about" onClick={() => setMenuOpen(false)}>
+            <Link to="/bidhub/about" onClick={() => setMenuOpen(false)}>
               About
             </Link>
           </li>
 
           <li>
-            <Link to="/marketplace" onClick={() => setMenuOpen(false)}>
+            <Link to="/bidhub/marketplace" onClick={() => setMenuOpen(false)}>
               Marketplace
             </Link>
           </li>
@@ -61,12 +61,12 @@ const NavBar = () => {
           {user ? (
             <>
               <li>
-                <Link to="/account" onClick={() => setMenuOpen(false)}>
+                <Link to="/bidhub/user/account" onClick={() => setMenuOpen(false)}>
                   Account
                 </Link>
               </li>
               <li>
-                <Link to="/purchases" onClick={() => setMenuOpen(false)}>
+                <Link to="/bidhub/user/account/purchases" onClick={() => setMenuOpen(false)}>
                   Purchases
                 </Link>
               </li>
@@ -77,12 +77,12 @@ const NavBar = () => {
           ) : (
             <>
               <li>
-                <Link to="/login" onClick={() => setMenuOpen(false)}>
+                <Link to="/bidhub/login" onClick={() => setMenuOpen(false)}>
                   Login
                 </Link>
               </li>
               <li>
-                <Link to="/register" onClick={() => setMenuOpen(false)}>
+                <Link to="/bidhub/register" onClick={() => setMenuOpen(false)}>
                   Register
                 </Link>
               </li>

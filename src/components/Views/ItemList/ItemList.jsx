@@ -4,8 +4,8 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-// import api from "../lib/api.js";
 import ItemCard from "../../Component/ItemCard/ItemCard.jsx";
+import { getItems } from "../../../services/itemService.js";
 
 const ItemList = () => {
   const [items, setItems] = useState([]);
@@ -13,7 +13,7 @@ const ItemList = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await api.get(`/items/`);
+      const { data } = await getItems();
       setItems(data.results || data);
       setLoading(false);
     })();

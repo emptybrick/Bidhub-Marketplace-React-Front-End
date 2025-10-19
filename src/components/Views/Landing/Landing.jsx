@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import "./landing.css";
-import RegisterForm from "../../components/RegisterForm/RegisterForm.jsx";
-
+import RegisterForm from "../../Forms/RegisterForm/RegisterForm";
 const Landing = () => {
   return (
     <div className="home">
