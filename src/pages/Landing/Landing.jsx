@@ -1,7 +1,7 @@
 const Landing = () => {
   return (
     <main>
-      <h1>Welcome to Bidaro.</h1>
+      <h1>Welcome to Bidhub.</h1>
     </main>
   );
 };

@@ -3,8 +3,8 @@
 // re-useable componenets: item-card
 
 import { useEffect, useState } from "react";
-import { useAuth } from "../state/AuthContext.jsx";
-import api from "../lib/api.js";
+import { useAuth } from "../../state/AuthContext.jsx";
+import api from "../../lib/api.js";
 
 const BidsPage = () => {
   const [bids, setBids] = useState([]);

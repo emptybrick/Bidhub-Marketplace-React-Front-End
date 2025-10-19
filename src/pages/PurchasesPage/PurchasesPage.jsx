@@ -1,5 +1,5 @@
 // should show successful purchases/auctions won to generate seller reviews and keep a history
-import { useAuth } from "../state/AuthContext.jsx";
+import { useAuth } from "../../state/AuthContext.jsx";
 
 const PurchasesPage = () => {
   const { user } = useAuth();

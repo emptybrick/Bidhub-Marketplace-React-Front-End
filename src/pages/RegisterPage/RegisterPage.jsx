@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router";
-import { register } from "../../services/authService";
-import { UserContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
+import { register } from "../../auth/authService";
+import { useAuth } from "../../state/AuthContext.jsx";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useAuth();
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     email: "",
