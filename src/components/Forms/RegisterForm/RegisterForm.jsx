@@ -4,7 +4,7 @@ import { UserContext } from "../../../contexts/UserContext.jsx";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useAuth();
+  const { user, setUser } = useContext(UserContext);
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     email: "",

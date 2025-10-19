@@ -43,7 +43,7 @@ const deleteItem = async (id) => {
 
 const createItem = async (Item) => {
     try {
-        const res = await axios.post(`${ BASE_URL }/`, Item);
+        const res = await axios.post(`${ BASE_URL }/new/`, Item);
         const data = await res.data;
         return data;
     } catch (error) {
