@@ -5,15 +5,15 @@ import { useContext } from "react";
 
 import Dashboard from "./components/Views/Dashboard/Dashboard.jsx";
 import Landing from "./components/Views/Landing/Landing.jsx";
-import LoginPage from "./components/Forms/LoginForm/LoginForm.jsx";
-import RegisterPage from "./components/Forms/RegisterForm/RegisterForm.jsx";
-import AccountPage from "./components/Views/Account/Account.jsx";
+import LoginForm from "./components/Forms/LoginForm/LoginForm.jsx";
+import RegisterForm from "./components/Forms/RegisterForm/RegisterForm.jsx";
+import Account from "./components/Views/Account/Account.jsx";
 import ItemListPage from "./components/Views/ItemList/ItemList.jsx";
-import ItemDetailPage from "./components/Views/ItemDetail/ItemDetail.jsx";
-import PurchasesPage from "./components/Views/Purchases/Purchases.jsx";
+import ItemDetail from "./components/Views/ItemDetail/ItemDetail.jsx";
+import Purchases from "./components/Views/Purchases/Purchases.jsx";
 // import BidsPage from "./components/Views/BidsPage/BidsPage.jsx";
 // import NotificationsBadge from "./components/NotificationsBadge.jsx";
-import SellerPage from "./components/Views/SellerView/SellerView.jsx";
+import SellerView from "./components/Views/SellerView/SellerView.jsx";
 // import SellerMarketPage from "./unused/SellerMarketPage/SellerMarketPage.jsx";
 import NavBar from "./components/Component/NavBar/NavBar.jsx";
 import Footer from "./components/Component/Footer/Footer.jsx";
@@ -33,8 +33,8 @@ const App = () => {
             path="/bidhub/home"
             element={user ? <Dashboard /> : <Landing />}
           />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
           <Route
             path="/marketplace"
             element={
@@ -47,7 +47,7 @@ const App = () => {
             path="/marketplace/:itemId"
             element={
               <ProtectedRoute>
-                <ItemDetailPage />
+                <ItemDetail />
               </ProtectedRoute>
             }
           />
@@ -55,7 +55,7 @@ const App = () => {
             path="/users/:userId/account"
             element={
               <ProtectedRoute>
-                <AccountPage />
+                <Account />
               </ProtectedRoute>
             }
           />
@@ -63,7 +63,7 @@ const App = () => {
             path="/users/:userId/purchases"
             element={
               <ProtectedRoute>
-                <PurchasesPage />
+                <Purchases />
               </ProtectedRoute>
             }
           />
@@ -79,7 +79,7 @@ const App = () => {
             path="/users/:sellerId"
             element={
               <ProtectedRoute>
-                <SellerPage />
+                <SellerView />
               </ProtectedRoute>
             }
           />
