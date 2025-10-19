@@ -1,15 +1,17 @@
 import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext.jsx";
+import { UserContext } from "../../../contexts/UserContext";
+import ItemForm from "../../Forms/ItemForm/ItemForm";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
 
   return (
     <main>
-      <h1>Welcome to your Dashboard, {user?.username}</h1>
-      <p>Your personal Bidhub marketplace hub.</p>
+      <h1>Dashboard - Welcome {user.username}.</h1>
+      <ItemForm />
     </main>
   );
 };
 
 export default Dashboard;
+
