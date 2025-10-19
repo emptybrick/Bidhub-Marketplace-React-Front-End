@@ -1,7 +1,7 @@
 // frontend/src/App.jsx
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router";
+import { UserContext } from "./contexts/UserContext";
 import { useContext } from "react";
-import { UserContext } from "./contexts/UserContext.jsx";
 
 import Dashboard from "./components/Views/Dashboard/Dashboard.jsx";
 import Landing from "./components/Views/Landing/Landing.jsx";
@@ -23,7 +23,6 @@ import SellerMarketPage from "./components/Views/SellerMarketPage/SellerMarketPa
 
 const App = () => {
   const { user } = useContext(UserContext);
-  
   return (
     <>
       <header>
@@ -41,7 +40,7 @@ const App = () => {
             path="/bidhub/marketplace"
             element={
               // <ProtectedRoute>
-                <ItemListPage />
+              <ItemListPage />
               // </ProtectedRoute>
             }
           />

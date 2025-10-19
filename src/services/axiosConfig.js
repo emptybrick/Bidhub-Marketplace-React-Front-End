@@ -1,19 +1,18 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "http://localhost:5173/bidhub/marketplace/",
-  headers: {
-    "Content-Type": "application/json",
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${ token }`;
+    }
+
+    return config;
   },
-});
-
-// Add request interceptor to include auth token
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  (error) => {
+    return Promise.reject(error);
   }
-  return config;
-});
+);
 
-export default api;
+export default axios;

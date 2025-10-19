@@ -23,10 +23,12 @@ const register = async (formData) => {
 const login = async (formData) => {
     try {
         const res = await axios.post(`${ BASE_URL }/login/`, formData);
+
         const data = await res.data;
 
         if (data.token) {
             localStorage.setItem("token", data.token);
+
             // Fetch the full user data from /auth/user
             const user = await getUser();
 
@@ -44,10 +46,4 @@ const login = async (formData) => {
     }
 };
 
-export const logout = async () => {
-  const response = await api.post("/auth/logout/");
-  return response.data;
-};
-
-
-export { register, login, logout };
+export { register, login };
