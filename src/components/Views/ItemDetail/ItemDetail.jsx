@@ -1,9 +1,9 @@
 // frontend/src/pages/ItemDetailPage.jsx (Bid placement)
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import api from "../../services/axiosConfig.js";
+import { useParams } from "react-router";
+import api from "../../../services/axiosConfig.js";
 import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext.jsx";
+import { UserContext } from "../../../contexts/UserContext.jsx";
 
 const ItemDetail = () => {
   const { itemId } = useParams();
