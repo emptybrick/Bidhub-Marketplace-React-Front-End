@@ -1,45 +1,101 @@
-// frontend/src/pages/ItemListPage.jsx
-// emptybrick was here
-// re-useable components: item-card
-
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import ItemCard from "../../Component/ItemCard/ItemCard.jsx";
-import { getItems } from "../../../services/itemService.js";
+import { getFilteredItems, getItems } from "../../../services/itemService.js";
 import "./itemlist.css";
-import ItemForm from '../../Forms/ItemForm/ItemForm.jsx'
+import { categories } from "../../../common/utils.js";
 
-const ItemList = () => {
+const ItemList = ({ owner = null }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [categoryFilter, setCategoryFilter] = useState("all"); // Default to 'all'
+  const [conditionFilter, setConditionFilter] = useState("all");
 
   useEffect(() => {
     (async () => {
-      const data = await getItems();
+      let data;
+      data = await getFilteredItems(categoryFilter, conditionFilter, owner);
       setItems(data);
       setLoading(false);
     })();
-  }, []);
+  }, [categoryFilter, conditionFilter]);
 
   if (loading) return <p>Loading…</p>;
   return (
-    <div className="section">
     <div className="container">
-      <div className="sub-header">
-        <h2>Product Listing</h2>
+      <div className="hero">
+        <h1>BidHub Marketplace</h1>
       </div>
-      <div className="item-card-container">
-        {items.map((item, idx) => (
-            <ItemCard item={item} key={idx}/>
-        ))}
+      <div className="section">
+        <div className="filter-container">
+          <div className="sub-header">
+            <h2>Condition</h2>
+          </div>
+          <ul>
+            <li
+              onClick={() => setConditionFilter("all")}
+              className={conditionFilter === "all" ? "active" : ""}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && setConditionFilter("all")}
+            >
+              Any
+            </li>
+            <li
+              onClick={() => setConditionFilter("NEW")}
+              className={conditionFilter === "NEW" ? "active" : ""} 
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && setConditionFilter("NEW")}
+            >
+              New
+            </li>
+            <li
+              onClick={() => setConditionFilter("USED")} 
+              className={conditionFilter === "USED" ? "active" : ""} 
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && setConditionFilter("USED")}
+            >
+              Used
+            </li>
+          </ul>
+          <div className="sub-header">
+            <h2>Categories</h2>
+          </div>
+          <ul>
+            <li
+              onClick={() => setCategoryFilter("all")} 
+              className={categoryFilter === "all" ? "active" : ""} 
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && setCategoryFilter("all")}
+            >
+              All Categories
+            </li>
+            {categories.map((cat, idx) => (
+              <li
+                key={idx}
+                onClick={() => setCategoryFilter(cat.value)}
+                className={categoryFilter === cat.value ? "active" : ""}
+                role="button"
+                tabIndex={0}
+              >
+                {cat.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="container">
+          <div className="item-card-container">
+            {items.map((item, idx) => (
+              <ItemCard item={item} key={idx} />
+            ))}
+          </div>
+        </div>
+        {/* <ItemForm /> */}
       </div>
-      </div>
-      <ItemForm />
     </div>
   );
 };
 
 export default ItemList;
-
-// class item-card is unique to product listing page to show details, image, current bid of each item (need to build css for item-card)
-// class product-listing-container is unique to product listing page to contain all the product item cards, will be right of categories and under header

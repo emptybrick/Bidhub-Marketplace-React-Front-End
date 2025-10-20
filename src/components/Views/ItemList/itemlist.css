@@ -24,6 +24,10 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+main {
+  padding-top: 0px;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -90,14 +94,14 @@ header {
 /* Main styling */
 .container {
   width: 80%;
-  margin: 80px auto 0 auto;
+  margin: 0 auto 0 auto;
 }
 
 .sub-header {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .sub-header .close-btn {
@@ -171,7 +175,6 @@ header {
   width: 100%;
   margin: 10px 0;
   transition: all ease-in-out 300ms;
-  background-image: url(https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTXPoeXWgsnGXHUV281dC1GJF95aPYl-F0WcQ1ZG5UJ4P3xc9n81Q);
   background-size: 90%;
   background-position: center;
   background-repeat: no-repeat;
@@ -194,6 +197,53 @@ header {
 .item-card .info .icon {
   font-size: 20px;
   color: var(--gold);
+}
+
+.section {
+  display: flex;
+}
+
+.filter-container {
+  margin-left: 20px;
+  padding-bottom: 40px;
+  
+}
+
+ul {
+  list-style: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  padding-bottom: 20px;
+}
+
+li {
+  cursor: pointer; /* Show pointer cursor on hover */
+  padding: 10px 15px; /* Add padding for better click area */
+  border-radius: 4px; /* Rounded corners for button-like look */
+  transition: all 0.2s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover effect */
+li:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
+  color: #007bff; /* Optional: Change text color on hover */
+}
+
+/* Optional: Active/selected state */
+li.active {
+  background-color: #007bff; /* Blue background for selected item */
+  color: white; /* White text for selected item */
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero h1 {
+  padding-bottom: 40px;
+  font-size: 5rem;
 }
 
 /* Media queries */

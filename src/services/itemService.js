@@ -11,6 +11,18 @@ const getItems = async () => {
     }
 };
 
+const getFilteredItems = async(categoryFilter, conditionFilter, owner = null) => {
+    try {
+        const res = await axios.get(`${ BASE_URL }/`, {
+            params: { category: categoryFilter, condition: conditionFilter, owner: owner },
+        });
+        return res.data;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
 const getItemById = async (id) => {
     try {
         const res = await axios.get(`${ BASE_URL }/${ id }/`);
@@ -52,4 +64,4 @@ const createItem = async (Item) => {
     }
 };
 
-export { getItems, getItemById, updateItem, deleteItem, createItem };
+export { getItems, getItemById, updateItem, deleteItem, createItem, getFilteredItems };

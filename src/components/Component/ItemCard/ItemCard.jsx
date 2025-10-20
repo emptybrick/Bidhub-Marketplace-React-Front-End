@@ -17,8 +17,6 @@ const ItemCard = ({item}) => {
 //     setActiveModal(modal);
 //   };
 
-// need to figure out css to implement modal quick view option above code is from previous project
-
   return (
     <div className="item-card">
       <div className="heading">
