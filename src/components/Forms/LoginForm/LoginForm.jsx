@@ -1,8 +1,9 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../../contexts/UserContext.jsx";
+import "./loginform.css";
 
-const LoginForm = () => {
+const LoginForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,40 +25,38 @@ const LoginForm = () => {
       // Replace with your actual login logic
       // const response = await login(formData);
       // setUser(response.user);
-      navigate("/bidhub/home");
+      navigate("/bidhub/auth/login/");
     } catch (err) {
       setError("Invalid credentials");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      {error && <p className="error">{error}</p>}
-      <div>
-        <label htmlFor="email">Email</label>
+    <div className="login-wrapper">
+      <button className="form-close-btn" onClick={onClose}>
+        ×
+      </button>
+      <form className="login" onSubmit={handleSubmit}>
+        {error && <div className="error-message">{error}</div>}
         <input
-          id="email"
           type="email"
           name="email"
+          placeholder="Email"
           value={formData.email}
           onChange={handleChange}
           required
         />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
         <input
-          id="password"
           type="password"
           name="password"
+          placeholder="Password"
           value={formData.password}
           onChange={handleChange}
           required
         />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+        <button type="submit">Login</button>
+      </form>
+    </div>
   );
 };
 

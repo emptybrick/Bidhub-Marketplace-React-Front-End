@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContext.jsx";
 import "./navbar.css";
 import RegisterForm from "../../Forms/RegisterForm/RegisterForm.jsx";
+import LoginForm from "../../Forms/LoginForm/LoginForm.jsx";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -84,27 +86,23 @@ const NavBar = () => {
           ) : (
             <>
               <li>
-                <button onClick={() => setMenuOpen(false)}>Login</button>
-              </li>
-
-              <li>
-                <button onClick={() => setShowRegister(!showRegister)}>
-                  {showRegister ? "Close Register" : "Register"}
+                <button onClick={() => setShowLogin(!showLogin)}>
+                  {showLogin ? "Click x to close" : "Login"}
                 </button>
               </li>
-
+              {showLogin && (
+                <div className="modal">
+                  <LoginForm onClose={() => setShowLogin(false)} />
+                </div>
+              )}
+              <li>
+                <button onClick={() => setShowRegister(!showRegister)}>
+                  {showRegister ? "Click x to close" : "Register"}
+                </button>
+              </li>
               {showRegister && (
                 <div className="modal">
-                  <div className="modal-content">
-                    <button
-                      className="modal-close"
-                      onClick={() => setShowRegister(false)}
-                      style={{ fontSize: "2.5rem", top: "5px", right: "15px" }} // Larger close button
-                    >
-                      ×
-                    </button>
-                    <RegisterForm />
-                  </div>
+                  <RegisterForm onClose={() => setShowRegister(false)} />
                 </div>
               )}
             </>
