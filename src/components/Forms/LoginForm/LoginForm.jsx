@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../../contexts/UserContext.jsx";
+import { login } from "../../../services/authService.js";
 import "./loginform.css";
 
 const LoginForm = ({ onClose }) => {
@@ -22,10 +23,11 @@ const LoginForm = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Replace with your actual login logic
-      // const response = await login(formData);
-      // setUser(response.user);
-      navigate("/bidhub/auth/login/");
+      // API call and set the user
+      const user = await login(formData);
+      setUser(user);
+      onClose(); // Close modal after successful login
+      navigate("/bidhub/home"); // Navigate to home page after login
     } catch (err) {
       setError("Invalid credentials");
     }

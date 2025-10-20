@@ -238,9 +238,6 @@ const RegisterForm = ({ onClose }) => {
             <button type="submit" disabled={isFormInvalid()}>
               Register
             </button>
-            <button type="button" onClick={() => navigate("/")}>
-              Cancel
-            </button>
           </div>
         </form>
       </div>

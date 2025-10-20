@@ -185,7 +185,7 @@ form {
 /* Form Buttons */
 .form-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Changed from space-between to center */
   margin-top: 20px;
 }
 
@@ -199,7 +199,7 @@ form {
   padding: 10px 0;
   border-radius: 5px;
   transition: background-color 300ms;
-  width: 45%;
+  width: 200px; /* Changed from 45% to fixed width */
 }
 
 .form-buttons button[type="submit"] {
