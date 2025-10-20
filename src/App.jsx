@@ -48,7 +48,7 @@ const App = () => {
             path="/bidhub/marketplace/:itemId"
             element={
               // <ProtectedRoute>
-                <ItemDetail />
+              <ItemDetail />
               // </ProtectedRoute>
             }
           />
@@ -68,6 +68,14 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          {/* <Route
+            path="/bidhub/user/account/auctions"
+            element={
+              <ProtectedRoute>
+                <UserAuctions />
+              </ProtectedRoute>
+            }
+          /> */}
           {/* should be able to just filter by seller id and reuse itemlist page */}
           <Route
             path="/bidhub/seller/:sellerId/marketplace"
