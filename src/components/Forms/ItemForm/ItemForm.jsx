@@ -105,7 +105,7 @@ const ItemForm = () => {
 
   return (
     <main>
-      <h1>Register</h1>
+      <h1>Create Item</h1>
       <p>{message}</p>
       <form onSubmit={handleSubmit}>
         <div>

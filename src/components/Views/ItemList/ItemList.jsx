@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import ItemCard from "../../Component/ItemCard/ItemCard.jsx";
 import { getItems } from "../../../services/itemService.js";
+import "./itemlist.css";
+import ItemForm from '../../Forms/ItemForm/ItemForm.jsx'
 
 const ItemList = () => {
   const [items, setItems] = useState([]);
@@ -13,19 +15,26 @@ const ItemList = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await getItems();
-      setItems(data.results || data);
+      const data = await getItems();
+      setItems(data);
       setLoading(false);
     })();
   }, []);
 
   if (loading) return <p>Loading…</p>;
   return (
-    <div className="product-listing-container">
-      <h2>Product Listing</h2>
-      {items.map((item) => (
-        <ItemCard item={item} />
-      ))}
+    <div className="section">
+    <div className="container">
+      <div className="sub-header">
+        <h2>Product Listing</h2>
+      </div>
+      <div className="item-card-container">
+        {items.map((item, idx) => (
+            <ItemCard item={item} key={idx}/>
+        ))}
+      </div>
+      </div>
+      <ItemForm />
     </div>
   );
 };

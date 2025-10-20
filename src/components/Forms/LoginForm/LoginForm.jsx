@@ -24,7 +24,7 @@ const LoginForm = () => {
       // Replace with your actual login logic
       // const response = await login(formData);
       // setUser(response.user);
-      navigate("/");
+      navigate("/bidhub/home");
     } catch (err) {
       setError("Invalid credentials");
     }
