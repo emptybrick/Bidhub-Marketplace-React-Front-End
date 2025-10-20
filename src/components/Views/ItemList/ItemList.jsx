@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import ItemCard from "../../Component/ItemCard/ItemCard.jsx";
-import { getFilteredItems, getItems } from "../../../services/itemService.js";
+import { getFilteredItems } from "../../../services/itemService.js";
 import "./itemlist.css";
 import { categories } from "../../../common/utils.js";
-import ItemForm from "../../Forms/ItemForm/ItemForm.jsx";
 import Hero from "../../Component/Hero/Hero.jsx";
 
-const ItemList = ({ owner = null, heroText = "BidHub Marketplace", userbids = null }) => {
+const ItemList = ({
+  owner = null,
+  heroText = "BidHub Marketplace",
+  userbids = null,
+}) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -159,7 +162,6 @@ const ItemList = ({ owner = null, heroText = "BidHub Marketplace", userbids = nu
             ))}
           </div>
         </div>
-        <ItemForm />
       </div>
     </div>
   );

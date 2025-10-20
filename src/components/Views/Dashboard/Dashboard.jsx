@@ -1,69 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { Link } from "react-router-dom";
-import ItemCard from "../../Component/ItemCard/ItemCard.jsx";
-import {
-  getItemsByUser,
-  getWatchedItems,
-  getBidItems,
-  getRecentItems,
-} from "../../../services/itemService.js";
 import "./dashboard.css";
 import ItemList from "../ItemList/ItemList.jsx";
+import ItemForm from "../../Forms/ItemForm/ItemForm.jsx";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
-  const [sellingItems, setSellingItems] = useState([]);
-  const [biddedItems, setBiddedItems] = useState([]);
-  const [watchedItems, setWatchedItems] = useState([]);
-  const [recentItems, setRecentItems] = useState([]);
   const [activeSection, setActiveSection] = useState("selling");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    // const fetchDashboardData = async () => {
-    //   setLoading(true);
-    //   try {
-    //     // Fetch all data concurrently for better performance
-    //     const [selling, bidded, watched, recent] = await Promise.all([
-    //       getItemsByUser(user.id),
-    //       getBidItems(user.id),
-    //       getWatchedItems(user.id),
-    //       getRecentItems(),
-    //     ]);
-
-    //     setSellingItems(selling);
-    //     setBiddedItems(bidded);
-    //     setWatchedItems(watched);
-    //     setRecentItems(recent);
-    //   } catch (error) {
-    //     console.error("Error fetching dashboard data:", error);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-
-    // if (user?.id) {
-    //   fetchDashboardData();
-    // }
-    console.log(user);
-  }, [user]);
-
-  // const renderItemCards = (items) => {
-  //   if (items.length === 0) {
-  //     return <p className="no-items">No items to display</p>;
-  //   }
-
-  //   return (
-  //     <div className="item-card-container">
-  //       {items.map((item) => (
-  //         <Link to={`/bidhub/marketplace/${item.id}`} key={item.id}>
-  //           <ItemCard item={item} />
-  //         </Link>
-  //       ))}
-  //     </div>
-  //   );
-  // };
 
   return (
     <div className="dashboard-container container">
@@ -79,19 +23,19 @@ const Dashboard = () => {
           className={activeSection === "selling" ? "active" : ""}
           onClick={() => setActiveSection("selling")}
         >
-          Your Items For Sale ({sellingItems.length})
+          Your Items For Sale
         </button>
         <button
           className={activeSection === "bidded" ? "active" : ""}
           onClick={() => setActiveSection("bidded")}
         >
-          Items You've Bid On ({biddedItems.length})
+          Items You've Bid On
         </button>
         <button
           className={activeSection === "watched" ? "active" : ""}
           onClick={() => setActiveSection("watched")}
         >
-          Watched Items ({watchedItems.length})
+          Watched Items
         </button>
         <button
           className={activeSection === "recent" ? "active" : ""}
@@ -101,54 +45,48 @@ const Dashboard = () => {
         </button>
       </div>
 
-      {loading ? (
-        <div className="loading">Loading your items...</div>
-      ) : (
-        <div className="dashboard-content">
-          {activeSection === "selling" && (
-            <div className="section-container">
-              <div className="section-header">
-                <h2>Your Items For Sale</h2>
-                <Link to="/bidhub/item/new" className="action-button">
-                  + List New Item
-                </Link>
-              </div>
-              <ItemList owner={user.id} heroText={null} />
-              {/* {renderItemCards(sellingItems)} */}
+      <div className="dashboard-content">
+        {activeSection === "selling" && (
+          <div className="section-container">
+            <div className="section-header">
+              <h2>Your Items For Sale</h2>
+              <Link to="/bidhub/item/new" className="action-button">
+                + List New Item
+              </Link>
             </div>
-          )}
+            <ItemList owner={user.id} heroText={null} />
+          </div>
+        )}
 
-          {activeSection === "bidded" && (
-            <div className="section-container">
-              <div className="section-header">
-                <h2>Items You've Bid On</h2>
-              </div>
-              {/* {renderItemCards(biddedItems)} */}
+        {activeSection === "bidded" && (
+          <div className="section-container">
+            <div className="section-header">
+              <h2>Items You've Bid On</h2>
             </div>
-          )}
+            <ItemList userbids={"true"} heroText={null} />
+          </div>
+        )}
 
-          {activeSection === "watched" && (
-            <div className="section-container">
-              <div className="section-header">
-                <h2>Watched Items</h2>
-              </div>
-              {/* {renderItemCards(watchedItems)} */}
+        {activeSection === "watched" && (
+          <div className="section-container">
+            <div className="section-header">
+              <h2>Watched Items</h2>
             </div>
-          )}
+          </div>
+        )}
 
-          {activeSection === "recent" && (
-            <div className="section-container">
-              <div className="section-header">
-                <h2>User Account Profile</h2>
-                <Link to="/bidhub/marketplace" className="action-button">
-                  View All Marketplace Items
-                </Link>
-              </div>
-              {/* {renderItemCards(recentItems)} */}
+        {activeSection === "recent" && (
+          <div className="section-container">
+            <div className="section-header">
+              <h2>User Account Profile</h2>
+              <Link to="/bidhub/marketplace" className="action-button">
+                View All Marketplace Items
+              </Link>
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
+        <ItemForm />
     </div>
   );
 };
