@@ -65,6 +65,26 @@ nav ul li a:active {
   transform: translateY(0);
 }
 
+nav ul li button {
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  display: inline-block;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  margin: 0 0.25rem;
+}
+
+nav ul li button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+nav ul li button:active {
+  transform: translateY(0);
+}
+
 /* Navbar section */
 .nav {
     width: 100%;
@@ -135,6 +155,12 @@ nav ul li a:active {
 .nav div.main_list ul li a:hover,
 .nav div.main_list ul li button:hover {
     color: #00E676;
+}
+
+.nav div.main_list ul li button:hover {
+    color: #00E676;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 .navTrigger {
@@ -392,4 +418,45 @@ nav ul li a:active {
 /* Add space for the navbar */
 main {
     padding-top: 105px;
+}
+
+/* Modal styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-close:hover {
+  color: #00E676;
 }
