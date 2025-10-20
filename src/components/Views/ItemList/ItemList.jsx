@@ -6,7 +6,7 @@ import { categories } from "../../../common/utils.js";
 import ItemForm from "../../Forms/ItemForm/ItemForm.jsx";
 import Hero from "../../Component/Hero/Hero.jsx";
 
-const ItemList = ({ owner = null, heroText = "BidHub Marketplace" }) => {
+const ItemList = ({ owner = null, heroText = "BidHub Marketplace", userbids = null }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -24,7 +24,8 @@ const ItemList = ({ owner = null, heroText = "BidHub Marketplace" }) => {
         endTimeSort,
         createdSort,
         bidSort,
-        owner
+        owner,
+        userbids
       );
       setItems(data);
       setLoading(false);
