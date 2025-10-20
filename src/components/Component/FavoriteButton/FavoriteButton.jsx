@@ -1,17 +1,19 @@
 // FavoriteButton.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { getFavorites, toggleFavorite } from "../../../services/authService";
+import { UserContext } from "../../../contexts/UserContext";
 
 function FavoriteButton({ itemId }) {
+  const { user } = useContext(UserContext);
   const [isFavorited, setIsFavorited] = useState(false);
   const [loading, setLoading] = useState(false);
 
   // Load initial state
   useEffect(() => {
-    if (itemId) {
+    if (itemId && user) {
       fetchIsFavorited();
     }
   }, [itemId]);
@@ -19,29 +21,31 @@ function FavoriteButton({ itemId }) {
   const fetchIsFavorited = async () => {
     try {
       const response = await getFavorites();
-    let favoritesArray = [];
-    if (response.favorites) {
-      favoritesArray = Array.isArray(response.favorites)
-        ? response.favorites.map(String)
-        : [];
-    }
+      let favoritesArray = [];
+      if (response.favorites) {
+        favoritesArray = Array.isArray(response.favorites)
+          ? response.favorites.map(String)
+          : [];
+      }
 
-    const isInFavorites = favoritesArray.includes(String(itemId));
-    setIsFavorited(isInFavorites);
+      const isInFavorites = favoritesArray.includes(String(itemId));
+      setIsFavorited(isInFavorites);
     } catch (error) {
       console.error("Failed to load favorites:", error);
     }
   };
 
   const handleToggle = async () => {
-    setLoading(true);
-    try {
-      const response = await toggleFavorite(itemId);
-      setIsFavorited(response.is_favorited);
-    } catch (error) {
-      console.error("Failed to toggle favorite:", error);
-    } finally {
-      setLoading(false);
+    if (user) {
+      setLoading(true);
+      try {
+        const response = await toggleFavorite(itemId);
+        setIsFavorited(response.is_favorited);
+      } catch (error) {
+        console.error("Failed to toggle favorite:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
