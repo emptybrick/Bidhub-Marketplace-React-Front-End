@@ -11,17 +11,17 @@ const getItems = async () => {
     }
 };
 
-const getFilteredItems = async(categoryFilter, conditionFilter, owner = null) => {
+const getFilteredItems = async (categoryFilter, conditionFilter, endTime, startTime, currentBid, owner = 'none') => {
     try {
         const res = await axios.get(`${ BASE_URL }/`, {
-            params: { category: categoryFilter, condition: conditionFilter, owner: owner },
+            params: { category: categoryFilter, condition: conditionFilter, owner: owner, end: endTime, start: startTime, bid: currentBid },
         });
         return res.data;
     } catch (err) {
         console.log(err);
         throw err;
     }
-}
+};
 
 const getItemById = async (id) => {
     try {

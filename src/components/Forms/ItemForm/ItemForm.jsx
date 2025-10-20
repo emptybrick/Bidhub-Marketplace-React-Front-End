@@ -61,7 +61,7 @@ const ItemForm = () => {
         end_time: end_time ? end_time.toISOString() : null, // Convert to ISO string
       };
       const newItem = await createItem(formattedFormData);
-      navigate(`bidhub/marketplace/${newItem.id}`);
+      navigate(`/${newItem.id}`);
     } catch (err) {
       setMessage(err.message);
     }

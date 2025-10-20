@@ -209,6 +209,34 @@ header {
   
 }
 
+.sort-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: right;
+    align-items: end;
+    padding: 1.5rem;
+    margin-bottom: .5rem;
+    flex-wrap: wrap;
+}
+
+.filter-sort {
+    display: flex;
+    flex-direction: column;
+    min-width: 140px;
+    position: relative;
+    margin-left: 3rem;
+}
+
+.filter-sort label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #495057;
+    margin-bottom: 0.4rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
 ul {
   list-style: none; /* Remove default bullets */
   padding: 0; /* Remove default padding */
@@ -242,7 +270,7 @@ li.active {
 }
 
 .hero h1 {
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   font-size: 5rem;
 }
 
