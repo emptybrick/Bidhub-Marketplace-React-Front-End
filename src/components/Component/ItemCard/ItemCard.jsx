@@ -1,17 +1,18 @@
-import '../../Views/ItemList/itemlist.css'
+import "../../Views/ItemList/itemlist.css";
+import FavoriteButton from "../FavoriteButton/FavoriteButton";
 
-const ItemCard = ({item}) => {
+const ItemCard = ({ item }) => {
   return (
     <div className="item-card">
       <div className="heading">
         <span>{item.item_name}</span>
         <span>
-          <i className="fa.fa-heart-o"></i>
+          <FavoriteButton itemId={ item.id } />
         </span>
       </div>
       <div className="box">ITEM IMAGE</div>
-      <div className="info">{ item.description }</div>
-      <div>Current Bid: ${ item.current_bid }</div>
+      <div className="info">{item.description}</div>
+      <div>Current Bid: ${item.current_bid}</div>
     </div>
   );
 };

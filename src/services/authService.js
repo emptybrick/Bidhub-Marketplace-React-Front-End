@@ -46,4 +46,26 @@ const login = async (formData) => {
     }
 };
 
-export { register, login };
+const toggleFavorite = async (itemId) => {
+    try {
+        const response = await axios.post(`${ BASE_URL }/user/favorites/toggle/`, {
+            item_id: itemId,
+        });
+        return response.data;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+};
+
+const getFavorites = async () => {
+    try {
+        const response = await axios.get(`${ BASE_URL }/user/favorites/`);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+};
+
+export { register, login, toggleFavorite, getFavorites };
