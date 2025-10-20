@@ -15,7 +15,7 @@ const Landing = () => {
         </Link>
       </div>
 
-      <RegisterForm />
+      {/* <RegisterForm /> */}
 
     </div>
     

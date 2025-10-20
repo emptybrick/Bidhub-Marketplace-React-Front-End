@@ -1,12 +1,14 @@
 import { useContext, useState, useEffect } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContext.jsx";
 import "./navbar.css";
+import RegisterForm from "../../Forms/RegisterForm/RegisterForm.jsx";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -45,7 +47,6 @@ const NavBar = () => {
 
       <div className={`main_list ${menuOpen ? "show_list" : ""}`}>
         <ul>
-
           <li>
             <Link to="/bidhub/about" onClick={() => setMenuOpen(false)}>
               About
@@ -61,12 +62,18 @@ const NavBar = () => {
           {user ? (
             <>
               <li>
-                <Link to="/bidhub/user/account" onClick={() => setMenuOpen(false)}>
+                <Link
+                  to="/bidhub/user/account"
+                  onClick={() => setMenuOpen(false)}
+                >
                   Account
                 </Link>
               </li>
               <li>
-                <Link to="/bidhub/user/account/purchases" onClick={() => setMenuOpen(false)}>
+                <Link
+                  to="/bidhub/user/account/purchases"
+                  onClick={() => setMenuOpen(false)}
+                >
                   Purchases
                 </Link>
               </li>
@@ -77,15 +84,29 @@ const NavBar = () => {
           ) : (
             <>
               <li>
-                <button onClick={() => setMenuOpen(false)}>
-                  Login
-                </button>
+                <button onClick={() => setMenuOpen(false)}>Login</button>
               </li>
+
               <li>
-                <button onClick={() => setMenuOpen(false)}>
-                  Register
+                <button onClick={() => setShowRegister(!showRegister)}>
+                  {showRegister ? "Close Register" : "Register"}
                 </button>
               </li>
+
+              {showRegister && (
+                <div className="modal">
+                  <div className="modal-content">
+                    <button
+                      className="modal-close"
+                      onClick={() => setShowRegister(false)}
+                      style={{ fontSize: "2.5rem", top: "5px", right: "15px" }} // Larger close button
+                    >
+                      ×
+                    </button>
+                    <RegisterForm />
+                  </div>
+                </div>
+              )}
             </>
           )}
         </ul>

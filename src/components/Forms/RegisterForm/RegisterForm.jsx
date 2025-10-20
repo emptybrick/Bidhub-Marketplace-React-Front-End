@@ -1,6 +1,8 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../../contexts/UserContext.jsx";
+import "./registerform.css";
+import { register } from "../../../services/authService.js";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -12,7 +14,6 @@ const RegisterForm = () => {
     password_confirmation: "",
     first_name: "",
     last_name: "",
-    // profile_image: "",
     username: "",
     street_address: "",
     city: "",
@@ -24,13 +25,13 @@ const RegisterForm = () => {
     user_rating: "",
   });
 
+  // Destructure formData
   const {
     email,
     password,
     password_confirmation,
     first_name,
     last_name,
-    // profile_image,
     username,
     street_address,
     city,
@@ -76,158 +77,168 @@ const RegisterForm = () => {
   };
 
   return (
-    <div>
+    <div className="register-form-container">
       <h1>Register</h1>
-      <p>{message}</p>
+      {message && <p className="error-message">{message}</p>}
+
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            name="email"
-            onChange={handleChange}
-            required
-          />
+        <div className="form-columns">
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              name="email"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              name="username"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              name="password"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="first_name">First Name:</label>
+            <input
+              type="text"
+              id="first_name"
+              value={first_name}
+              name="first_name"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="last_name">Last Name:</label>
+            <input
+              type="text"
+              id="last_name"
+              value={last_name}
+              name="last_name"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password_confirmation">Confirm Password:</label>
+            <input
+              type="password"
+              id="password_confirmation"
+              value={password_confirmation}
+              name="password_confirmation"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <h2 style={{ gridColumn: "1 / -1", marginBottom: "0.5rem" }}>
+            Address
+          </h2>
+
+          <div className="form-group">
+            <label htmlFor="street_address">Street Address:</label>
+            <input
+              type="text"
+              id="street_address"
+              value={street_address}
+              name="street_address"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="city">City:</label>
+            <input
+              type="text"
+              id="city"
+              value={city}
+              name="city"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="state">State:</label>
+            <input
+              type="text"
+              id="state"
+              value={state}
+              name="state"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="postal_code">Postal Code:</label>
+            <input
+              type="text"
+              id="postal_code"
+              value={postal_code}
+              name="postal_code"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="country">Country:</label>
+            <input
+              type="text"
+              id="country"
+              value={country}
+              name="country"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="phone_number">Phone Number:</label>
+            <input
+              type="text"
+              id="phone_number"
+              value={phone_number}
+              name="phone_number"
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            name="username"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="first_name">First Name:</label>
-          <input
-            type="text"
-            id="first_name"
-            value={first_name}
-            name="first_name"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="last_name">Last Name:</label>
-          <input
-            type="text"
-            id="last_name"
-            value={last_name}
-            name="last_name"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            name="password"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password_confirmation">Confirm Password:</label>
-          <input
-            type="password"
-            id="password_confirmation"
-            value={password_confirmation}
-            name="password_confirmation"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <h1>Address</h1>
-        </div>
-        <div>
-          <label htmlFor="street_address">Street Address:</label>
-          <input
-            type="text"
-            id="street_address"
-            value={street_address}
-            name="street_address"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="city">City:</label>
-          <input
-            type="text"
-            id="city"
-            value={city}
-            name="city"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="state">State:</label>
-          <input
-            type="text"
-            id="state"
-            value={state}
-            name="state"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="postal_code">Postal Code:</label>
-          <input
-            type="text"
-            id="postal_code"
-            value={postal_code}
-            name="postal_code"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="country">Country:</label>
-          <input
-            type="text"
-            id="country"
-            value={country}
-            name="country"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="phone_number">Phone Number:</label>
-          <input
-            type="text"
-            id="phone_number"
-            value={phone_number}
-            name="phone_number"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {/* <div>
-          <label htmlFor="profile_image">Profile Image URL:</label>
-          <input
-            type="text"
-            id="profile_image"
-            value={profile_image}
-            name="profile_image"
-            onChange={handleChange}
-          />
-        </div> */}
-        <div>
-          <button disabled={isFormInvalid()}>Register</button>
-          <button onClick={() => navigate("/")}>Cancel</button>
+
+        <div className="form-buttons">
+          <button type="submit" disabled={isFormInvalid()}>
+            Register
+          </button>
+          <button type="button" onClick={() => navigate("/")}>
+            Cancel
+          </button>
         </div>
       </form>
     </div>
