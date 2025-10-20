@@ -97,7 +97,7 @@ const Dashboard = () => {
           className={activeSection === "recent" ? "active" : ""}
           onClick={() => setActiveSection("recent")}
         >
-          Recent Marketplace Listings
+          User Account Profile
         </button>
       </div>
 
@@ -139,7 +139,7 @@ const Dashboard = () => {
           {activeSection === "recent" && (
             <div className="section-container">
               <div className="section-header">
-                <h2>Recent Marketplace Listings</h2>
+                <h2>User Account Profile</h2>
                 <Link to="/bidhub/marketplace" className="action-button">
                   View All Marketplace Items
                 </Link>

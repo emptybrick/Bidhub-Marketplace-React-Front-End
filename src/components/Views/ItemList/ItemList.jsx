@@ -158,7 +158,7 @@ const ItemList = ({ owner = null, heroText = "BidHub Marketplace" }) => {
             ))}
           </div>
         </div>
-        {/* <ItemForm /> */}
+        <ItemForm />
       </div>
     </div>
   );
