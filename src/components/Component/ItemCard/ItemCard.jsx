@@ -1,8 +1,9 @@
 // frontend/src/components/ItemCard
 // emptybrick was here
 import { useState } from "react";
+import '../../Views/ItemList/itemlist.css'
 
-const ItemCard = (item) => {
+const ItemCard = ({item}) => {
 //   const [activeModal, setActiveModal] = useState(null);
 
 //   const handleCloseQuickView = (e) => {
@@ -19,18 +20,16 @@ const ItemCard = (item) => {
 // need to figure out css to implement modal quick view option above code is from previous project
 
   return (
-    <div className="item-card" key={item.id}>
-      {/* <h3>
-        <Link to={`/items/${item.id}`}>{item.title}</Link>
-      </h3> */}
-      {/* show product.image[0] + product name + product current bid*/}
-      {/* {item.category && <span className="badge">{item.category.name}</span>} */ }
-      <p>{ item.name }</p>
-      <p>{item.description}</p>
-      {/* <button className="product-quickview" onClick={showModal}>
-        Quick View
-      </button> */}
-      {/* on quickview show product details and product images */}
+    <div className="item-card">
+      <div className="heading">
+        <span>{item.item_name}</span>
+        <span>
+          <i className="fa.fa-heart-o"></i>
+        </span>
+      </div>
+      <div className="box">ITEM IMAGE</div>
+      <div className="info">{ item.description }</div>
+      <div>Current Bid: ${ item.current_bid }</div>
     </div>
   );
 };

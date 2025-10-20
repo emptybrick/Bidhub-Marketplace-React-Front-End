@@ -1,0 +1,235 @@
+/* Imports */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+/* Variables */
+:root {
+  --gold: #c8ad78;
+}
+
+/* General styling */
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.logo {
+  text-transform: uppercase;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.logo span {
+  font-weight: 700;
+}
+
+.logo .sub-info {
+  font-size: 12px;
+  letter-spacing: 4px;
+}
+
+.navigation a {
+  color: black;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-left: 20px;
+  font-weight: 700;
+}
+
+.navigation a.active {
+  color: var(--gold);
+}
+
+.more {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.more .figure {
+  position: absolute;
+  bottom: 80%;
+  right: 0;
+  color: white;
+  font-size: 14px;
+  font-weight: 900;
+  background: var(--gold);
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 50%;
+}
+
+.more .menu {
+  font-size: 30px;
+  color: black;
+}
+
+/* Main styling */
+.container {
+  width: 80%;
+  margin: 80px auto 0 auto;
+}
+
+.sub-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.sub-header .close-btn {
+  font-size: 30px;
+  color: var(--gold);
+  cursor: pointer;
+}
+
+.sub-header .title {
+  line-height: 1;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.sub-header .title span {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: lowercase;
+  color: var(--gold);
+}
+
+.item-card-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item-card {
+  width: 24%;
+  margin: 0 0.5% 20px 0.5%;
+  padding: 15px 20px;
+  border: 1px solid var(--gold);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all ease-in-out 300ms;
+}
+
+.item-card.is-active {
+  border: none;
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(1.1);
+  z-index: 1000;
+  background: white;
+  animation: animateCard ease-in-out 1000ms forwards;
+}
+
+.item-card.stop-animation {
+  animation-play-state: paused;
+}
+
+.item-card:hover {
+  border: none;
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(1.1);
+  z-index: 1000;
+  background: white;
+}
+
+.item-card .heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-card .heading span {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.item-card .box {
+  width: 100%;
+  margin: 10px 0;
+  transition: all ease-in-out 300ms;
+  background-image: url(https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTXPoeXWgsnGXHUV281dC1GJF95aPYl-F0WcQ1ZG5UJ4P3xc9n81Q);
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.item-card .box::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.item-card .info {
+  display: flex;
+  justify-content: space-between;
+  line-height: 1.2;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.item-card .info .icon {
+  font-size: 20px;
+  color: var(--gold);
+}
+
+/* Media queries */
+@media (max-width: 1200px) {
+  .item-card {
+    width: 31.33%;
+    margin: 0 0.5% 20px 0.5%;
+  }
+}
+
+@media (max-width: 640px) {
+  .item-card {
+    width: 100%;
+    margin: 0 0 20px 0;
+  }
+
+  .navigation {
+    display: none;
+  }
+}
+
+/* Animations */
+@keyframes animateCard {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+  10%, 20% {
+    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+  }
+  30%, 50%, 70%, 90% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+  }
+  40%, 60%, 80% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
