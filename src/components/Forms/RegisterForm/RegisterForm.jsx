@@ -84,7 +84,6 @@ const RegisterForm = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-columns">
           <div className="form-group">
-            <label htmlFor="email">Email:</label>
             <input
               type="email"
               id="email"
@@ -93,10 +92,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="email">Email</label>
           </div>
 
           <div className="form-group">
-            <label htmlFor="username">Username:</label>
             <input
               type="text"
               id="username"
@@ -105,10 +104,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="username">Username</label>
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password:</label>
             <input
               type="password"
               id="password"
@@ -117,10 +116,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="password">Password</label>
           </div>
 
           <div className="form-group">
-            <label htmlFor="first_name">First Name:</label>
             <input
               type="text"
               id="first_name"
@@ -129,10 +128,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="first_name">First Name</label>
           </div>
 
           <div className="form-group">
-            <label htmlFor="last_name">Last Name:</label>
             <input
               type="text"
               id="last_name"
@@ -141,10 +140,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="last_name">Last Name</label>
           </div>
 
           <div className="form-group">
-            <label htmlFor="password_confirmation">Confirm Password:</label>
             <input
               type="password"
               id="password_confirmation"
@@ -153,14 +152,14 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="password_confirmation">Confirm Password</label>
           </div>
+        </div>
 
-          <h2 style={{ gridColumn: "1 / -1", marginBottom: "0.5rem" }}>
-            Address
-          </h2>
+        <h2>Address</h2>
 
+        <div className="form-columns">
           <div className="form-group">
-            <label htmlFor="street_address">Street Address:</label>
             <input
               type="text"
               id="street_address"
@@ -169,10 +168,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="street_address">Street</label>
           </div>
 
           <div className="form-group">
-            <label htmlFor="city">City:</label>
             <input
               type="text"
               id="city"
@@ -181,10 +180,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="city">City</label>
           </div>
 
           <div className="form-group">
-            <label htmlFor="state">State:</label>
             <input
               type="text"
               id="state"
@@ -193,10 +192,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="state">State</label>
           </div>
 
           <div className="form-group">
-            <label htmlFor="postal_code">Postal Code:</label>
             <input
               type="text"
               id="postal_code"
@@ -205,10 +204,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="postal_code">Postal Code</label>
           </div>
 
           <div className="form-group">
-            <label htmlFor="country">Country:</label>
             <input
               type="text"
               id="country"
@@ -217,10 +216,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="country">Country</label>
           </div>
 
           <div className="form-group">
-            <label htmlFor="phone_number">Phone Number:</label>
             <input
               type="text"
               id="phone_number"
@@ -229,6 +228,7 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <label htmlFor="phone_number">Phone</label>
           </div>
         </div>
 
