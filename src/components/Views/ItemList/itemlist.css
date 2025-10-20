@@ -223,7 +223,6 @@ header {
     display: flex;
     flex-direction: column;
     min-width: 140px;
-    position: relative;
     margin-left: 3rem;
 }
 
@@ -263,16 +262,6 @@ li.active {
   color: white; /* White text for selected item */
 }
 
-.hero {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero h1 {
-  padding-bottom: 20px;
-  font-size: 5rem;
-}
 
 /* Media queries */
 @media (max-width: 1200px) {

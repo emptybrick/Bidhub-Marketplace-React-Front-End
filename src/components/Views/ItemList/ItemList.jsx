@@ -4,8 +4,9 @@ import { getFilteredItems, getItems } from "../../../services/itemService.js";
 import "./itemlist.css";
 import { categories } from "../../../common/utils.js";
 import ItemForm from "../../Forms/ItemForm/ItemForm.jsx";
+import Hero from "../../Component/Hero/Hero.jsx";
 
-const ItemList = ({ owner = null }) => {
+const ItemList = ({ owner = null, heroText = "BidHub Marketplace" }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -17,7 +18,14 @@ const ItemList = ({ owner = null }) => {
   useEffect(() => {
     (async () => {
       let data;
-      data = await getFilteredItems(categoryFilter, conditionFilter, endTimeSort, createdSort, bidSort, owner);
+      data = await getFilteredItems(
+        categoryFilter,
+        conditionFilter,
+        endTimeSort,
+        createdSort,
+        bidSort,
+        owner
+      );
       setItems(data);
       setLoading(false);
     })();
@@ -38,9 +46,7 @@ const ItemList = ({ owner = null }) => {
   if (loading) return <p>Loading…</p>;
   return (
     <div className="container">
-      <div className="hero">
-        <h1>BidHub Marketplace</h1>
-      </div>
+      <Hero heroText={heroText} />
       <div className="sort-container">
         <div className="filter-sort">
           <label htmlFor="sort-by-bid">Bid Amount</label>

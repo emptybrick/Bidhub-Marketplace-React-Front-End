@@ -9,6 +9,7 @@ import {
   getRecentItems,
 } from "../../../services/itemService.js";
 import "./dashboard.css";
+import ItemList from "../ItemList/ItemList.jsx";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
@@ -17,51 +18,52 @@ const Dashboard = () => {
   const [watchedItems, setWatchedItems] = useState([]);
   const [recentItems, setRecentItems] = useState([]);
   const [activeSection, setActiveSection] = useState("selling");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
-      setLoading(true);
-      try {
-        // Fetch all data concurrently for better performance
-        const [selling, bidded, watched, recent] = await Promise.all([
-          getItemsByUser(user.id),
-          getBidItems(user.id),
-          getWatchedItems(user.id),
-          getRecentItems(),
-        ]);
+    // const fetchDashboardData = async () => {
+    //   setLoading(true);
+    //   try {
+    //     // Fetch all data concurrently for better performance
+    //     const [selling, bidded, watched, recent] = await Promise.all([
+    //       getItemsByUser(user.id),
+    //       getBidItems(user.id),
+    //       getWatchedItems(user.id),
+    //       getRecentItems(),
+    //     ]);
 
-        setSellingItems(selling);
-        setBiddedItems(bidded);
-        setWatchedItems(watched);
-        setRecentItems(recent);
-      } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    //     setSellingItems(selling);
+    //     setBiddedItems(bidded);
+    //     setWatchedItems(watched);
+    //     setRecentItems(recent);
+    //   } catch (error) {
+    //     console.error("Error fetching dashboard data:", error);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
 
-    if (user?.id) {
-      fetchDashboardData();
-    }
+    // if (user?.id) {
+    //   fetchDashboardData();
+    // }
+    console.log(user);
   }, [user]);
 
-  const renderItemCards = (items) => {
-    if (items.length === 0) {
-      return <p className="no-items">No items to display</p>;
-    }
+  // const renderItemCards = (items) => {
+  //   if (items.length === 0) {
+  //     return <p className="no-items">No items to display</p>;
+  //   }
 
-    return (
-      <div className="item-card-container">
-        {items.map((item) => (
-          <Link to={`/bidhub/marketplace/${item.id}`} key={item.id}>
-            <ItemCard item={item} />
-          </Link>
-        ))}
-      </div>
-    );
-  };
+  //   return (
+  //     <div className="item-card-container">
+  //       {items.map((item) => (
+  //         <Link to={`/bidhub/marketplace/${item.id}`} key={item.id}>
+  //           <ItemCard item={item} />
+  //         </Link>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   return (
     <div className="dashboard-container container">
@@ -111,7 +113,8 @@ const Dashboard = () => {
                   + List New Item
                 </Link>
               </div>
-              {renderItemCards(sellingItems)}
+              <ItemList owner={user.id} heroText={null} />
+              {/* {renderItemCards(sellingItems)} */}
             </div>
           )}
 
@@ -120,7 +123,7 @@ const Dashboard = () => {
               <div className="section-header">
                 <h2>Items You've Bid On</h2>
               </div>
-              {renderItemCards(biddedItems)}
+              {/* {renderItemCards(biddedItems)} */}
             </div>
           )}
 
@@ -129,7 +132,7 @@ const Dashboard = () => {
               <div className="section-header">
                 <h2>Watched Items</h2>
               </div>
-              {renderItemCards(watchedItems)}
+              {/* {renderItemCards(watchedItems)} */}
             </div>
           )}
 
@@ -141,7 +144,7 @@ const Dashboard = () => {
                   View All Marketplace Items
                 </Link>
               </div>
-              {renderItemCards(recentItems)}
+              {/* {renderItemCards(recentItems)} */}
             </div>
           )}
         </div>
