@@ -13,10 +13,10 @@ const getItems = async () => {
   }
 };
 
-const getFilteredItems = async (categoryFilter, conditionFilter, endTime, startTime, currentBid, owner = 'none') => {
+const getFilteredItems = async (categoryFilter, conditionFilter, endTime, startTime, currentBid, owner = 'none', userbids = 'none') => {
     try {
         const res = await axios.get(`${ BASE_URL }/`, {
-            params: { category: categoryFilter, condition: conditionFilter, owner: owner, end: endTime, start: startTime, bid: currentBid },
+            params: { category: categoryFilter, condition: conditionFilter, owner: owner, end: endTime, start: startTime, bid: currentBid, userbids: userbids },
         });
         return res.data;
     } catch (err) {

@@ -1,23 +1,6 @@
-// frontend/src/components/ItemCard
-// emptybrick was here
-import { useState } from "react";
 import '../../Views/ItemList/itemlist.css'
 
-
 const ItemCard = ({item}) => {
-//   const [activeModal, setActiveModal] = useState(null);
-
-//   const handleCloseQuickView = (e) => {
-//     e.preventDefault();
-//     setActiveModal(null);
-//   };
-
-//   const handleShowQuickView = (e) => {
-//     e.preventDefault();
-//     const modal = e.target.dataset.target;
-//     setActiveModal(modal);
-//   };
-
   return (
     <div className="item-card">
       <div className="heading">
