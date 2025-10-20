@@ -9,6 +9,7 @@ const ItemList = ({
   owner = null,
   heroText = "BidHub Marketplace",
   userbids = null,
+  favorites = null,
 }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,8 @@ const ItemList = ({
         createdSort,
         bidSort,
         owner,
-        userbids
+        userbids,
+        favorites
       );
       setItems(data);
       setLoading(false);

@@ -20,7 +20,8 @@ const getFilteredItems = async (
   startTime,
   currentBid,
   owner = "none",
-  userbids = "none"
+  userbids = "none",
+  favorites = 'none'
 ) => {
   try {
     const res = await axios.get(`${BASE_URL}/`, {
@@ -32,6 +33,7 @@ const getFilteredItems = async (
         start: startTime,
         bid: currentBid,
         userbids: userbids,
+        favorites: favorites
       },
     });
     return res.data;

@@ -93,6 +93,7 @@ const Dashboard = () => {
             <div className="section-header">
               <h2>Watched Items</h2>
             </div>
+            <ItemList favorites={ "true" } heroText={ null } />
           </div>
         )}
 
