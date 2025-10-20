@@ -1,0 +1,344 @@
+@import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap');
+
+:root {
+  --green-seaweed: rgba(2, 128, 144, 1);
+  --blue-queen: rgba(69, 105, 144, 1);
+  --red-fire: rgba(244, 91, 105, 1);
+}
+
+body {
+  font-family: 'Asap', sans-serif;
+}
+
+/* Item form wrapper for positioning */
+.item-form-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  height: 550px;
+  margin: 40px auto;
+  overflow: visible; /* Critical for wave visibility */
+}
+
+/* Item form container */
+.item-form {
+  overflow: hidden;
+  background-color: white;  /* Changed from gray to white */
+  padding: 25px 30px;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  transition: transform 300ms, box-shadow 300ms;
+  box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+}
+
+/* Wave effects */
+.item-form::before, 
+.item-form::after {
+  content: '';
+  position: absolute;
+  width: 1000px;
+  height: 1000px;
+  border-top-left-radius: 40%;
+  border-top-right-radius: 45%;
+  border-bottom-left-radius: 35%;
+  border-bottom-right-radius: 40%;
+  z-index: -1;
+}
+
+.item-form::before {
+  left: 40%;
+  bottom: -130%;
+  background-color: rgba(69, 105, 144, 0.15);
+  animation: waves 6s infinite linear;
+}
+
+.item-form::after {
+  left: 35%;
+  bottom: -125%;
+  background-color: rgba(2, 128, 144, 0.2);
+  animation: waves 7s infinite;
+}
+
+@keyframes waves {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+
+/* Form layout - 2 columns instead of 3 */
+.form-grid {
+  display: flex;
+  gap: 30px;  /* Increased gap */
+}
+
+.form-column {
+  flex: 1;  /* Each column takes equal space */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;  /* Increased gap between fields */
+}
+
+/* Form fields */
+.form-field {
+  margin-bottom: 0;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 4px;  /* Slightly increased */
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;  /* Increased font size */
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea,
+.react-datepicker-wrapper {
+  font-family: 'Asap', sans-serif;
+  display: block;
+  border-radius: 5px;
+  font-size: 15px;  /* Increased font size */
+  background: white;
+  width: 100%;
+  border: 0;
+  padding: 10px;  /* Increased padding */
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  height: 40px;  /* Increased height */
+}
+
+/* Dimensions container */
+.dimensions-container {
+  margin-bottom: 0;
+}
+
+.dimensions-container label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Dimension fields in one row */
+.dimensions-row {
+  display: flex;
+  gap: 10px;  /* Increased gap */
+}
+
+.form-field.dimension {
+  flex: 1;
+}
+
+.form-field.dimension input {
+  padding: 8px;
+  text-align: center;
+  height: 38px;
+}
+
+/* Style DatePicker input */
+.date-picker-input {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  font-family: 'Asap', sans-serif;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 0;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Description field */
+.description-field {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field textarea {
+  font-family: 'Asap', sans-serif;
+  display: block;
+  border-radius: 5px;
+  font-size: 15px;  /* Increased font size */
+  background: white;
+  width: 100%;
+  border: 0;
+  padding: 10px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-height: 180px;  /* Increased height */
+  resize: none;
+  height: auto;  /* Override fixed height for textarea */
+}
+
+/* Form buttons - wider buttons */
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  padding: 0 5px;
+}
+
+.form-buttons button {
+  width: 150px;  /* Wider buttons */
+}
+
+/* Form heading */
+h1 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+/* Error message */
+.error-message {
+  color: var(--red-fire);
+  background-color: rgba(244, 91, 105, 0.1);
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* For modal display when used in popup */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  font-weight: 300;
+  color: #999;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--red-fire);
+  background-color: rgba(0,0,0,0.05);
+}
+
+/* Container for the login form within modal */
+.login-modal {
+  position: relative;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Adjust close button position for login modal */
+.login-modal .modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--red-fire);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1100;
+  cursor: pointer;
+}
+
+.login-modal .modal-close:hover {
+  background-color: #f8f8f8;
+  transform: scale(1.1);
+}
+
+/* Fix the login wrapper setup */
+.login-wrapper {
+  position: relative;
+  width: 400px;
+  height: 300px; /* Height to accommodate the form */
+  overflow: visible; /* Allow waves to overflow */
+}
+
+/* Position the close button without affecting the login form */
+.form-close-btn {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  color: var(--red-fire);
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1100; /* Keep this higher than other elements */
+  transition: all 0.2s ease;
+}
+
+.form-close-btn:hover {
+  background-color: #f8f8f8;
+  transform: scale(1.1);
+}
+
+/* Ensure the modal properly centers the form */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 900px) {
+  .form-grid {
+    flex-direction: column;
+  }
+  
+  .item-form-wrapper {
+    height: auto;
+    margin: 20px auto;
+    overflow: auto;
+  }
+  
+  .item-form {
+    position: relative;
+    transform: none;
+    top: auto;
+    left: auto;
+  }
+}

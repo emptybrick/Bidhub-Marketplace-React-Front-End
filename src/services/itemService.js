@@ -13,16 +13,32 @@ const getItems = async () => {
   }
 };
 
-const getFilteredItems = async (categoryFilter, conditionFilter, endTime, startTime, currentBid, owner = 'none', userbids = 'none') => {
-    try {
-        const res = await axios.get(`${ BASE_URL }/`, {
-            params: { category: categoryFilter, condition: conditionFilter, owner: owner, end: endTime, start: startTime, bid: currentBid, userbids: userbids },
-        });
-        return res.data;
-    } catch (err) {
-        console.log(err);
-        throw err;
-    }
+const getFilteredItems = async (
+  categoryFilter,
+  conditionFilter,
+  endTime,
+  startTime,
+  currentBid,
+  owner = "none",
+  userbids = "none"
+) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/`, {
+      params: {
+        category: categoryFilter,
+        condition: conditionFilter,
+        owner: owner,
+        end: endTime,
+        start: startTime,
+        bid: currentBid,
+        userbids: userbids,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 };
 
 const getItemById = async (id) => {
@@ -55,14 +71,16 @@ const deleteItem = async (id) => {
   }
 };
 
-const createItem = async (Item) => {
+const createItem = async (formData) => {
   try {
-    const res = await axios.post(`${BASE_URL}/new/`, Item);
-    const data = await res.data;
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw error;
+    const res = await axios.post(`${BASE_URL}/new/`, formData);
+    return res.data;
+  } catch (err) {
+    console.error("Create item error:", err.response ? err.response.data : err);
+    throw new Error(
+      err.response?.data?.detail ||
+        "Failed to create item. Please check all fields and try again."
+    );
   }
 };
 

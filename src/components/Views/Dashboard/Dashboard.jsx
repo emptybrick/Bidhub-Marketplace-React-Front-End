@@ -8,6 +8,7 @@ import ItemForm from "../../Forms/ItemForm/ItemForm.jsx";
 const Dashboard = () => {
   const { user } = useContext(UserContext);
   const [activeSection, setActiveSection] = useState("selling");
+  const [showItem, setShowItem] = useState(false);
 
   return (
     <div className="dashboard-container container">
@@ -50,12 +51,32 @@ const Dashboard = () => {
           <div className="section-container">
             <div className="section-header">
               <h2>Your Items For Sale</h2>
-              <Link to="/bidhub/item/new" className="action-button">
-                + List New Item
-              </Link>
+
+              <button 
+                className="action-button"
+                onClick={() => setShowItem(true)}
+                >
+                  + List New Item
+              </button>
+
             </div>
             <ItemList owner={user.id} heroText={null} />
+
+            {showItem && (
+            <div className="modal">
+              <div className="modal-content">
+                <button
+                  className="close-button"
+                  onClick={() => setShowItem(false)}
+                >
+                  ✕
+                </button>
+                <ItemForm onClose={() => setShowItem(false)} />
+              </div>
+            </div>
+          )}
           </div>
+
         )}
 
         {activeSection === "bidded" && (
@@ -86,7 +107,6 @@ const Dashboard = () => {
           </div>
         )}
       </div>
-        <ItemForm />
     </div>
   );
 };

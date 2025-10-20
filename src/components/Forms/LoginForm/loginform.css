@@ -38,7 +38,7 @@ body {
 }
 
 .login::before {
-  left: 40%;
+  left: 100%;
   bottom: -130%;
   background-color: rgba(69, 105, 144, 0.15);
   animation: waves 6s infinite linear;
@@ -204,7 +204,7 @@ body {
 }
 
 .form-close-btn:hover {
-  background-color: #f8f8f8;
+  background-color: red;
   transform: scale(1.1);
 }
 
