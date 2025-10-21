@@ -60,15 +60,15 @@ const ItemDetail = () => {
           <div className="top-right-section">
             <div className="bid-info">
               <div className="current-bid">
-                Current Bid: ${item.current_bid}
+                Current Bid: <span className="span-bold">${item.current_bid}</span>
               </div>
               <div className="initial-bid">
-                Initial Bid: ${item.initial_bid}
+                Initial Bid: <span className="span-bold">${item.initial_bid}</span>
               </div>
 
               <div className="bid-end">
                 Time left:{" "}
-                <span className="time-left">
+                <span className="span-bold">
                   {Math.ceil(
                     (new Date(item.end_time) - new Date()) /
                       (1000 * 60 * 60 * 24)
@@ -84,28 +84,53 @@ const ItemDetail = () => {
                 <button className="bid-history-button">VIEW BID HISTORY</button>
               </div>
             </div>
-            <div className="item-detail-subtitle">Item Details</div>
-            <div className="item-info">
-              <ul className="item-info-left">
-                <li>Category: {item.category}</li>
-                <li>Condition: {item.condition}</li>
-                {item.manufacture_year ? (
-                  <li>Manufacture Year: {item.manufacture_year}</li>
-                ) : (
-                  ""
-                )}
-                {item.country_of_origin ? (
-                  <li>Country of Origin: {item.country_of_origin}</li>
-                ) : (
-                  ""
-                )}
-              </ul>
-              <ul className="item-info-right">
-                <li>Height: {item.height} cm</li>
-                <li>Width: {item.width} cm</li>
-                <li>Length: {item.length} cm</li>
-                <li>Weight: {item.weight} kg</li>
-              </ul>
+            <div className="item-info-section">
+              <div className="item-detail-subtitle">Item Details</div>
+              <div className="item-info">
+                <ul className="item-info-left">
+                  <li>
+                    Category: <span className="span-bold">
+                    {item.category}</span>
+                  </li>
+                  <li>
+                    Condition: <span className="span-bold">
+                    {item.condition}</span>
+                  </li>
+                  {item.manufacture_year ? (
+                    <li>
+                      Manufacture Year: <span className="span-bold">
+                      {item.manufacture_year}</span>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                  {item.country_of_origin ? (
+                    <li>
+                      Country of Origin: <span className="span-bold">
+                      {item.country_of_origin}</span>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                </ul>
+                <ul className="item-info-right">
+                  <li>
+                    Height: <span className="span-bold">{item.height} cm</span>
+                  </li>
+                  <li>
+                    Width: <span className="span-bold">
+                    {item.width} cm</span>
+                  </li>
+                  <li>
+                    Length: <span className="span-bold">
+                    {item.length} cm</span>
+                  </li>
+                  <li>
+                    Weight: <span className="span-bold">
+                    {item.weight} kg</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

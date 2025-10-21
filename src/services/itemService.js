@@ -20,8 +20,8 @@ const getFilteredItems = async (
   startTime,
   currentBid,
   owner = "none",
-  userbids = "none",
-  favorites = "none",
+  userbids = "false",
+  favorites = "false",
   purchased = "false"
 ) => {
   try {
