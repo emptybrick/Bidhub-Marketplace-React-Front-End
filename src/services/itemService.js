@@ -21,8 +21,8 @@ const getFilteredItems = async (
   currentBid,
   owner = "none",
   userbids = "none",
-  favorites = 'none',
-  purchased = 'false',
+  favorites = "none",
+  purchased = "false"
 ) => {
   try {
     const res = await axios.get(`${BASE_URL}/`, {
@@ -81,9 +81,12 @@ const createItem = async (formData) => {
     return res.data;
   } catch (err) {
     console.error("Create item error:", err.response ? err.response.data : err);
+    let detail = err.response?.data?.detail;
+    if (typeof detail !== "string") {
+      detail = JSON.stringify(detail);
+    }
     throw new Error(
-      err.response?.data?.detail ||
-        "Failed to create item. Please check all fields and try again."
+      detail || "Failed to create item. Please check all fields and try again."
     );
   }
 };
