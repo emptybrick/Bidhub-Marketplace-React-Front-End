@@ -1,0 +1,64 @@
+:root {
+  --primary-color: #4e73df;
+  --secondary-color: #f8f9fc;
+  --dark-color: #5a5c69;
+  --light-color: #f8f9fc;
+  --danger-color: #e74a3b;
+  --success-color: #1cc88a;
+}
+
+.about {
+  background: var(--secondary-color);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  padding: 2.5rem 2rem;
+  margin: 40px auto;
+  max-width: 800px;
+  text-align: center;
+}
+
+.about h1 {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.about h2 {
+  color: var(--dark-color);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.about p {
+  color: var(--dark-color);
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+
+.about img {
+  display: block;
+  margin: 0 auto 2.5rem auto;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  border: none;
+}
+
+@media (max-width: 600px) {
+  .about {
+    padding: 1rem 0.5rem;
+    max-width: 98vw;
+  }
+  .about img {
+    max-width: 98vw;
+    margin-bottom: 1.5rem;
+  }
+}

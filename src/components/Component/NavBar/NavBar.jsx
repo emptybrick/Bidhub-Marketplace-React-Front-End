@@ -12,7 +12,6 @@ const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [showAccount, setShowAccount] = useState(false);
 
   // Handle scroll effect for navbar
   useEffect(() => {
