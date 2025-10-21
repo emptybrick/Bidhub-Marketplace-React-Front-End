@@ -66,7 +66,7 @@ const NavBar = () => {
           {user ? (
             <>
           <li>
-            <Link to="/bidhub/dashboard" onClick={() => setMenuOpen(false)}>
+            <Link to="/bidhub/home" onClick={() => setMenuOpen(false)}>
               Dashboard
             </Link>
           </li>
