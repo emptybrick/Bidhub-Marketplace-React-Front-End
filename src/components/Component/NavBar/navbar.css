@@ -87,7 +87,8 @@ body {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     padding: 5px 10px;
-}.navTrigger {
+}
+.navTrigger {
     display: none;
 }/* Media query section */
 @media
@@ -324,3 +325,24 @@ body {
   color: #FFD700; /* Gold highlight */
 }
 
+.nav-bar-link:hover {
+    background-color: #111 !important;
+    height: 65px !important;
+}
+
+.nav-bar-link a {
+    text-decoration: none !important;
+    color: #fff !important;
+    font-size: 2.5rem !important;
+    line-height: normal !important; /* Reset line height */
+    transition: color 0.3s, background-color 0.3s !important;
+    padding: 5px 10px !important;
+    border-radius: 4px !important;
+}
+
+.nav-bar-link a:hover {
+    color: #FFD700 !important; /* Gold highlight */
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 4px !important;
+    padding: 5px 10px !important;
+}

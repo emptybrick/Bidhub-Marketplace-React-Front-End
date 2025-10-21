@@ -79,7 +79,7 @@
 .action-button:hover {
   background-color: #b69c68;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.758);
 }
 
 .no-items {

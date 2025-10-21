@@ -1,10 +1,12 @@
 import { Link } from "react-router";
 import "./landing.css";
 import RegisterForm from "../../Forms/RegisterForm/RegisterForm";
+import TextMorph from "../../Component/TextMorph/TextMorph";
 const Landing = () => {
   return (
     <div className="home">
       <div className="home-content">
+        <TextMorph />
         <h1 className="home-title">Welcome to Bidhub</h1>
         <p className="home-subtitle">
           Your premier marketplace for auctions and direct sales. Find unique

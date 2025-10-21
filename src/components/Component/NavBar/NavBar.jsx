@@ -12,7 +12,6 @@ const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [showAccount, setShowAccount] = useState(false);
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -51,13 +50,13 @@ const NavBar = () => {
 
       <div className={`main_list ${menuOpen ? "show_list" : ""}`}>
         <ul>
-          <li>
+          <li className="nav-bar-link">
             <Link to="/bidhub/about" onClick={() => setMenuOpen(false)}>
               About
             </Link>
           </li>
 
-          <li>
+          <li className="nav-bar-link">
             <Link to="/bidhub/marketplace" onClick={() => setMenuOpen(false)}>
               Marketplace
             </Link>
@@ -65,32 +64,34 @@ const NavBar = () => {
 
           {user ? (
             <>
-          <li>
-            <Link to="/bidhub/home" onClick={() => setMenuOpen(false)}>
-              Dashboard
-            </Link>
-          </li>
+              <li className="nav-bar-link">
+                <Link to="/bidhub/home" onClick={() => setMenuOpen(false)}>
+                  Dashboard
+                </Link>
+              </li>
 
-              <li>
-                <button onClick={handleSignOut}>Sign Out</button>
+              <li className="nav-bar-link">
+                <Link onClick={handleSignOut}>Sign Out</Link>
               </li>
             </>
           ) : (
             <>
-              <li>
-                <button onClick={() => setShowLogin(!showLogin)}>
-                  {showLogin ? "Click x to close" : "Login"}
-                </button>
+              <li className="nav-bar-link">
+                <Link onClick={() => setShowLogin(!showLogin)}>
+                    {/* { showLogin ? "Click x to close" : "Login" } */}
+                    Login
+                </Link>
               </li>
               {showLogin && (
                 <div className="modal">
                   <LoginForm onClose={() => setShowLogin(false)} />
                 </div>
               )}
-              <li>
-                <button onClick={() => setShowRegister(!showRegister)}>
-                  {showRegister ? "Click x to close" : "Register"}
-                </button>
+              <li className="nav-bar-link">
+                <Link onClick={() => setShowRegister(!showRegister)}>
+                    {/* { showRegister ? "Click x to close" : "Register" } */}
+                    Register
+                </Link>
               </li>
               {showRegister && (
                 <div className="modal">

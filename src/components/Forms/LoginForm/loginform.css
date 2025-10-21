@@ -38,16 +38,16 @@ body {
 }
 
 .login::before {
-  left: 100%;
+  left: 60%;
   bottom: -130%;
-  background-color: rgba(69, 105, 144, 0.15);
+  background-color: rgba(67, 67, 67, 0.452);
   animation: waves 6s infinite linear;
 }
 
 .login::after {
   left: 35%;
   bottom: -125%;
-  background-color: rgba(2, 128, 144, 0.2);
+  background-color: rgba(255, 248, 45, 0.464);
   animation: waves 7s infinite;
 }
 
@@ -56,12 +56,12 @@ body {
   display: block;
   border-radius: 5px;
   font-size: 16px;
-  background: white;
+  background: rgba(255, 255, 255, 0.527);
   width: 100%;
   border: 0;
   padding: 10px 10px;
   margin: 15px -10px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.334);
 }
 
 .login > button {

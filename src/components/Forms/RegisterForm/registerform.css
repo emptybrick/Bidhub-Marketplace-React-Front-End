@@ -39,26 +39,26 @@ body {
 .register::after {
   content: '';
   position: absolute;
-  width: 1000px; /* Wider for larger form */
-  height: 1000px; /* Taller for larger form */
-  border-top-left-radius: 40%;
-  border-top-right-radius: 45%;
-  border-bottom-left-radius: 35%;
-  border-bottom-right-radius: 40%;
+  width: 2000px; /* Wider for larger form */
+  height: 2000px; /* Taller for larger form */
+  border-top-left-radius: 200%;
+  border-top-right-radius: 250%;
+  border-bottom-left-radius: 250%;
+  border-bottom-right-radius: 200%;
   z-index: -1;
 }
 
 .register::before {
-  left: 40%;
-  bottom: -130%;
-  background-color: rgba(69, 105, 144, 0.15);
+  left: 70%;
+  bottom: -100%;
+  background-color: rgba(67, 67, 67, 0.452);
   animation: waves 6s infinite linear;
 }
 
 .register::after {
   left: 35%;
   bottom: -125%;
-  background-color: rgba(2, 128, 144, 0.2);
+  background-color: rgba(255, 248, 45, 0.464);
   animation: waves 7s infinite;
 }
 
@@ -137,10 +137,10 @@ form {
 /* Label styling */
 .form-group label {
   position: absolute;
-  top: -18px;
-  left: 20px;
+  top: -30px;
+  left: 0px;
   font-size: 12px;
-  opacity: 0.6;
+  opacity: 0.9;
   text-transform: uppercase;
   transition: all 0.3s ease-in-out;
 }
@@ -152,18 +152,18 @@ form {
   padding: 10px;
   height: 38px;
   border-radius: 5px;
-  background: white;
+  background: rgba(255, 255, 255, 0.473);
   border: 0;
   color: #333;
   font-family: 'Asap', sans-serif;
   font-size: 14px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.23);
   transition: all 0.3s ease-in-out;
 }
 
 .form-group input:focus {
   outline: 0;
-  box-shadow: 0 0 5px rgba(2, 128, 144, 0.3);
+  box-shadow: 0 0 5px rgba(141, 91, 0, 0.3);
 }
 
 .form-group input:focus + label {
