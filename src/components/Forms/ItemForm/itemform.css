@@ -15,24 +15,21 @@ body {
   position: relative;
   width: 90%;
   max-width: 1000px;
-  height: 550px;
   margin: 40px auto;
-  overflow: visible; /* Critical for wave visibility */
+  overflow: visible;
+  height: auto; /* <-- Remove fixed height */
 }
 
 /* Item form container */
 .item-form {
   overflow: hidden;
-  background-color: white;  /* Changed from gray to white */
+  background-color: white;
   padding: 25px 30px;
   border-radius: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
   width: 100%;
-  transform: translate(-50%, -50%);
-  transition: transform 300ms, box-shadow 300ms;
   box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+  position: relative; /* <-- Remove absolute, top, left, transform */
+  transition: box-shadow 300ms;
 }
 
 /* Wave effects */
@@ -328,17 +325,13 @@ h1 {
   .form-grid {
     flex-direction: column;
   }
-  
   .item-form-wrapper {
-    height: auto;
     margin: 20px auto;
     overflow: auto;
+    height: auto;
   }
-  
   .item-form {
-    position: relative;
-    transform: none;
-    top: auto;
-    left: auto;
+    width: 100%;
+    padding: 15px;
   }
 }

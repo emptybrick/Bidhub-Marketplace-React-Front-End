@@ -4,6 +4,7 @@ import { UserContext } from "../../../contexts/UserContext.jsx";
 import "./navbar.css";
 import RegisterForm from "../../Forms/RegisterForm/RegisterForm.jsx";
 import LoginForm from "../../Forms/LoginForm/LoginForm.jsx";
+import Account from "../../Views/Account/Account.jsx";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
@@ -11,6 +12,7 @@ const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [showAccount, setShowAccount] = useState(false);
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -63,14 +65,25 @@ const NavBar = () => {
 
           {user ? (
             <>
-              <li>
+              {/* <li>
                 <Link
                   to="/bidhub/user/account"
                   onClick={() => setMenuOpen(false)}
                 >
                   Account
                 </Link>
+              </li> */}
+              <li>
+                <button onClick={() => setShowAccount(!showAccount)}>
+                  {showAccount ? "Click x to close" : "Account"}
+                </button>
               </li>
+              {showAccount && (
+                <div className="modal">
+                  <Account onClose={() => setShowAccount(false)} />
+                </div>
+              )}
+
               <li>
                 <Link
                   to="/bidhub/user/account/purchases"

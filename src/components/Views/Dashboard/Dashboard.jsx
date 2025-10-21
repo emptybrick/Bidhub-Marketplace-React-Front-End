@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./dashboard.css";
 import ItemList from "../ItemList/ItemList.jsx";
 import ItemForm from "../../Forms/ItemForm/ItemForm.jsx";
+import Account from "../Account/Account.jsx";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
@@ -51,32 +52,28 @@ const Dashboard = () => {
           <div className="section-container">
             <div className="section-header">
               <h2>Your Items For Sale</h2>
-
-              <button 
+              <button
                 className="action-button"
                 onClick={() => setShowItem(true)}
-                >
-                  + List New Item
+              >
+                + List New Item
               </button>
-
             </div>
             <ItemList owner={user.id} heroText={null} />
-
             {showItem && (
-            <div className="modal">
-              <div className="modal-content">
-                <button
-                  className="close-button"
-                  onClick={() => setShowItem(false)}
-                >
-                  ✕
-                </button>
-                <ItemForm onClose={() => setShowItem(false)} />
+              <div className="modal">
+                <div className="modal-content">
+                  <button
+                    className="close-button"
+                    onClick={() => setShowItem(false)}
+                  >
+                    ✕
+                  </button>
+                  <ItemForm onClose={() => setShowItem(false)} />
+                </div>
               </div>
-            </div>
-          )}
+            )}
           </div>
-
         )}
 
         {activeSection === "bidded" && (
@@ -93,7 +90,7 @@ const Dashboard = () => {
             <div className="section-header">
               <h2>Watched Items</h2>
             </div>
-            <ItemList favorites={ "true" } heroText={ null } />
+            <ItemList favorites={"true"} heroText={null} />
           </div>
         )}
 
@@ -101,10 +98,8 @@ const Dashboard = () => {
           <div className="section-container">
             <div className="section-header">
               <h2>User Account Profile</h2>
-              <Link to="/bidhub/marketplace" className="action-button">
-                View All Marketplace Items
-              </Link>
             </div>
+            <Account onClose={() => setActiveSection("selling")} />
           </div>
         )}
       </div>
