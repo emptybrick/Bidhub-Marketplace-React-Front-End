@@ -4,7 +4,7 @@ import { UserContext } from "../../../contexts/UserContext.jsx";
 import "./navbar.css";
 import RegisterForm from "../../Forms/RegisterForm/RegisterForm.jsx";
 import LoginForm from "../../Forms/LoginForm/LoginForm.jsx";
-import Account from "../../Views/Account/Account.jsx";
+import Dashboard from "../../Views/Dashboard/Dashboard.jsx";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
@@ -65,33 +65,12 @@ const NavBar = () => {
 
           {user ? (
             <>
-              {/* <li>
-                <Link
-                  to="/bidhub/user/account"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Account
-                </Link>
-              </li> */}
-              <li>
-                <button onClick={() => setShowAccount(!showAccount)}>
-                  {showAccount ? "Click x to close" : "Account"}
-                </button>
-              </li>
-              {showAccount && (
-                <div className="modal">
-                  <Account onClose={() => setShowAccount(false)} />
-                </div>
-              )}
+          <li>
+            <Link to="/bidhub/dashboard" onClick={() => setMenuOpen(false)}>
+              Dashboard
+            </Link>
+          </li>
 
-              <li>
-                <Link
-                  to="/bidhub/user/account/purchases"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Purchases
-                </Link>
-              </li>
               <li>
                 <button onClick={handleSignOut}>Sign Out</button>
               </li>
