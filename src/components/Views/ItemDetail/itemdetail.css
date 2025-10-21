@@ -1,29 +1,90 @@
-.time-left {
-    font-weight: bold;
-}
-
 .item-detail-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: rgb(49, 136, 212);
+}
+
+.item-detail-section {
+    width: 80vw;
+    height: 100%;
+    background-color: goldenrod;
 }
 
 .details-top {
     display: flex;
+    background-color: blueviolet;
 }
 
-.bid-section {
+.item-image {
+    width: 640px;
+    height: 640px;
+    background-color: lightcoral;
+}
+
+.top-right-section {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    background-color: aqua;
+    flex: 1;
+}
+
+.bid-info {
+    background-color: bisque;
+}
+
+.bid-end {
+    background-color: chartreuse;
+}
+
+.time-left {
+    font-weight: bold;
 }
 
 .bid-offer {
     display: flex;
+    background-color: rgb(166, 7, 7);
+}
+
+.bid-history {
+    background-color: darkkhaki;
+}
+
+.bid-history-button {
+    width: fit-content;
+}
+
+.item-detail-subtitle, .item-description-subtitle {
+    justify-self: center;
+    align-self: center;
+    font-size: 32px;
 }
 
 .item-info {
     display: flex;
+    background-color: blue;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-info-left {
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
+    justify-content: center;
+    align-self: center;
+}
+
+.item-info-right {
+    font-size: 24px;
+}
+
+.details-bottom {
+    background-color: brown;
+    height: fit-content;
+    min-height: 200px;
 }
 
 .details-link {
