@@ -10,7 +10,7 @@ const ItemList = ({
   heroText = "BidHub Marketplace",
   userbids = null,
   favorites = null,
-  loggedin = null,
+  purchased= 'false'
 }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ const ItemList = ({
         owner,
         userbids,
         favorites,
-        loggedin
+        purchased
       );
       setItems(data);
       setLoading(false);

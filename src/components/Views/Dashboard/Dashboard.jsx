@@ -16,93 +16,108 @@ const Dashboard = () => {
       <div className="dashboard-container container">
         <div className="sub-header-dash">
           <div className="title">
-            Welcome, { user?.username }
+            Welcome, {user?.username}
             <span>Your personalized BidHub dashboard</span>
           </div>
         </div>
 
         <div className="dashboard-nav">
           <button
-            className={ activeSection === "selling" ? "active" : "" }
-            onClick={ () => setActiveSection("selling") }
+            className={activeSection === "selling" ? "active" : ""}
+            onClick={() => setActiveSection("selling")}
           >
             Your Items For Sale
           </button>
           <button
-            className={ activeSection === "bidded" ? "active" : "" }
-            onClick={ () => setActiveSection("bidded") }
+            className={activeSection === "bidded" ? "active" : ""}
+            onClick={() => setActiveSection("bidded")}
           >
             Items You've Bid On
           </button>
           <button
-            className={ activeSection === "watched" ? "active" : "" }
-            onClick={ () => setActiveSection("watched") }
+            className={activeSection === "watched" ? "active" : ""}
+            onClick={() => setActiveSection("watched")}
           >
             Watched Items
           </button>
           <button
-            className={ activeSection === "recent" ? "active" : "" }
-            onClick={ () => setActiveSection("recent") }
+            className={activeSection === "purchased" ? "active" : ""}
+            onClick={() => setActiveSection("purchased")}
+          >
+            Purchased Items
+          </button>
+          <button
+            className={activeSection === "account" ? "active" : ""}
+            onClick={() => setActiveSection("account")}
           >
             User Account Profile
           </button>
         </div>
 
         <div className="dashboard-content">
-          { activeSection === "selling" && (
+          {activeSection === "selling" && (
             <div className="section-container">
               <div className="section-header">
                 <h2>Your Items For Sale</h2>
                 <button
                   className="action-button"
-                  onClick={ () => setShowItem(true) }
+                  onClick={() => setShowItem(true)}
                 >
                   + List New Item
                 </button>
               </div>
-              <ItemList owner={ user.id } heroText={ null } />
-              { showItem && (
+              <ItemList owner={user.id} heroText={null} />
+              {showItem && (
                 <div className="modal">
                   <div className="modal-content">
                     <button
                       className="close-button"
-                      onClick={ () => setShowItem(false) }
+                      onClick={() => setShowItem(false)}
                     >
                       ✕
                     </button>
-                    <ItemForm onClose={ () => setShowItem(false) } />
+                    <ItemForm onClose={() => setShowItem(false)} />
                   </div>
                 </div>
-              ) }
+              )}
             </div>
-          ) }
+          )}
 
-          { activeSection === "bidded" && (
+          {activeSection === "bidded" && (
             <div className="section-container">
               <div className="section-header">
                 <h2>Items You've Bid On</h2>
               </div>
-              <ItemList userbids={ "true" } heroText={ null } />
+              <ItemList userbids={"true"} heroText={null} />
             </div>
-          ) }
+          )}
 
-          { activeSection === "watched" && (
+          {activeSection === "watched" && (
             <div className="section-container">
               <div className="section-header">
                 <h2>Watched Items</h2>
               </div>
-              <ItemList favorites={ "true" } heroText={ null } />
+              <ItemList favorites={"true"} heroText={null} />
             </div>
-          ) }
+          )}
 
-          { activeSection === "recent" && (
+          {activeSection === "purchased" && (
+            <div className="section-container">
+              <div className="section-header">
+                <h2>Purchased Items</h2>
+              </div>
+              <ItemList purchased={"true"} heroText={null} />
+            </div>
+          )}
+
+          {activeSection === "account" && (
             <div className="section-container">
               <div className="section-header">
                 <h2>User Account Profile</h2>
               </div>
-              <Account onClose={ () => setActiveSection("selling") } />
+              <Account onClose={() => setActiveSection("account")} />
             </div>
-          ) }
+          )}
         </div>
       </div>
     </div>
