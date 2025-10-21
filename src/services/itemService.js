@@ -86,45 +86,6 @@ const createItem = async (formData) => {
   }
 };
 
-const getItemsByUser = async (userId) => {
-  try {
-    return await getFilteredItems(null, null, userId);
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-};
-
-const getWatchedItems = async (userId) => {
-  try {
-    const res = await axios.get(`${BASE_URL}/watched/${userId}/`);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-};
-
-const getBidItems = async (userId) => {
-  try {
-    const res = await axios.get(`${BASE_URL}/bid/${userId}/`);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-};
-
-const getRecentItems = async () => {
-  try {
-    const res = await axios.get(`${BASE_URL}/recent/`);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-};
-
 export {
   getItems,
   getItemById,
@@ -132,8 +93,4 @@ export {
   deleteItem,
   createItem,
   getFilteredItems,
-  getItemsByUser,
-  getWatchedItems,
-  getBidItems,
-  getRecentItems,
 };

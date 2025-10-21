@@ -10,6 +10,7 @@ const ItemList = ({
   heroText = "BidHub Marketplace",
   userbids = null,
   favorites = null,
+  loggedin = null,
 }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,7 +31,8 @@ const ItemList = ({
         bidSort,
         owner,
         userbids,
-        favorites
+        favorites,
+        loggedin
       );
       setItems(data);
       setLoading(false);
@@ -51,117 +53,125 @@ const ItemList = ({
 
   if (loading) return <p>Loading…</p>;
   return (
-    <div className="container">
-      <Hero heroText={heroText} />
-      <div className="sort-container">
-        <div className="filter-sort">
-          <label htmlFor="sort-by-bid">Bid Amount</label>
-          <select
-            id="sort-by-bid"
-            value={bidSort}
-            name="sort-by-bid"
-            onChange={handleBidSortChange}
-            required
-          >
-            <option value="none">None</option>
-            <option value="desc">Highest</option>
-            <option value="asc">Lowest</option>
-          </select>
-        </div>
-        <div className="filter-sort">
-          <label htmlFor="sort-by-time">Time Remaining</label>
-          <select
-            id="sort-by-time"
-            value={endTimeSort}
-            name="sort-by-time"
-            onChange={handleTimeSortChange}
-            required
-          >
-            <option value="none">None</option>
-            <option value="desc">Ending Latest</option>
-            <option value="asc">Ending Soonest</option>
-          </select>
-        </div>
-        <div className="filter-sort">
-          <label htmlFor="sort-by-created">Date Created</label>
-          <select
-            id="sort-by-created"
-            value={createdSort}
-            name="sort-by-created"
-            onChange={handleCreatedSortChange}
-            required
-          >
-            <option value="none">None</option>
-            <option value="desc">Latest</option>
-            <option value="asc">Oldest</option>
-          </select>
-        </div>
-      </div>
-      <div className="section">
-        <div className="filter-container">
-          <div className="sub-header">
-            <h2>Condition</h2>
+    <div className="market-container">
+      <div className="item-list">
+        <Hero heroText={heroText} />
+        <div className="sort-container">
+          <div className="filter-sort">
+            <label htmlFor="sort-by-bid">Bid Amount</label>
+            <select
+              id="sort-by-bid"
+              value={bidSort}
+              name="sort-by-bid"
+              onChange={handleBidSortChange}
+              required
+            >
+              <option value="none">None</option>
+              <option value="desc">Highest</option>
+              <option value="asc">Lowest</option>
+            </select>
           </div>
-          <ul>
-            <li
-              onClick={() => setConditionFilter("all")}
-              className={conditionFilter === "all" ? "active" : ""}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && setConditionFilter("all")}
+          <div className="filter-sort">
+            <label htmlFor="sort-by-time">Time Remaining</label>
+            <select
+              id="sort-by-time"
+              value={endTimeSort}
+              name="sort-by-time"
+              onChange={handleTimeSortChange}
+              required
             >
-              Any
-            </li>
-            <li
-              onClick={() => setConditionFilter("NEW")}
-              className={conditionFilter === "NEW" ? "active" : ""}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && setConditionFilter("NEW")}
-            >
-              New
-            </li>
-            <li
-              onClick={() => setConditionFilter("USED")}
-              className={conditionFilter === "USED" ? "active" : ""}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && setConditionFilter("USED")}
-            >
-              Used
-            </li>
-          </ul>
-          <div className="sub-header">
-            <h2>Categories</h2>
+              <option value="none">None</option>
+              <option value="desc">Ending Latest</option>
+              <option value="asc">Ending Soonest</option>
+            </select>
           </div>
-          <ul>
-            <li
-              onClick={() => setCategoryFilter("all")}
-              className={categoryFilter === "all" ? "active" : ""}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && setCategoryFilter("all")}
+          <div className="filter-sort">
+            <label htmlFor="sort-by-created">Date Created</label>
+            <select
+              id="sort-by-created"
+              value={createdSort}
+              name="sort-by-created"
+              onChange={handleCreatedSortChange}
+              required
             >
-              All Categories
-            </li>
-            {categories.map((cat, idx) => (
+              <option value="none">None</option>
+              <option value="desc">Latest</option>
+              <option value="asc">Oldest</option>
+            </select>
+          </div>
+        </div>
+        <div className="section">
+          <div className="filter-container">
+            <div className="sub-header">
+              <h2>Condition</h2>
+            </div>
+            <ul>
               <li
-                key={idx}
-                onClick={() => setCategoryFilter(cat.value)}
-                className={categoryFilter === cat.value ? "active" : ""}
+                onClick={() => setConditionFilter("all")}
+                className={conditionFilter === "all" ? "active" : ""}
                 role="button"
                 tabIndex={0}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && setConditionFilter("all")
+                }
               >
-                {cat.label}
+                Any
               </li>
-            ))}
-          </ul>
-        </div>
-        <div className="container">
-          <div className="item-card-container">
-            {items.map((item, idx) => (
-              <ItemCard item={item} key={idx} />
-            ))}
+              <li
+                onClick={() => setConditionFilter("NEW")}
+                className={conditionFilter === "NEW" ? "active" : ""}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && setConditionFilter("NEW")
+                }
+              >
+                New
+              </li>
+              <li
+                onClick={() => setConditionFilter("USED")}
+                className={conditionFilter === "USED" ? "active" : ""}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && setConditionFilter("USED")
+                }
+              >
+                Used
+              </li>
+            </ul>
+            <div className="sub-header">
+              <h2>Categories</h2>
+            </div>
+            <ul>
+              <li
+                onClick={() => setCategoryFilter("all")}
+                className={categoryFilter === "all" ? "active" : ""}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && setCategoryFilter("all")}
+              >
+                All Categories
+              </li>
+              {categories.map((cat, idx) => (
+                <li
+                  key={idx}
+                  onClick={() => setCategoryFilter(cat.value)}
+                  className={categoryFilter === cat.value ? "active" : ""}
+                  role="button"
+                  tabIndex={0}
+                >
+                  {cat.label}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="container">
+            <div className="item-card-container">
+              {items.map((item, idx) => (
+                <ItemCard item={item} key={idx} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

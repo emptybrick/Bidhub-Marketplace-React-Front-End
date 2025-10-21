@@ -12,40 +12,41 @@ const Dashboard = () => {
   const [showItem, setShowItem] = useState(false);
 
   return (
-    <div className="dashboard-container container">
-      <div className="sub-header">
-        <div className="title">
-          Welcome, {user?.username}
-          <span>Your personalized BidHub dashboard</span>
+    <div className="section">
+      <div className="dashboard-container container">
+        <div className="sub-header-dash">
+          <div className="title">
+            Welcome, {user?.username}
+            <span>Your personalized BidHub dashboard</span>
+          </div>
         </div>
-      </div>
 
-      <div className="dashboard-nav">
-        <button
-          className={activeSection === "selling" ? "active" : ""}
-          onClick={() => setActiveSection("selling")}
-        >
-          Your Items For Sale
-        </button>
-        <button
-          className={activeSection === "bidded" ? "active" : ""}
-          onClick={() => setActiveSection("bidded")}
-        >
-          Items You've Bid On
-        </button>
-        <button
-          className={activeSection === "watched" ? "active" : ""}
-          onClick={() => setActiveSection("watched")}
-        >
-          Watched Items
-        </button>
-        <button
-          className={activeSection === "recent" ? "active" : ""}
-          onClick={() => setActiveSection("recent")}
-        >
-          User Account Profile
-        </button>
-      </div>
+        <div className="dashboard-nav">
+          <button
+            className={activeSection === "selling" ? "active" : ""}
+            onClick={() => setActiveSection("selling")}
+          >
+            Your Items For Sale
+          </button>
+          <button
+            className={activeSection === "bidded" ? "active" : ""}
+            onClick={() => setActiveSection("bidded")}
+          >
+            Items You've Bid On
+          </button>
+          <button
+            className={activeSection === "watched" ? "active" : ""}
+            onClick={() => setActiveSection("watched")}
+          >
+            Watched Items
+          </button>
+          <button
+            className={activeSection === "recent" ? "active" : ""}
+            onClick={() => setActiveSection("recent")}
+          >
+            User Account Profile
+          </button>
+        </div>
 
       <div className="dashboard-content">
         {activeSection === "selling" && (
