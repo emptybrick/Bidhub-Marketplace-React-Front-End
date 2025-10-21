@@ -1,0 +1,31 @@
+.time-left {
+    font-weight: bold;
+}
+
+.item-detail-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.details-top {
+    display: flex;
+}
+
+.bid-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.bid-offer {
+    display: flex;
+}
+
+.item-info {
+    display: flex;
+}
+
+.details-link {
+    color: goldenrod;
+}

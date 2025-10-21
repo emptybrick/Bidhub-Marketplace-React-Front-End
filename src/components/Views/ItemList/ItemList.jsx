@@ -111,7 +111,7 @@ const ItemList = ({
             <ul>
               <li
                 onClick={() => setConditionFilter("all")}
-                className={conditionFilter === "all" ? "active" : ""}
+                className={conditionFilter === "all" ? "item-li active" : "item-li "}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) =>
@@ -122,7 +122,7 @@ const ItemList = ({
               </li>
               <li
                 onClick={() => setConditionFilter("NEW")}
-                className={conditionFilter === "NEW" ? "active" : ""}
+                className={conditionFilter === "NEW" ? "item-li active" : "item-li "}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) =>
@@ -133,7 +133,7 @@ const ItemList = ({
               </li>
               <li
                 onClick={() => setConditionFilter("USED")}
-                className={conditionFilter === "USED" ? "active" : ""}
+                className={conditionFilter === "USED" ? "item-li active" : "item-li "}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) =>
@@ -149,7 +149,7 @@ const ItemList = ({
             <ul>
               <li
                 onClick={() => setCategoryFilter("all")}
-                className={categoryFilter === "all" ? "active" : ""}
+                className={categoryFilter === "all" ? "item-li active" : ""}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => e.key === "Enter" && setCategoryFilter("all")}
@@ -160,7 +160,7 @@ const ItemList = ({
                 <li
                   key={idx}
                   onClick={() => setCategoryFilter(cat.value)}
-                  className={categoryFilter === cat.value ? "active" : ""}
+                  className={categoryFilter === cat.value ? "item-li active" : "item-li "}
                   role="button"
                   tabIndex={0}
                 >

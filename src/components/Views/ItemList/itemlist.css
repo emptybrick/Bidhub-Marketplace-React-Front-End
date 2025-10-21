@@ -260,7 +260,7 @@ ul {
   padding-bottom: 20px;
 }
 
-li {
+.item-li {
   cursor: pointer; /* Show pointer cursor on hover */
   padding: 10px 15px; /* Add padding for better click area */
   border-radius: 4px; /* Rounded corners for button-like look */
@@ -268,13 +268,13 @@ li {
 }
 
 /* Hover effect */
-li:hover {
+.item-li:hover {
   background-color: #f0f0f0; /* Light gray background on hover */
   color: #007bff; /* Optional: Change text color on hover */
 }
 
 /* Optional: Active/selected state */
-li.active {
+.item-li.active {
   background-color: #007bff; /* Blue background for selected item */
   color: white; /* White text for selected item */
 }
