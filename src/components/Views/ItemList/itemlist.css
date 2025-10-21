@@ -24,10 +24,6 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-main {
-  padding-top: 0px;
-}
-
 header {
   display: flex;
   justify-content: space-between;
@@ -92,7 +88,8 @@ header {
 }
 
 /* Main styling */
-.container {
+.market-container {
+  /* padding-top: 110px; */
   width: 80%;
   margin: 0 auto 0 auto;
 }
@@ -201,6 +198,8 @@ header {
 
 .section {
   display: flex;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
 .filter-container {
@@ -224,6 +223,7 @@ header {
     flex-direction: column;
     min-width: 140px;
     margin-left: 3rem;
+    margin-right: 4rem;
 }
 
 .filter-sort label {

@@ -1,7 +1,11 @@
-// page to display when item/url input is not valid/does not exist
+import './page404.css'
 
 const Page404 = () => {
-    return (<h1>404 Page Not Found!</h1>)
-}
+  return (
+    <div className="container-notfound">
+        <img src="./BidHub404.png" alt="404 logo" />
+    </div>
+  );
+};
 
-export default Page404
+export default Page404;
