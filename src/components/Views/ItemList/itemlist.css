@@ -1,5 +1,5 @@
 /* Imports */
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 
 /* Variables */
 :root {
@@ -11,7 +11,13 @@
   box-sizing: border-box;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   margin: 0;
   padding: 0;
 }
@@ -21,7 +27,7 @@ a {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 header {
@@ -122,19 +128,31 @@ header {
 }
 
 .item-card-container {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: contents; /* Allows the grid to apply directly to ItemCard components */
+}
+
+/* Grid container for items */
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 350px); /* 4 equal columns */
+  gap: 15px; /* Space between items */
+  padding: 20px;
+}
+
+/* Placeholder for empty slots */
+.item-card.placeholder {
+  visibility: hidden; /* Keeps layout but hides content */
 }
 
 .item-card {
-  width: 24%;
-  margin: 0 0.5% 20px 0.5%;
+  width: 100%; /* Full width within grid cell */
+  margin: 0 auto;
   padding: 15px 20px;
   border: 1px solid var(--gold);
   border-radius: 5px;
   cursor: pointer;
   transition: all ease-in-out 300ms;
+  min-height: 200px; /* Minimum height to maintain layout */
 }
 
 .item-card.is-active {
@@ -203,37 +221,36 @@ header {
 }
 
 .filter-container {
+  margin-top: 20px;
   margin-left: 20px;
   padding-bottom: 40px;
-  
 }
 
 .sort-container {
-    display: flex;
-    gap: 1rem;
-    justify-content: right;
-    align-items: end;
-    padding: 1.5rem;
-    margin-bottom: .5rem;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+  justify-content: right;
+  align-items: end;
+  padding: 1.5rem;
+  flex-wrap: wrap;
 }
 
 .filter-sort {
-    display: flex;
-    flex-direction: column;
-    min-width: 140px;
-    margin-left: 3rem;
-    margin-right: 4rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  margin-left: 3rem;
+  margin-right: 4rem;
 }
 
 .filter-sort label {
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: #495057;
-    margin-bottom: 0.4rem;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #495057;
+  margin-bottom: 0.4rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 ul {
@@ -262,23 +279,22 @@ li.active {
   color: white; /* White text for selected item */
 }
 
-
-/* Media queries */
-@media (max-width: 1200px) {
-  .item-card {
-    width: 31.33%;
-    margin: 0 0.5% 20px 0.5%;
+/* Responsive adjustments */
+@media (max-width: 1750px) {
+  .item-grid {
+    grid-template-columns: repeat(3, 350px); /* 2 columns on smaller screens */
   }
 }
 
-@media (max-width: 640px) {
-  .item-card {
-    width: 100%;
-    margin: 0 0 20px 0;
+@media screen and (max-width: 1400px) {
+  .item-grid {
+    grid-template-columns: repeat(2, 350px); /* 2 columns on smaller screens */
   }
+}
 
-  .navigation {
-    display: none;
+@media (max-width: 1024px) {
+  .item-grid {
+    grid-template-columns: 350px; /* 1 column on very small screens */
   }
 }
 
@@ -287,13 +303,19 @@ li.active {
   from {
     transform: scale3d(1, 1, 1);
   }
-  10%, 20% {
+  10%,
+  20% {
     transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
   }
-  30%, 50%, 70%, 90% {
+  30%,
+  50%,
+  70%,
+  90% {
     transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
   }
-  40%, 60%, 80% {
+  40%,
+  60%,
+  80% {
     transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
   }
   to {

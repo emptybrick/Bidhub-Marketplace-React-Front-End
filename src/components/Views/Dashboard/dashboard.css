@@ -1,5 +1,5 @@
 /* Import the base styling */
-@import '../ItemList/itemlist.css';
+@import "../ItemList/itemlist.css";
 
 .dashboard-container {
   display: flex;
@@ -40,7 +40,7 @@
 }
 
 .dashboard-nav button.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -5px;
   left: 0;
@@ -55,14 +55,29 @@
 
 .section-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 75%;
   margin: auto;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.section-header h2 {
+.section-header-sales {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header-sales button {
+
+  justify-self: flex-end !important;
+}
+
+.section-header h2,
+.section-header-sales h2 {
   font-size: 24px;
   font-weight: 600;
 }
@@ -131,12 +146,12 @@
     flex-wrap: nowrap;
     justify-content: flex-start;
   }
-  
+
   .section-header {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .section-header .action-button {
     margin-top: 10px;
   }

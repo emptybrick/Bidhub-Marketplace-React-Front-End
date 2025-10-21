@@ -57,7 +57,7 @@ const Dashboard = () => {
         <div className="dashboard-content">
           {activeSection === "selling" && (
             <div className="section-container">
-              <div className="section-header">
+              <div className="section-header-sales">
                 <h2>Your Items For Sale</h2>
                 <button
                   className="action-button"
@@ -88,7 +88,7 @@ const Dashboard = () => {
               <div className="section-header">
                 <h2>Items You've Bid On</h2>
               </div>
-              <ItemList userbids={"true"} heroText={null} />
+              <ItemList userbids={"true"} heroText={null} messageText={'You have no bids on current auctions.  Look for an item to bid on in the Marketplace!'}/>
             </div>
           )}
 
@@ -97,7 +97,7 @@ const Dashboard = () => {
               <div className="section-header">
                 <h2>Watched Items</h2>
               </div>
-              <ItemList favorites={"true"} heroText={null} />
+              <ItemList favorites={"true"} heroText={null} messageText={'You currently have no watched items.  Find interesting items in the Marketplace and click the favorite icons!'}/>
             </div>
           )}
 
@@ -106,7 +106,7 @@ const Dashboard = () => {
               <div className="section-header">
                 <h2>Purchased Items</h2>
               </div>
-              <ItemList purchased={"true"} heroText={null} />
+              <ItemList purchased={"true"} heroText={null} messageText={'You currently have no past purchases.  Go to the Marketplace now and start bidding to win!'}/>
             </div>
           )}
 

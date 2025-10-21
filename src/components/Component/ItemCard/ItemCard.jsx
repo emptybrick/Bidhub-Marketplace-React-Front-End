@@ -1,13 +1,16 @@
 import "../../Views/ItemList/itemlist.css";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item, isPlaceholder = false }) => {
+  if (isPlaceholder) {
+    return <div className="item-card placeholder" />;
+  }
   return (
     <div className="item-card">
       <div className="heading">
         <span>{item.item_name}</span>
         <span>
-          <FavoriteButton itemId={ item.id } />
+          <FavoriteButton itemId={item.id} />
         </span>
       </div>
       <div className="box">ITEM IMAGE</div>

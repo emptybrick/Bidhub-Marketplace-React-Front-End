@@ -4,13 +4,15 @@ import { getFilteredItems } from "../../../services/itemService.js";
 import "./itemlist.css";
 import { categories } from "../../../common/utils.js";
 import Hero from "../../Component/Hero/Hero.jsx";
+import Message from "../../Component/Message/Message.jsx";
 
 const ItemList = ({
   owner = null,
   heroText = "BidHub Marketplace",
-  userbids = null,
-  favorites = null,
-  purchased= 'false'
+  userbids = "false",
+  favorites = "false",
+  purchased = "false",
+  messageText,
 }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -52,6 +54,7 @@ const ItemList = ({
   };
 
   if (loading) return <p>Loading…</p>;
+  if (items.length < 1 && !loading) return ( <Message text={messageText} />)
   return (
     <div className="market-container">
       <div className="item-list">
@@ -166,11 +169,16 @@ const ItemList = ({
               ))}
             </ul>
           </div>
-          <div className="container">
+          <div className="item-grid">
             <div className="item-card-container">
               {items.map((item, idx) => (
                 <ItemCard item={item} key={idx} />
               ))}
+              {/* Add placeholders if items are less than 4 */}
+              {items.length < 4 &&
+                Array.from({ length: 4 - items.length }, (_, idx) => (
+                  <ItemCard key={`placeholder-${idx}`} isPlaceholder={true} />
+                ))}
             </div>
           </div>
         </div>
