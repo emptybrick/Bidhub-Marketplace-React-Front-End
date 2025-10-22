@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../../contexts/UserContext";
 import DatePicker from "react-datepicker";
@@ -25,7 +25,7 @@ const ItemForm = ({ onClose }) => {
   const [images, setImages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleUploadSuccess = (publicId) => {
+  const handleUploadSuccess = useCallback((publicId) => {
     if (!publicId) return;
     setImages((prev) => {
       const next = [...prev, publicId];
@@ -33,16 +33,15 @@ const ItemForm = ({ onClose }) => {
       setCurrentIndex(next.length - 1);
       return next;
     });
-  };
+  }, []);
 
   useEffect(() => {
-    // keep index in range when images change
-    if (images.length === 0) {
-      setCurrentIndex(0);
-    } else if (currentIndex > images.length - 1) {
-      setCurrentIndex(images.length - 1);
-    }
-  }, [images, currentIndex]);
+    // keep index in range when images change (depend only on images)
+    setCurrentIndex((i) => {
+      if (images.length === 0) return 0;
+      return Math.min(i, images.length - 1);
+    });
+  }, [images]);
 
   const prevImage = () => {
     setCurrentIndex((i) => Math.max(0, i - 1));
@@ -52,11 +51,15 @@ const ItemForm = ({ onClose }) => {
   };
 
   // widget config passed to UploadWidget
-  const uwConfig = {
-    cloudName,
-    uploadPreset,
-    multiple: true,
-  };
+  // memoize uwConfig so its reference doesn't change every render
+  const uwConfig = useMemo(
+    () => ({
+      cloudName,
+      uploadPreset,
+      multiple: true,
+    }),
+    [cloudName, uploadPreset]
+  );
 
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
@@ -91,11 +94,13 @@ const ItemForm = ({ onClose }) => {
 
   const handleChange = (evt) => {
     setMessage("");
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+    const { name, value } = evt.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // use functional update to avoid clobbering state
   const handleDateChange = (date) => {
-    setFormData({ ...formData, end_time: date });
+    setFormData((prev) => ({ ...prev, end_time: date }));
   };
 
   const handleSubmit = async (evt) => {
@@ -148,7 +153,7 @@ const ItemForm = ({ onClose }) => {
           {message && <div className="error-message">{message}</div>}
 
           <form onSubmit={handleSubmit}>
-            {/* single-image display with carousel arrows on the left,
+            {/* Top 50%: single-image display with carousel arrows on the left,
                 upload + thumbnails on the right */}
             <div className="image-display">
               <div className="image-left">
@@ -228,8 +233,8 @@ const ItemForm = ({ onClose }) => {
             </div>
 
             <div className="form-area">
-              <div className="form-grid three-column">
-                {/* COLUMN 1 */}
+              <div className="form-grid two-column">
+                {/* LEFT column */}
                 <div className="form-column">
                   <div className="form-field">
                     <label htmlFor="item_name">Item Name</label>
@@ -260,20 +265,33 @@ const ItemForm = ({ onClose }) => {
                   </div>
 
                   <div className="form-field">
+                    <label htmlFor="condition">Condition</label>
+                    <select
+                      id="condition"
+                      value={condition}
+                      name="condition"
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="NEW">New</option>
+                      <option value="USED">Used</option>
+                    </select>
+                  </div>
+
+                  <div className="form-field">
                     <label htmlFor="manufacture_year">Year Made</label>
                     <input
                       type="text"
                       id="manufacture_year"
                       value={manufacture_year}
                       name="manufacture_year"
-                      placeholder="e.g. 2024"
+                      placeholder="Enter manufacture year. e.g. 2024"
                       onChange={handleChange}
+                      required
                     />
                   </div>
-                </div>
 
-                {/* COLUMN 2 */}
-                <div className="form-column">
+                  {/* moved: Country of origin */}
                   <div className="form-field">
                     <label htmlFor="country_of_origin">Country</label>
                     <input
@@ -281,11 +299,13 @@ const ItemForm = ({ onClose }) => {
                       id="country_of_origin"
                       value={country_of_origin}
                       name="country_of_origin"
-                      placeholder="Country of origin"
+                      placeholder="Enter country of origin"
                       onChange={handleChange}
+                      required
                     />
                   </div>
 
+                  {/* moved: Description */}
                   <div className="form-field description-field">
                     <label htmlFor="description">Description</label>
                     <textarea
@@ -293,9 +313,16 @@ const ItemForm = ({ onClose }) => {
                       value={description}
                       name="description"
                       onChange={handleChange}
+                      required
                     />
                   </div>
+                </div>
 
+                <div className="form-column">
+                  {/* MIDDLE column */}
+                  <div className="form-field">
+                    {/* dimensions and remaining fields stay here */}
+                  </div>
                   <div className="dimensions-container moved">
                     <div className="form-field">
                       <label htmlFor="Dimensions">Dimensions (cm)</label>
@@ -307,8 +334,9 @@ const ItemForm = ({ onClose }) => {
                           id="height"
                           value={height}
                           name="height"
-                          placeholder="H"
+                          placeholder="height"
                           onChange={handleChange}
+                          required
                         />
                       </div>
                       <div className="form-field dimension">
@@ -317,8 +345,9 @@ const ItemForm = ({ onClose }) => {
                           id="width"
                           value={width}
                           name="width"
-                          placeholder="W"
+                          placeholder="width"
                           onChange={handleChange}
+                          required
                         />
                       </div>
                       <div className="form-field dimension">
@@ -327,27 +356,12 @@ const ItemForm = ({ onClose }) => {
                           id="length"
                           value={length}
                           name="length"
-                          placeholder="L"
+                          placeholder="length"
                           onChange={handleChange}
+                          required
                         />
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                {/* COLUMN 3 */}
-                <div className="form-column">
-                  <div className="form-field">
-                    <label htmlFor="condition">Condition</label>
-                    <select
-                      id="condition"
-                      value={condition}
-                      name="condition"
-                      onChange={handleChange}
-                    >
-                      <option value="NEW">New</option>
-                      <option value="USED">Used</option>
-                    </select>
                   </div>
 
                   <div className="form-field">
@@ -357,7 +371,9 @@ const ItemForm = ({ onClose }) => {
                       id="weight"
                       value={weight}
                       name="weight"
+                      placeholder="Enter weight"
                       onChange={handleChange}
+                      required
                     />
                   </div>
 
@@ -369,6 +385,7 @@ const ItemForm = ({ onClose }) => {
                       value={initial_bid}
                       name="initial_bid"
                       onChange={handleChange}
+                      required
                     />
                   </div>
 
@@ -380,6 +397,7 @@ const ItemForm = ({ onClose }) => {
                       showTimeSelect
                       dateFormat="MM/dd/yy h:mm aa"
                       placeholderText="Select date and time"
+                      required
                       className="date-picker-input"
                     />
                   </div>

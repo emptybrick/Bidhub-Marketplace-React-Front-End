@@ -1,41 +1,34 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 const UploadWidget = ({ uwConfig, setPublicId }) => {
   const uploadWidgetRef = useRef(null);
   const uploadButtonRef = useRef(null);
 
   useEffect(() => {
-    const initializeUploadWidget = () => {
-      if (window.cloudinary && uploadButtonRef.current) {
-        // Create upload widget
-        uploadWidgetRef.current = window.cloudinary.createUploadWidget(
-          uwConfig,
-          (error, result) => {
-            if (!error && result && result.event === 'success') {
-              console.log('Upload successful:', result.info);
-              setPublicId(result.info.public_id);
-            }
+    // initialize and return cleanup so listeners are removed between effect runs
+    if (window.cloudinary && uploadButtonRef.current) {
+      uploadWidgetRef.current = window.cloudinary.createUploadWidget(
+        uwConfig,
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            console.log("Upload successful:", result.info);
+            setPublicId(result.info.public_id);
           }
-        );
+        }
+      );
 
-        // Add click event to open widget
-        const handleUploadClick = () => {
-          if (uploadWidgetRef.current) {
-            uploadWidgetRef.current.open();
-          }
-        };
+      const handleUploadClick = () => {
+        if (uploadWidgetRef.current) uploadWidgetRef.current.open();
+      };
 
-        const buttonElement = uploadButtonRef.current;
-        buttonElement.addEventListener('click', handleUploadClick);
+      const buttonElement = uploadButtonRef.current;
+      buttonElement.addEventListener("click", handleUploadClick);
 
-        // Cleanup
-        return () => {
-          buttonElement.removeEventListener('click', handleUploadClick);
-        };
-      }
-    };
-
-    initializeUploadWidget();
+      return () => {
+        buttonElement.removeEventListener("click", handleUploadClick);
+        uploadWidgetRef.current = null;
+      };
+    }
   }, [uwConfig, setPublicId]);
 
   return (
