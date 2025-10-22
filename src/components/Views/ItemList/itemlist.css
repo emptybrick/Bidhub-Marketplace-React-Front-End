@@ -127,22 +127,24 @@ header {
 }
 
 .item-card-container {
-  display: contents; 
+  display: contents;
 }
 
 .item-grid {
   display: grid;
-  grid-template-columns: repeat(4, 350px); 
+  grid-template-columns: repeat(4, 350px);
   gap: 15px;
   padding: 20px;
+  height: auto; /* Let the grid height adjust to content */
+  min-height: 0; /* Prevent the grid from stretching unnecessarily */
 }
 
 .item-card.placeholder {
-  visibility: hidden; 
+  visibility: hidden;
 }
 
 .item-card {
-  width: 100%; 
+  width: 100%;
   margin: 0 auto;
   padding: 15px 20px;
   border: 1px solid var(--gold);
@@ -224,13 +226,15 @@ header {
 .item-card-image {
   width: 300px;
   max-height: 400px;
+  object-fit: cover;
+  aspect-ratio: 3 / 4;
   justify-self: center;
   align-self: center;
   padding-bottom: 20px;
 }
 
 .view-details {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .section {
@@ -272,6 +276,13 @@ header {
   letter-spacing: 0.5px;
 }
 
+.no-items-message {
+  padding-top: 40px;
+  font-size: 24px;
+  text-align: center;
+  width: 100%;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -280,25 +291,25 @@ ul {
 }
 
 .item-li {
-  cursor: pointer; 
+  cursor: pointer;
   padding: 10px 15px;
-  border-radius: 4px; 
-  transition: all 0.2s ease; 
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 .item-li:hover {
-  background-color: #f0f0f0; 
+  background-color: #f0f0f0;
   color: #007bff;
 }
 
 .item-li.active {
   background-color: #007bff;
-  color: white; 
+  color: white;
 }
 
 @media (max-width: 1750px) {
   .item-grid {
-    grid-template-columns: repeat(3, 350px); 
+    grid-template-columns: repeat(3, 350px);
   }
 }
 

@@ -45,7 +45,14 @@ const ItemList = ({
 
   useEffect(() => {
     fetchItems();
-  }, [categoryFilter, conditionFilter, bidSort, endTimeSort, createdSort, favorites]);
+  }, [
+    categoryFilter,
+    conditionFilter,
+    bidSort,
+    endTimeSort,
+    createdSort,
+    favorites,
+  ]);
 
   const handleFavoriteToggle = () => {
     if (favorites === "true") {
@@ -66,7 +73,8 @@ const ItemList = ({
   };
 
   if (loading) return <p>Loading…</p>;
-  if (items.length < 1 && !loading) return <Message text={messageText} />;
+  if (items.length < 1 && !loading && messageText)
+    return <Message text={messageText} />;
   return (
     <div className="market-container">
       <div className="item-list">
@@ -124,7 +132,7 @@ const ItemList = ({
               <li
                 onClick={() => setConditionFilter("all")}
                 className={
-                  conditionFilter === "all" ? "item-li active" : "item-li "
+                  conditionFilter === "all" ? "item-li active" : "item-li"
                 }
                 role="button"
                 tabIndex={0}
@@ -137,7 +145,7 @@ const ItemList = ({
               <li
                 onClick={() => setConditionFilter("NEW")}
                 className={
-                  conditionFilter === "NEW" ? "item-li active" : "item-li "
+                  conditionFilter === "NEW" ? "item-li active" : "item-li"
                 }
                 role="button"
                 tabIndex={0}
@@ -167,7 +175,7 @@ const ItemList = ({
             <ul>
               <li
                 onClick={() => setCategoryFilter("all")}
-                className={categoryFilter === "all" ? "item-li active" : ""}
+                className={categoryFilter === "all" ? "item-li active" : "item-li"}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => e.key === "Enter" && setCategoryFilter("all")}
@@ -179,7 +187,7 @@ const ItemList = ({
                   key={idx}
                   onClick={() => setCategoryFilter(cat.value)}
                   className={
-                    categoryFilter === cat.value ? "item-li active" : "item-li "
+                    categoryFilter === cat.value ? "item-li active" : "item-li"
                   }
                   role="button"
                   tabIndex={0}
@@ -189,21 +197,25 @@ const ItemList = ({
               ))}
             </ul>
           </div>
-          <div className="item-grid">
-            <div className="item-card-container">
-              {items.map((item, idx) => (
-                <ItemCard
-                  item={item}
-                  key={idx}
-                  onFavoriteToggle={handleFavoriteToggle}
-                />
-              ))}
-              {items.length < 4 &&
-                Array.from({ length: 4 - items.length }, (_, idx) => (
-                  <ItemCard key={`placeholder-${idx}`} isPlaceholder={true} />
+          {items.length > 0 ? (
+            <div className="item-grid">
+              <div className="item-card-container">
+                {items.map((item, idx) => (
+                  <ItemCard
+                    item={item}
+                    key={idx}
+                    onFavoriteToggle={handleFavoriteToggle}
+                  />
                 ))}
+                {items.length < 4 &&
+                  Array.from({ length: 4 - items.length }, (_, idx) => (
+                    <ItemCard key={`placeholder-${idx}`} isPlaceholder={true} />
+                  ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="no-items-message">No items where found that matches selected filters.</div>
+          )}
         </div>
       </div>
     </div>
