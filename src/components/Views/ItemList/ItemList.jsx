@@ -5,6 +5,7 @@ import "./itemlist.css";
 import { categories } from "../../../common/utils.js";
 import Hero from "../../Component/Hero/Hero.jsx";
 import Message from "../../Component/Message/Message.jsx";
+import { useLocation } from "react-router-dom";
 
 const ItemList = ({
   owner = null,
@@ -21,7 +22,9 @@ const ItemList = ({
   const [conditionFilter, setConditionFilter] = useState("all");
   const [bidSort, setBidSort] = useState("none");
   const [endTimeSort, setEndTimeSort] = useState("none");
-  const [createdSort, setCreatedSort] = useState("none");
+  const [ createdSort, setCreatedSort ] = useState("none");
+  const location = useLocation();
+  const seller = location.state?.seller;
 
   const fetchItems = async () => {
     try {
@@ -98,7 +101,7 @@ const ItemList = ({
   return (
     <div className="market-container">
       <div className="item-list">
-        <Hero heroText={heroText} />
+        <Hero heroText={ seller ? `${seller.username}'s MarketPlace` : heroText } />
         {showFilters && (
           <>
             <div className="sort-container">

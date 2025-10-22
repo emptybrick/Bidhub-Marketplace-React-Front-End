@@ -9,7 +9,7 @@ const Landing = () => {
           Your premier marketplace for auctions and direct sales. Find unique
           items, place bids, and connect with buyers and sellers worldwide.
         </p>
-        <Link to="/marketplace" className="home-button">
+        <Link to="/bidhub/marketplace" className="home-button">
           Browse Marketplace
         </Link>
       </div>

@@ -1,0 +1,210 @@
+.seller-view-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.seller-view-section {
+  width: 80vw;
+  height: 100%;
+  background-color: rgba(218, 165, 32, 0.07);
+  border-radius: 10px;
+  box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+  padding: 30px;
+}
+
+.details-top {
+  display: flex;
+}
+
+.seller-profile-image {
+  width: 640px;
+  max-height: 640px;
+  background-color: rgba(0, 0, 0, 0.052);
+  padding: 40px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.top-right-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 1;
+  margin-bottom: 30px;
+}
+
+.marketplace-link {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: darkkhaki;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  align-self: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.marketplace-link:hover {
+  background-color: goldenrod;
+  transform: translateY(-2px);
+}
+
+.marketplace-link:active {
+  transform: translateY(0);
+}
+
+.star-rating {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.star {
+  font-size: 24px;
+  color: #ccc; /* Empty star color */
+}
+
+.star.filled {
+  color: goldenrod; /* Filled star color */
+}
+
+.star.partial {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.star.partial::before {
+  content: "★";
+  position: absolute;
+  color: goldenrod;
+  width: 100%;
+}
+
+.bubble-rating {
+  display: flex;
+  gap: 5px;
+}
+
+.bubble {
+  font-size: 16px;
+  color: #ccc; /* Empty bubble color */
+}
+
+.bubble.filled {
+  color: goldenrod; /* Filled bubble color */
+}
+
+.sort-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.sort-controls button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: darkkhaki;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.sort-controls button.active {
+  background-color: goldenrod;
+}
+
+.seller-detail-subtitle,
+.reviews-subtitle {
+  justify-self: center;
+  align-self: center;
+  font-size: 32px;
+  padding-top: 20px;
+}
+
+.seller-info-section {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.052);
+  width: 80%;
+  align-self: center;
+  min-width: fit-content;
+}
+
+.seller-info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.seller-info-left {
+  font-size: 24px;
+  padding: 20px;
+}
+
+.seller-info-left li {
+  padding-bottom: 10px;
+}
+
+.span-bold {
+  font-weight: bold;
+}
+
+.details-bottom {
+  height: fit-content;
+  min-height: 200px;
+  padding-top: 20px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.052);
+}
+
+.reviews-list {
+  list-style: none;
+  padding: 20px 40px;
+}
+
+.review-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.review-ratings {
+  margin-bottom: 10px;
+}
+
+.ten-point-ratings ul {
+  list-style: none;
+  padding: 10px 0;
+}
+
+.ten-point-ratings li {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.review-text {
+  font-size: 20px;
+  padding: 10px 0;
+}
+
+.reviewer {
+  font-size: 16px;
+  font-style: italic;
+}
+
+.no-reviews {
+  font-size: 20px;
+  padding: 20px 40px;
+}

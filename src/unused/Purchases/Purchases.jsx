@@ -1,7 +1,7 @@
 // should show successful purchases/auctions won to generate seller reviews and keep a history
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../../contexts/UserContext.jsx";
-import api from "../../../services/axiosConfig.js";
+import { UserContext } from "../../contexts/UserContext.jsx";
+import api from "../../services/axiosConfig.js";
 
 const Purchases = () => {
   const { user } = useContext(UserContext);
