@@ -1,15 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import "../../Views/ItemList/itemlist.css";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
+import { useContext } from "react";
+import { UserContext } from "../../../contexts/UserContext";
 
 const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
   const navigate = useNavigate();
+  const user = useContext(UserContext);
 
   const handleLink = () => {
     if (!isPlaceholder) {
       navigate(`/bidhub/marketplace/${item.id}`);
     }
   };
+
+  console.log(user)
 
   if (isPlaceholder) {
     return <div className="item-card placeholder" />;
@@ -19,10 +24,14 @@ const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
       <div className="heading">
         <span>{item.item_name}</span>
         <span>
-          <FavoriteButton
-            itemId={item.id}
-            onFavoriteToggle={onFavoriteToggle}
-          />
+          {user.user ? (
+            <FavoriteButton
+              itemId={item.id}
+              onFavoriteToggle={onFavoriteToggle}
+            />
+          ) : (
+            ""
+          )}
         </span>
       </div>
       <div className="box">
@@ -37,9 +46,13 @@ const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
             <div>Current Bid: ${item.current_bid}</div>
           </div>
           <div className="item-card-right">
-            <button className="view-details" onClick={() => handleLink()}>
-              View Details
-            </button>
+            {user.user ? (
+              <button className="view-details" onClick={() => handleLink()}>
+                View Details
+              </button>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

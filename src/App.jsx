@@ -32,7 +32,14 @@ const App = () => {
           <Route path="/bidhub/about" element={<About />} />
 
           <Route path="/bidhub/marketplace" element={<ItemListPage />} />
-          <Route path="/bidhub/marketplace/:itemId" element={<ItemDetail />} />
+          <Route
+            path="/bidhub/marketplace/:itemId"
+            element={
+              <ProtectedRoute>
+                <ItemDetail />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/bidhub/seller/:sellerId/marketplace"
             element={
