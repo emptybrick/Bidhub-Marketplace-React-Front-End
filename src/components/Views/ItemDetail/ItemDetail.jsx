@@ -52,7 +52,12 @@ const ItemDetail = () => {
       <Hero heroText={item.item_name} seller={item.owner.username} />
       <div className="item-detail-section">
         <div className="details-top">
-          <div className="item-image">ITEM IMAGE</div>
+          <div className="item-image">
+            <img className="item-detail-image"
+              src="https://cdn.pixabay.com/photo/2015/02/08/17/42/marbles-628820_1280.jpg"
+              alt=""
+            />
+          </div>
           <div className="top-right-section">
             <div className="bid-info">
               <div className="bid-info-left">
@@ -89,7 +94,9 @@ const ItemDetail = () => {
                             id="bid-offer-amount"
                             min={item.current_bid}
                             onChange={(e) => {
-                              e.target.value = Number(e.target.value).toFixed(2);
+                              e.target.value = Number(e.target.value).toFixed(
+                                2
+                              );
                             }}
                             required
                           />

@@ -153,6 +153,8 @@ header {
   cursor: pointer;
   transition: all ease-in-out 300ms;
   min-height: 200px; /* Minimum height to maintain layout */
+  display: flex;
+  flex-direction: column;
 }
 
 .item-card.is-active {
@@ -187,18 +189,21 @@ header {
 }
 
 .item-card .box {
-  width: 100%;
+  /* width: 100%; */
   margin: 10px 0;
   transition: all ease-in-out 300ms;
   background-size: 90%;
   background-position: center;
   background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
 }
 
 .item-card .box::before {
-  content: "";
-  display: block;
-  padding-top: 100%;
+  display: flex;
+  /* content: ""; */
+  /* display: block; */
+  /* padding-top: 100%; */
 }
 
 .item-card .info {
@@ -212,6 +217,22 @@ header {
 .item-card .info .icon {
   font-size: 20px;
   color: var(--gold);
+}
+
+.item-card-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-card-right {
+  align-self: center;
+}
+
+.item-card-image {
+  width: 300px;
+  justify-self: center;
+  align-self: center;
+  padding-bottom: 20px;
 }
 
 .section {
