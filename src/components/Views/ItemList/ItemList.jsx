@@ -152,7 +152,7 @@ const ItemList = ({
         )}
 
         <div className="section">
-          <div className="section">
+          <div className="item-list-section">
             {showFilters && (
               <>
                 <div className="filter-container">
