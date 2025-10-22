@@ -1,4 +1,3 @@
-// frontend/src/pages/ItemDetailPage.jsx (Bid placement)
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useContext } from "react";
@@ -34,7 +33,6 @@ const ItemDetail = () => {
     const bidOffered = Number(e.target.elements[ "bid-offer-amount" ].value).toFixed(2);
     try {
       await createBid(itemId, bidOffered);
-      // Refresh item data to show updated bids
       const response = await getItemById(itemId);
       setItem(response);
     } catch (error) {

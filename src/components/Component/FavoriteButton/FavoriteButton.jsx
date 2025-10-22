@@ -1,4 +1,3 @@
-// FavoriteButton.jsx
 import { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
@@ -11,7 +10,6 @@ function FavoriteButton({ itemId, onFavoriteToggle }) {
   const [isFavorited, setIsFavorited] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Load initial state
   useEffect(() => {
     if (itemId && user) {
       fetchIsFavorited();

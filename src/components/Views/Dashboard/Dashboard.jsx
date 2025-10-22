@@ -9,8 +9,8 @@ import Account from "../Account/Account.jsx";
 const Dashboard = () => {
   const { user } = useContext(UserContext);
   const [activeSection, setActiveSection] = useState("selling");
-  const [ showItem, setShowItem ] = useState(false);
-  
+  const [showItem, setShowItem] = useState(false);
+
   return (
     <div className="section">
       <div className="dashboard-container container">

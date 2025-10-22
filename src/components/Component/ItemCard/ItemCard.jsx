@@ -7,7 +7,7 @@ const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
 
   const handleLink = () => {
     if (!isPlaceholder) {
-      navigate(`/bidhub/marketplace/${item.id}`); // Navigate to the item detail page
+      navigate(`/bidhub/marketplace/${item.id}`);
     }
   };
 
