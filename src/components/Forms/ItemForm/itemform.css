@@ -597,7 +597,7 @@ h1 {
 /* ensure top area occupies half the modal */
 .image-display {
   display: flex;
-  gap: 18px;
+  gap: 100px;
   align-items: stretch;
   justify-content: center;
   padding: 8px 12px;
@@ -624,7 +624,7 @@ h1 {
   height: 100%;
 }
 
-/* Make each column distribute its fields evenly so labels line up */
+/* make each column distribute its fields evenly so labels line up */
 .form-grid.two-column .form-column {
   display: flex;
   flex-direction: column;
@@ -632,44 +632,79 @@ h1 {
   gap: 12px;
 }
 
-/* Uniform label sizing and spacing to align titles horizontally/vertically */
-.form-field {
+/* three-column grid for bottom half */
+.form-grid.three-column {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: 100%;
+  align-items: start;
+  height: 100%;
+}
+
+/* make each column a vertical stack and distribute fields evenly */
+.form-grid.three-column .form-column {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  margin: 0;
+  justify-content: space-between; /* spreads fields so they fit bottom area */
+  gap: 10px;
 }
 
+/* slightly reduce label/control vertical space to fit everything */
 .form-field label {
-  display: block;
   margin-bottom: 6px;
-  font-weight: 500;
-  color: #333;
-  font-size: 14px;
-  line-height: 1.2;
-  min-height: 20px; /* consistent label height to help alignment */
+  font-size: 13px;
+  min-height: 20px;
 }
-
-/* Slightly reduce control heights to help everything fit */
 .form-field input,
 .form-field select,
 .form-field textarea,
 .date-picker-input {
   height: 36px;
-  padding: 8px;
+  padding: 6px 8px;
   font-size: 14px;
 }
 
-/* make description smaller so it doesn't push layout */
+/* ensure description is compact */
 .form-field.description-field textarea {
-  min-height: 60px;
-  max-height: 120px;
+  min-height: 56px;
+  max-height: 110px;
   overflow-y: auto;
 }
 
-/* fallback: if modal is too small, allow inner scrolling but keep top image visible */
-@media (max-height: 700px) {
-  .item-form { height: calc(100vh - 40px); }
-  .image-display { height: 46%; }
-  .form-area { flex: 0 0 54%; overflow-y: auto; }
+/* pin buttons to the interior bottom so they remain visible */
+.item-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-bottom: 68px; /* make room for buttons */
+  box-sizing: border-box;
+}
+
+/* place form-buttons absolute inside card bottom */
+.form-buttons {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+/* reduce button widths slightly to help fit */
+.form-buttons button { width: 110px; }
+
+/* ensure bottom area doesn't overflow */
+.form-area { overflow: hidden; }
+
+/* responsive: collapse to two rows on small screens */
+@media (max-width: 980px) {
+  .form-grid.three-column {
+    grid-template-columns: 1fr 1fr;
+  }
+  .item-form { width: 94vw; }
 }
