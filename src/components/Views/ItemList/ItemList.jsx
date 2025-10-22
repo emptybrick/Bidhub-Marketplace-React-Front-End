@@ -22,10 +22,9 @@ const ItemList = ({
   const [endTimeSort, setEndTimeSort] = useState("none");
   const [createdSort, setCreatedSort] = useState("none");
 
-  useEffect(() => {
-    (async () => {
-      let data;
-      data = await getFilteredItems(
+  const fetchItems = async () => {
+    try {
+      const data = await getFilteredItems(
         categoryFilter,
         conditionFilter,
         endTimeSort,
@@ -37,9 +36,22 @@ const ItemList = ({
         purchased
       );
       setItems(data);
+    } catch (error) {
+      console.error("Failed to fetch items:", error);
+    } finally {
       setLoading(false);
-    })();
-  }, [categoryFilter, conditionFilter, bidSort, endTimeSort, createdSort]);
+    }
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, [categoryFilter, conditionFilter, bidSort, endTimeSort, createdSort, favorites]);
+
+  const handleFavoriteToggle = () => {
+    if (favorites === "true") {
+      fetchItems();
+    }
+  };
 
   const handleBidSortChange = (evt) => {
     setBidSort(evt.target.value);
@@ -54,7 +66,7 @@ const ItemList = ({
   };
 
   if (loading) return <p>Loading…</p>;
-  if (items.length < 1 && !loading) return ( <Message text={messageText} />)
+  if (items.length < 1 && !loading) return <Message text={messageText} />;
   return (
     <div className="market-container">
       <div className="item-list">
@@ -111,7 +123,9 @@ const ItemList = ({
             <ul>
               <li
                 onClick={() => setConditionFilter("all")}
-                className={conditionFilter === "all" ? "item-li active" : "item-li "}
+                className={
+                  conditionFilter === "all" ? "item-li active" : "item-li "
+                }
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) =>
@@ -122,7 +136,9 @@ const ItemList = ({
               </li>
               <li
                 onClick={() => setConditionFilter("NEW")}
-                className={conditionFilter === "NEW" ? "item-li active" : "item-li "}
+                className={
+                  conditionFilter === "NEW" ? "item-li active" : "item-li "
+                }
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) =>
@@ -133,7 +149,9 @@ const ItemList = ({
               </li>
               <li
                 onClick={() => setConditionFilter("USED")}
-                className={conditionFilter === "USED" ? "item-li active" : "item-li "}
+                className={
+                  conditionFilter === "USED" ? "item-li active" : "item-li "
+                }
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) =>
@@ -160,7 +178,9 @@ const ItemList = ({
                 <li
                   key={idx}
                   onClick={() => setCategoryFilter(cat.value)}
-                  className={categoryFilter === cat.value ? "item-li active" : "item-li "}
+                  className={
+                    categoryFilter === cat.value ? "item-li active" : "item-li "
+                  }
                   role="button"
                   tabIndex={0}
                 >
@@ -172,9 +192,12 @@ const ItemList = ({
           <div className="item-grid">
             <div className="item-card-container">
               {items.map((item, idx) => (
-                <ItemCard item={item} key={idx} />
+                <ItemCard
+                  item={item}
+                  key={idx}
+                  onFavoriteToggle={handleFavoriteToggle}
+                />
               ))}
-              {/* Add placeholders if items are less than 4 */}
               {items.length < 4 &&
                 Array.from({ length: 4 - items.length }, (_, idx) => (
                   <ItemCard key={`placeholder-${idx}`} isPlaceholder={true} />

@@ -8,9 +8,9 @@ import Account from "../Account/Account.jsx";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
-  const [ activeSection, setActiveSection ] = useState("selling");
+  const [activeSection, setActiveSection] = useState("selling");
   const [ showItem, setShowItem ] = useState(false);
-
+  
   return (
     <div className="section">
       <div className="dashboard-container container">
@@ -66,7 +66,13 @@ const Dashboard = () => {
                   + List New Item
                 </button>
               </div>
-              <ItemList owner={user.id} heroText={null} />
+              <ItemList
+                owner={user.id}
+                heroText={null}
+                messageText={
+                  "You have no active auctions.  Consider adding an item to the marketplace to start an auction!"
+                }
+              />
               {showItem && (
                 <div className="modal">
                   <div className="modal-content">
@@ -88,7 +94,13 @@ const Dashboard = () => {
               <div className="section-header">
                 <h2>Items You've Bid On</h2>
               </div>
-              <ItemList userbids={"true"} heroText={null} messageText={'You have no bids on current auctions.  Look for an item to bid on in the Marketplace!'}/>
+              <ItemList
+                userbids={"true"}
+                heroText={null}
+                messageText={
+                  "You have no bids on current auctions.  Look for an item to bid on in the Marketplace!"
+                }
+              />
             </div>
           )}
 
@@ -97,7 +109,13 @@ const Dashboard = () => {
               <div className="section-header">
                 <h2>Watched Items</h2>
               </div>
-              <ItemList favorites={"true"} heroText={null} messageText={'You currently have no watched items.  Find interesting items in the Marketplace and click the favorite icons!'}/>
+              <ItemList
+                favorites={"true"}
+                heroText={null}
+                messageText={
+                  "You currently have no watched items.  Find interesting items in the Marketplace and click the favorite icons!"
+                }
+              />
             </div>
           )}
 
@@ -106,7 +124,13 @@ const Dashboard = () => {
               <div className="section-header">
                 <h2>Purchased Items</h2>
               </div>
-              <ItemList purchased={"true"} heroText={null} messageText={'You currently have no past purchases.  Go to the Marketplace now and start bidding to win!'}/>
+              <ItemList
+                purchased={"true"}
+                heroText={null}
+                messageText={
+                  "You currently have no past purchases.  Go to the Marketplace now and start bidding to win!"
+                }
+              />
             </div>
           )}
 
@@ -122,7 +146,6 @@ const Dashboard = () => {
       </div>
     </div>
   );
-}
-      
+};
 
 export default Dashboard;

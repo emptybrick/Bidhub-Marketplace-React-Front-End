@@ -6,7 +6,7 @@ import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { getFavorites, toggleFavorite } from "../../../services/authService";
 import { UserContext } from "../../../contexts/UserContext";
 
-function FavoriteButton({ itemId }) {
+function FavoriteButton({ itemId, onFavoriteToggle }) {
   const { user } = useContext(UserContext);
   const [isFavorited, setIsFavorited] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,6 +41,9 @@ function FavoriteButton({ itemId }) {
       try {
         const response = await toggleFavorite(itemId);
         setIsFavorited(response.is_favorited);
+        if (onFavoriteToggle) {
+          onFavoriteToggle(itemId, response.is_favorited);
+        }
       } catch (error) {
         console.error("Failed to toggle favorite:", error);
       } finally {

@@ -38,6 +38,10 @@ header {
   padding: 10px 20px;
 }
 
+.message-text {
+  font-size: 20px;
+}
+
 .logo {
   text-transform: uppercase;
   font-weight: 300;
@@ -150,11 +154,11 @@ header {
   padding: 15px 20px;
   border: 1px solid var(--gold);
   border-radius: 5px;
-  cursor: pointer;
   transition: all ease-in-out 300ms;
   min-height: 200px; /* Minimum height to maintain layout */
   display: flex;
   flex-direction: column;
+  max-height: fit-content;
 }
 
 .item-card.is-active {
@@ -201,9 +205,6 @@ header {
 
 .item-card .box::before {
   display: flex;
-  /* content: ""; */
-  /* display: block; */
-  /* padding-top: 100%; */
 }
 
 .item-card .info {
@@ -230,9 +231,14 @@ header {
 
 .item-card-image {
   width: 300px;
+  max-height: 400px;
   justify-self: center;
   align-self: center;
   padding-bottom: 20px;
+}
+
+.view-details {
+    cursor: pointer;
 }
 
 .section {

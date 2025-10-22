@@ -21,6 +21,7 @@
 
 .item-detail-image {
   width: 640px;
+  max-height: 640px;
   background-color: rgba(0, 0, 0, 0.052);
   padding: 40px;
   border-radius: 10px;

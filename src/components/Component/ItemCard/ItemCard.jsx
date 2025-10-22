@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "../../Views/ItemList/itemlist.css";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 
-const ItemCard = ({ item, isPlaceholder = false }) => {
+const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
   const navigate = useNavigate();
 
   const handleLink = () => {
@@ -15,11 +15,14 @@ const ItemCard = ({ item, isPlaceholder = false }) => {
     return <div className="item-card placeholder" />;
   }
   return (
-    <div className="item-card" onClick={() => handleLink()}>
+    <div className="item-card">
       <div className="heading">
         <span>{item.item_name}</span>
         <span>
-          <FavoriteButton itemId={item.id} />
+          <FavoriteButton
+            itemId={item.id}
+            onFavoriteToggle={onFavoriteToggle}
+          />
         </span>
       </div>
       <div className="box">
@@ -34,7 +37,9 @@ const ItemCard = ({ item, isPlaceholder = false }) => {
             <div>Current Bid: ${item.current_bid}</div>
           </div>
           <div className="item-card-right">
-            <button className="view-details">View Details</button>
+            <button className="view-details" onClick={() => handleLink()}>
+              View Details
+            </button>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 const Message = ({text}) => {
     return (
-        <p>{text}</p>
+        <div className="message-text">{text}</div>
     )
 };
 
