@@ -6,15 +6,13 @@ import { UserContext } from "../../../contexts/UserContext";
 
 const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
   const navigate = useNavigate();
-  const user = useContext(UserContext);
+  const {user} = useContext(UserContext);
 
   const handleLink = () => {
     if (!isPlaceholder) {
       navigate(`/bidhub/marketplace/${item.id}`);
     }
   };
-
-  console.log(user)
 
   if (isPlaceholder) {
     return <div className="item-card placeholder" />;
@@ -24,7 +22,7 @@ const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
       <div className="heading">
         <span>{item.item_name}</span>
         <span>
-          {user.user ? (
+          {user ? (
             <FavoriteButton
               itemId={item.id}
               onFavoriteToggle={onFavoriteToggle}
@@ -46,7 +44,7 @@ const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
             <div>Current Bid: ${item.current_bid}</div>
           </div>
           <div className="item-card-right">
-            {user.user ? (
+            {user ? (
               <button className="view-details" onClick={() => handleLink()}>
                 View Details
               </button>
