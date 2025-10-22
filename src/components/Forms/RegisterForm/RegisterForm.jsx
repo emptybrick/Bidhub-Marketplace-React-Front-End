@@ -51,7 +51,7 @@ const RegisterForm = ({ onClose }) => {
     try {
       const newUser = await register(formData);
       setUser(newUser);
-      navigate("/");
+      navigate("/bidhub/home");
     } catch (err) {
       setMessage(err.message);
     }
