@@ -13,7 +13,6 @@ const ItemDetail = () => {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
-  const [bidAmount, setBidAmount] = useState("");
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -32,17 +31,14 @@ const ItemDetail = () => {
 
   const handleSubmitBid = async (e) => {
     e.preventDefault();
+    const bidOffered = Number(e.target.elements[ "bid-offer-amount" ].value).toFixed(2);
     try {
-      await createBid(itemId, bidAmount);
-      alert("Bid placed successfully!");
+      await createBid(itemId, bidOffered);
       // Refresh item data to show updated bids
       const response = await getItemById(itemId);
       setItem(response);
-      setBidAmount("");
     } catch (error) {
-      alert(
-        "Error placing bid: " + error.response?.data?.message || "Unknown error"
-      );
+      console.log("Error Placing Bid:", error);
     }
   };
 
@@ -59,28 +55,52 @@ const ItemDetail = () => {
           <div className="item-image">ITEM IMAGE</div>
           <div className="top-right-section">
             <div className="bid-info">
-              <div className="current-bid">
-                Current Bid: <span className="span-bold">${item.current_bid}</span>
-              </div>
-              <div className="initial-bid">
-                Initial Bid: <span className="span-bold">${item.initial_bid}</span>
-              </div>
+              <div className="bid-info-left">
+                <div className="current-bid">
+                  Current Bid:{" "}
+                  <span className="span-bold">${item.current_bid}</span>
+                </div>
+                <div className="initial-bid">
+                  Initial Bid:{" "}
+                  <span className="span-bold">${item.initial_bid}</span>
+                </div>
 
-              <div className="bid-end">
-                Time left:{" "}
-                <span className="span-bold">
-                  {Math.ceil(
-                    (new Date(item.end_time) - new Date()) /
-                      (1000 * 60 * 60 * 24)
-                  )}{" "}
-                  days left
-                </span>
+                <div className="bid-end">
+                  Time left:{" "}
+                  <span className="span-bold">
+                    {Math.ceil(
+                      (new Date(item.end_time) - new Date()) /
+                        (1000 * 60 * 60 * 24)
+                    )}
+                    day(s) left
+                  </span>
+                </div>
               </div>
-              <div className="bid-offer">
-                <div className="form">INPUT: offer</div>
-                <button>BID</button>
-              </div>
-              <div className="bid-history">
+              <div className="bid-info-right">
+                <div className="bid-offer">
+                  <div className="bid-input-section">
+                    <form onSubmit={handleSubmitBid} className="bid-form">
+                      <div className="bid-offer">
+                        <label htmlFor="bid-offer-amount">Bid Offer ($)</label>
+                        <div className="bid-label">
+                          <input
+                            className="bid-input"
+                            type="number"
+                            id="bid-offer-amount"
+                            min={item.current_bid}
+                            onChange={(e) => {
+                              e.target.value = Number(e.target.value).toFixed(2);
+                            }}
+                            required
+                          />
+                          <button type="submit" className="bid-offer-button">
+                            Submit Bid
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
                 <button className="bid-history-button">VIEW BID HISTORY</button>
               </div>
             </div>
@@ -89,25 +109,26 @@ const ItemDetail = () => {
               <div className="item-info">
                 <ul className="item-info-left">
                   <li>
-                    Category: <span className="span-bold">
-                    {item.category}</span>
+                    Category: <span className="span-bold">{item.category}</span>
                   </li>
                   <li>
-                    Condition: <span className="span-bold">
-                    {item.condition}</span>
+                    Condition:{" "}
+                    <span className="span-bold">{item.condition}</span>
                   </li>
                   {item.manufacture_year ? (
                     <li>
-                      Manufacture Year: <span className="span-bold">
-                      {item.manufacture_year}</span>
+                      Manufacture Year:{" "}
+                      <span className="span-bold">{item.manufacture_year}</span>
                     </li>
                   ) : (
                     ""
                   )}
                   {item.country_of_origin ? (
                     <li>
-                      Country of Origin: <span className="span-bold">
-                      {item.country_of_origin}</span>
+                      Country of Origin:{" "}
+                      <span className="span-bold">
+                        {item.country_of_origin}
+                      </span>
                     </li>
                   ) : (
                     ""
@@ -118,16 +139,13 @@ const ItemDetail = () => {
                     Height: <span className="span-bold">{item.height} cm</span>
                   </li>
                   <li>
-                    Width: <span className="span-bold">
-                    {item.width} cm</span>
+                    Width: <span className="span-bold">{item.width} cm</span>
                   </li>
                   <li>
-                    Length: <span className="span-bold">
-                    {item.length} cm</span>
+                    Length: <span className="span-bold">{item.length} cm</span>
                   </li>
                   <li>
-                    Weight: <span className="span-bold">
-                    {item.weight} kg</span>
+                    Weight: <span className="span-bold">{item.weight} kg</span>
                   </li>
                 </ul>
               </div>
