@@ -72,6 +72,7 @@ const Dashboard = () => {
                 messageText={
                   "You have no active auctions.  Consider adding an item to the marketplace to start an auction!"
                 }
+                hideFilters={true}
               />
               {showItem && (
                 <div className="modal">
@@ -100,6 +101,7 @@ const Dashboard = () => {
                 messageText={
                   "You have no bids on current auctions.  Look for an item to bid on in the Marketplace!"
                 }
+                hideFilters={true}
               />
             </div>
           )}
@@ -115,6 +117,7 @@ const Dashboard = () => {
                 messageText={
                   "You currently have no watched items.  Find interesting items in the Marketplace and click the favorite icons!"
                 }
+                hideFilters={true}
               />
             </div>
           )}
@@ -130,6 +133,7 @@ const Dashboard = () => {
                 messageText={
                   "You currently have no past purchases.  Go to the Marketplace now and start bidding to win!"
                 }
+                hideFilters={true}
               />
             </div>
           )}
