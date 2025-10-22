@@ -12,7 +12,6 @@ import Landing from "./components/Views/Landing/Landing.jsx";
 import NavBar from "./components/Component/NavBar/NavBar.jsx";
 import Page404 from "./components/Views/Page404/Page404.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import About from "./components/Views/About/About.jsx";
 
 const App = () => {
   const { user } = useContext(UserContext);
