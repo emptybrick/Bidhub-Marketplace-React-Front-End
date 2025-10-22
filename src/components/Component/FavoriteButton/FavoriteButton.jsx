@@ -63,7 +63,7 @@ function FavoriteButton({ itemId, onFavoriteToggle }) {
     >
       <FontAwesomeIcon
         icon={isFavorited ? faHeartSolid : faHeartRegular}
-        style={{ color: "#edd326" }}
+        style={{ color: "#f94040ff" }}
         size="2x"
         spin={loading}
       />

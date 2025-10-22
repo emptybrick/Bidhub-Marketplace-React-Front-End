@@ -163,6 +163,20 @@ header {
   display: flex;
   flex-direction: column;
   max-height: fit-content;
+  background-color: #ffffff;
+}
+
+.view-details {
+  background-color: #ffffff;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.view-details:hover {
+  background-color: #d2b01c43;
+  transform: scale(110%);
 }
 
 .item-card.is-active {
@@ -183,7 +197,7 @@ header {
   box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.4);
   transform: scale(1.1);
   z-index: 1000;
-  background: white;
+  background: rgba(218, 218, 218, 0.444);
 }
 
 .item-card .heading {
@@ -247,20 +261,24 @@ header {
   justify-self: center;
 }
 
-.item-card-image-button-left, .item-card-image-button-right {
+.item-card-image-button-left,
+.item-card-image-button-right {
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 44px;
-  height: 44px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: rgba(242, 198, 40, 0.9);
-   border: none;
-     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  font-size: 26px;
-    cursor: pointer;
+  background: rgba(198, 174, 87, 0.999);
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  font-size: 24px;
+  font-weight: bolder;
+  color: #ffffff;
+  cursor: pointer;
 }
 
-.item-card-image-button-left:hover, .item-card-image-button-right:hover {
+.item-card-image-button-left:hover,
+.item-card-image-button-right:hover {
   background: rgba(245, 211, 86, 0.9);
 }
 
@@ -352,34 +370,33 @@ ul {
     grid-template-columns: repeat(3, 350px);
   }
   .no-items-message {
-  min-width: 1120px;
-}
-  
+    min-width: 1120px;
+  }
 }
 
 @media screen and (max-width: 1400px) {
   .item-grid {
     grid-template-columns: repeat(2, 350px);
   }
-    .no-items-message {
-  min-width: 755px;
-}
+  .no-items-message {
+    min-width: 755px;
+  }
 }
 
 @media (max-width: 1024px) {
   .item-grid {
     grid-template-columns: 350px;
   }
-    .no-items-message {
-              width: 390px;
-      min-width: 390px;
-}
+  .no-items-message {
+    width: 390px;
+    min-width: 390px;
+  }
 }
 
 @media (max-width: 800px) {
-      .no-items-message {
-  min-width: 405px;
-}
+  .no-items-message {
+    min-width: 405px;
+  }
 }
 
 @keyframes animateCard {
