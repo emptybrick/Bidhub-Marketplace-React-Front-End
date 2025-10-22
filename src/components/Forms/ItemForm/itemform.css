@@ -13,23 +13,74 @@ body {
 /* Item form wrapper for positioning */
 .item-form-wrapper {
   position: relative;
-  width: 90%;
-  max-width: 1000px;
-  margin: 40px auto;
+  width: 800px;
+  max-width: 1400px;
+  height: auto; /* let form size naturally */
   overflow: visible;
-  height: auto; /* <-- Remove fixed height */
 }
 
 /* Item form container */
 .item-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
   overflow: hidden;
   background-color: white;
-  padding: 25px 30px;
+  padding: 12px 14px;
   border-radius: 10px;
-  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1000px;            /* widen to fit three columns and gallery */
+  max-width: 95vw;
+  transform: translate(-50%, -50%);
+  transition: transform 300ms, box-shadow 300ms;
   box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
-  position: relative; /* <-- Remove absolute, top, left, transform */
-  transition: box-shadow 300ms;
+  color: #333;
+  height: calc(100vh - 80px); /* ensure modal occupies most of viewport */
+  max-height: calc(100vh - 80px);
+}
+
+/* content-wrapper: upload area + form body */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/* reserve ~30% height for upload-area (top), and rest for the form-grid */
+.upload-area {
+  flex: 0 0 28%;
+  min-height: 120px;
+  max-height: 220px;
+  overflow: visible;
+  margin-bottom: 6px;
+}
+
+/* form-grid should take remaining space (bottom ~72%) */
+.content-wrapper .form-grid {
+  display: flex;
+  gap: 20px;
+  flex: 1 1 auto;
+  overflow: auto; /* allow internal scroll if necessary on very small screens */
+  padding-top: 6px;
+}
+
+/* ensure columns stretch and form inputs align towards the bottom */
+.form-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+/* push input groups lower by adding top padding to the grid on large viewports */
+@media (min-height: 800px) {
+  .content-wrapper .form-grid {
+    padding-top: 18px; /* shift fields downward inside the modal */
+  }
 }
 
 /* Wave effects */
@@ -37,32 +88,80 @@ body {
 .item-form::after {
   content: '';
   position: absolute;
-  width: 1000px;
-  height: 1000px;
-  border-top-left-radius: 40%;
-  border-top-right-radius: 45%;
-  border-bottom-left-radius: 35%;
-  border-bottom-right-radius: 40%;
+  width: 2000px; /* Wider for larger form */
+  height: 2000px; /* Taller for larger form */
+  border-top-left-radius: 200%;
+  border-top-right-radius: 250%;
+  border-bottom-left-radius: 250%;
+  border-bottom-right-radius: 200%;
   z-index: -1;
 }
 
 .item-form::before {
-  left: 40%;
-  bottom: -130%;
-  background-color: rgba(69, 105, 144, 0.15);
+  left: 70%;
+  bottom: -100%;
+  background-color: rgba(67, 67, 67, 0.452);
   animation: waves 6s infinite linear;
 }
 
 .item-form::after {
   left: 35%;
   bottom: -125%;
-  background-color: rgba(2, 128, 144, 0.2);
+  background-color: rgba(255, 248, 45, 0.464);
   animation: waves 7s infinite;
 }
 
 @keyframes waves {
   from { transform: rotate(0); }
   to { transform: rotate(360deg); }
+}
+
+.form-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  color: var(--red-fire);
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1100;
+  transition: all 0.2s ease;
+}
+
+/* ensure the X sits neatly inside the top-right corner of the card */
+.item-form .form-close-btn {
+  position: absolute;
+  top: 12px;    /* adjust this to move the X up/down */
+  right: 12px;  /* adjust this to move the X left/right */
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  color: var(--red-fire);
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1100;
+  transition: all 0.2s ease;
+}
+
+.form-close-btn:hover {
+  background-color: #f8f8f8;
+  transform: scale(1.1);
 }
 
 /* Form layout - 2 columns instead of 3 */
@@ -107,80 +206,107 @@ body {
   height: 40px;  /* Increased height */
 }
 
-/* Dimensions container */
-.dimensions-container {
-  margin-bottom: 0;
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
 }
 
-.dimensions-container label {
-  display: block;
-  margin-bottom: 4px;
-  font-weight: 500;
-  color: #333;
-  font-size: 14px;
-}
 
-/* Dimension fields in one row */
-.dimensions-row {
-  display: flex;
-  gap: 10px;  /* Increased gap */
-}
-
-.form-field.dimension {
-  flex: 1;
-}
-
-.form-field.dimension input {
-  padding: 8px;
-  text-align: center;
-  height: 38px;
-}
-
-/* Style DatePicker input */
 .date-picker-input {
-  width: 100%;
-  height: 40px;
-  padding: 10px;
-  font-family: 'Asap', sans-serif;
-  font-size: 15px;
-  border-radius: 5px;
-  border: 0;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Description field */
-.description-field {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-field textarea {
   font-family: 'Asap', sans-serif;
   display: block;
   border-radius: 5px;
-  font-size: 15px;  /* Increased font size */
+  font-size: 15px;
   background: white;
   width: 100%;
   border: 0;
   padding: 10px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-  flex: 1;
-  min-height: 180px;  /* Increased height */
-  resize: none;
-  height: auto;  /* Override fixed height for textarea */
+  height: 40px;
 }
 
-/* Form buttons - wider buttons */
+/* ensure the internal input has no extra wrapper margins */
+.react-datepicker__input-container input {
+  background: transparent;
+}
+
+/* Description field */
+.description-field {
+  /* prevent the description column from growing and pushing modal taller */
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* make textarea smaller and scroll internally if content exceeds limit */
+.form-field textarea {
+  font-family: 'Asap', sans-serif;
+  display: block;
+  border-radius: 5px;
+  font-size: 15px;
+  background: white;
+  width: 100%;
+  border: 0;
+  padding: 10px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  flex: 0 0 auto;
+  min-height: 50px;   /* reduced from 180px */
+  max-height: 160px;   /* prevents the textarea from growing too tall */
+  overflow-y: auto;    /* scroll inside the textarea when needed */
+  resize: vertical;    /* allow user to expand if desired */
+}
+
+/* responsive tweak: smaller textarea on narrow screens */
+@media (max-width: 900px) {
+  .form-field textarea {
+    min-height: 90px;
+    max-height: 160px;
+  }
+}
+
+/* Form Buttons - visible at bottom of modal like RegisterForm */
 .form-buttons {
   display: flex;
-  justify-content: space-between;
-  margin-top: 25px;
-  padding: 0 5px;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 6px 6px;
+  border-top: 0; /* ensure no extra line */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-buttons button {
-  width: 150px;  /* Wider buttons */
+  width: 120px;
+  font-family: 'Asap', sans-serif;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  border: 0;
+  padding: 10px 0;
+  border-radius: 6px;
+  transition: background-color 200ms;
+}
+
+.form-buttons button[type="submit"] {
+  background-color: var(--green-seaweed);
+}
+
+.form-buttons button[type="submit"]:hover {
+  background-color: rgba(2,128,144,0.85);
+}
+
+.form-buttons button[type="button"] {
+  background-color: var(--blue-queen);
+}
+
+.form-buttons button[type="button"]:hover {
+  background-color: rgba(69,105,144,0.85);
 }
 
 /* Form heading */
@@ -208,9 +334,9 @@ h1 {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  width: 100vw;         /* full viewport width */
+  height: 100vh;        /* full viewport height */
+  background-color: rgba(0, 0, 0, 0.65);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -286,11 +412,11 @@ h1 {
   overflow: visible; /* Allow waves to overflow */
 }
 
-/* Position the close button without affecting the login form */
+/* close button */
 .form-close-btn {
   position: absolute;
-  top: -15px;
-  right: -15px;
+  top: 12px;
+  right: 12px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -304,7 +430,7 @@ h1 {
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  z-index: 1100; /* Keep this higher than other elements */
+  z-index: 1100;
   transition: all 0.2s ease;
 }
 
@@ -313,25 +439,237 @@ h1 {
   transform: scale(1.1);
 }
 
-/* Ensure the modal properly centers the form */
-.modal {
+/* make the modal a fixed viewport box and split 50/50 */
+.item-form {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  overflow: hidden;
+  background-color: white;
+  padding: 12px 14px;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1000px;            /* widen to fit three columns and gallery */
+  max-width: 95vw;
+  transform: translate(-50%, -50%);
+  transition: transform 300ms, box-shadow 300ms;
+  box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+  color: #333;
+  height: calc(100vh - 80px); /* ensure modal occupies most of viewport */
+  max-height: calc(100vh - 80px);
 }
 
-/* Responsive adjustments */
-@media screen and (max-width: 900px) {
-  .form-grid {
+/* Top area: left = main image, right = upload + thumbnails */
+.image-display {
+  display: flex;
+  gap: 18px;
+  align-items: stretch;
+  justify-content: center;
+  padding: 8px 12px;
+  height: 50%; 
+}
+
+/* left side - main image + carousel buttons */
+.image-left {
+  flex: 1 1 auto;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* adjust image card to fit left column */
+.image-left .image-card {
+  width: 60%;
+  max-width: 600px; /* cap width so right column fits */
+  aspect-ratio: 3 / 4;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* position carousel buttons relative to .image-left and vertically centered */
+.image-left .carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(242, 198, 40, 0.9);
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  font-size: 26px;
+  color: var(--blue-queen);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.image-left .carousel-btn.left { left: 8px; }
+.image-left .carousel-btn.right { right: 8px; }
+
+.image-left .carousel-btn:disabled { opacity: 0.35; cursor: default; }
+
+/* right side - upload and thumbnails */
+.image-right {
+  width: 320px; /* fixed column for upload + thumbnails */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* keep upload guidance centered */
+.image-right .upload-guidance {
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+}
+
+/* horizontal thumbnails but stacked in right column (wrap if needed) */
+.image-right .image-gallery {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding-top: 6px;
+}
+
+/* thumbnail button */
+.thumb-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  width: 92px;
+  height: 122px; /* 3:4 */
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  cursor: pointer;
+}
+.thumb-btn img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb-btn.active { outline: 2px solid var(--green-seaweed); }
+
+/* ensure main image covers card */
+.image-card img,
+.image-card picture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ensure overall modal keeps contents visible */
+.item-form { overflow: hidden; }
+.form-area { overflow: hidden; }
+
+/* responsive adjustments */
+@media (max-width: 1100px) {
+  .image-right { width: 260px; }
+  .image-left .image-card { max-width: 520px; }
+}
+
+@media (max-width: 800px) {
+  /* stack right column below on small screens */
+  .image-display {
     flex-direction: column;
-  }
-  .item-form-wrapper {
-    margin: 20px auto;
-    overflow: auto;
     height: auto;
   }
-  .item-form {
-    width: 100%;
-    padding: 15px;
-  }
+  .image-right { width: 100%; order: 2; }
+  .image-left { order: 1; }
+  .image-left .carousel-btn.left { left: 6px; }
+  .image-left .carousel-btn.right { right: 6px; }
+}
+
+/* ensure top area occupies half the modal */
+.image-display {
+  display: flex;
+  gap: 18px;
+  align-items: stretch;
+  justify-content: center;
+  padding: 8px 12px;
+  height: 50%;
+}
+
+/* bottom 50% reserved for form */
+.form-area {
+  flex: 0 0 50%;
+  padding: 6px 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* Two-column form grid that fills the bottom half */
+.form-grid.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  align-items: start; /* top-align columns */
+  height: 100%;
+}
+
+/* Make each column distribute its fields evenly so labels line up */
+.form-grid.two-column .form-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* evenly spread fields vertically */
+  gap: 12px;
+}
+
+/* Uniform label sizing and spacing to align titles horizontally/vertically */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.2;
+  min-height: 20px; /* consistent label height to help alignment */
+}
+
+/* Slightly reduce control heights to help everything fit */
+.form-field input,
+.form-field select,
+.form-field textarea,
+.date-picker-input {
+  height: 36px;
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* make description smaller so it doesn't push layout */
+.form-field.description-field textarea {
+  min-height: 60px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+/* fallback: if modal is too small, allow inner scrolling but keep top image visible */
+@media (max-height: 700px) {
+  .item-form { height: calc(100vh - 40px); }
+  .image-display { height: 46%; }
+  .form-area { flex: 0 0 54%; overflow-y: auto; }
 }

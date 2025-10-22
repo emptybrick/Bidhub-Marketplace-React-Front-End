@@ -76,10 +76,10 @@ const RegisterForm = ({ onClose }) => {
 
   return (
     <div className="register-wrapper">
-      <button className="form-close-btn" onClick={onClose}>
-        ×
-      </button>
       <div className="register">
+        <button className="form-close-btn" type="button" onClick={onClose}>
+          ×
+        </button>
         <h1>Register</h1>
         {message && <p className="error-message">{message}</p>}
 
@@ -237,6 +237,18 @@ const RegisterForm = ({ onClose }) => {
           <div className="form-buttons">
             <button type="submit" disabled={isFormInvalid()}>
               Register
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (onClose) {
+                  onClose();
+                } else {
+                  navigate("/bidhub/home");
+                }
+              }}
+            >
+              Cancel
             </button>
           </div>
         </form>

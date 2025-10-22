@@ -63,7 +63,7 @@ const Dashboard = () => {
                   className="action-button"
                   onClick={() => setShowItem(true)}
                 >
-                  + List New Item
+                  + List New Auction Item
                 </button>
               </div>
               <ItemList

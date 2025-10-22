@@ -5,3 +5,10 @@ A modern, component-based front end for Bidhub, a marketplace platform enabling 
 Built with React (Vite), this application connects to a Django REST Framework (DRF) API for secure authentication, bidding logic, wallet management, and notifications.
 
 <img width="1024" height="1024" alt="Bidhub-Logo" src="https://github.com/user-attachments/assets/68bd8cfc-004a-4f4d-9644-e0675dd7d3d1" />
+
+Cloudinary React SDK 
+
+Install the required packages using the NPM package manager:
+
+npm i @cloudinary/url-gen @cloudinary/react
+

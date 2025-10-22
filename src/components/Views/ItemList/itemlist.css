@@ -253,7 +253,7 @@ header {
 .sort-container {
   display: flex;
   gap: 1rem;
-  justify-content: right;
+  justify-content: center;
   align-items: end;
   padding: 1.5rem;
   flex-wrap: wrap;
