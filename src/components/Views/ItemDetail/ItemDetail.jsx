@@ -6,6 +6,7 @@ import { getItemById } from "../../../services/itemService.js";
 import { createBid } from "../../../services/bidService.js";
 import Hero from "../../Component/Hero/Hero.jsx";
 import "./itemdetail.css";
+import UploadWidget from "../../../components/Component/UploadWidget/UploadWidget.jsx";  
 
 const ItemDetail = () => {
   const { itemId } = useParams();

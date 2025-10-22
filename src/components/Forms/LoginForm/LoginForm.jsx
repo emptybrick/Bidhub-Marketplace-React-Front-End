@@ -35,10 +35,10 @@ const LoginForm = ({ onClose }) => {
 
   return (
     <div className="login-wrapper">
-      <button className="form-close-btn" onClick={onClose}>
-        ×
-      </button>
       <form className="login" onSubmit={handleSubmit}>
+        <button className="form-close-btn" type="button" onClick={onClose}>
+          ×
+        </button>
         {error && <div className="error-message">{error}</div>}
         <input
           type="email"
@@ -56,7 +56,22 @@ const LoginForm = ({ onClose }) => {
           onChange={handleChange}
           required
         />
-        <button type="submit">Login</button>
+
+        <div className="form-buttons">
+          <button type="submit">Login</button>
+          <button
+            type="button"
+            onClick={() => {
+              if (onClose) {
+                onClose();
+              } else {
+                navigate("/bidhub/home");
+              }
+            }}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
