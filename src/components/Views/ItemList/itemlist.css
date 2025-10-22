@@ -233,6 +233,11 @@ header {
   padding-bottom: 20px;
 }
 
+.image-buttons {
+  align-self: center;
+  justify-self: center;
+}
+
 .view-details {
   cursor: pointer;
 }

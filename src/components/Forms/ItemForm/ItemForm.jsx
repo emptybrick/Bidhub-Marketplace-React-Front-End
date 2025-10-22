@@ -11,6 +11,7 @@ import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 
 import UploadWidget from "../../Component/UploadWidget/UploadWidget";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
 
 const ItemForm = ({ onClose }) => {
   const { user } = useContext(UserContext);
@@ -33,6 +34,7 @@ const ItemForm = ({ onClose }) => {
       setCurrentIndex(next.length - 1);
       return next;
     });
+    console.log(images)
   };
 
   useEffect(() => {
@@ -72,6 +74,7 @@ const ItemForm = ({ onClose }) => {
     description: "",
     initial_bid: "",
     end_time: null,
+    images: [],
   });
 
   const {
@@ -105,6 +108,7 @@ const ItemForm = ({ onClose }) => {
         ...formData,
         end_time: end_time ? end_time.toISOString() : null,
         owner: user.id,
+        images: images,
       };
 
       const newItem = await createItem(formattedFormData);
@@ -131,7 +135,8 @@ const ItemForm = ({ onClose }) => {
       weight &&
       description &&
       initial_bid &&
-      end_time
+      end_time &&
+      images.length > 0
     );
   };
 
