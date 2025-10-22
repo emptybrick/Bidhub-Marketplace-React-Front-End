@@ -4,7 +4,7 @@ import { Navigate } from "react-router";
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useContext(UserContext);
-
+  console.log('redirecting')
   if (!user) {
     return <Navigate to="/bidhub/marketplace" replace />;
   }

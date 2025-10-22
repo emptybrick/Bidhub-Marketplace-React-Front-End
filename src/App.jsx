@@ -12,7 +12,6 @@ import NavBar from "./components/Component/NavBar/NavBar.jsx";
 import Footer from "./components/Component/Footer/Footer.jsx";
 import Page404 from "./components/Views/Page404/Page404.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import SellerMarketPage from "./components/Views/SellerMarketPage/SellerMarketPage.jsx";
 import About from "./components/Views/About/About.jsx";
 
 const App = () => {
@@ -41,15 +40,7 @@ const App = () => {
             }
           />
           <Route
-            path="/bidhub/seller/:sellerId/marketplace"
-            element={
-              <ProtectedRoute>
-                <SellerMarketPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/bidhub/seller/:sellerId/reviews"
+            path="/bidhub/seller/:sellerId/"
             element={
               <ProtectedRoute>
                 <SellerView />

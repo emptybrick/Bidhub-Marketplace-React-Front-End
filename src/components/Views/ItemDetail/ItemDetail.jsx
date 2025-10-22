@@ -47,7 +47,7 @@ const ItemDetail = () => {
 
   return (
     <div className="item-detail-container">
-      <Hero heroText={item.item_name} seller={item.owner.username} />
+      <Hero heroText={item.item_name} seller={item.owner} />
       <div className="item-detail-section">
         <div className="details-top">
           <div className="item-image">

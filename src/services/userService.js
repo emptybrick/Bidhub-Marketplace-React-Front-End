@@ -13,9 +13,7 @@ const getUser = async () => {
   }
 };
 
-export { getUser };
-
-export const updateUser = async (userId, userData) => {
+const updateUser = async (userId, userData) => {
   try {
     const res = await axios.put(`${BASE_URL}/users/${userId}/`, userData);
     return res.data;
@@ -26,3 +24,7 @@ export const updateUser = async (userId, userData) => {
     );
   }
 };
+
+export { getUser, updateUser };
+
+
