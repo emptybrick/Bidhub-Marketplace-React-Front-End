@@ -14,6 +14,7 @@ const ItemList = ({
   userbids = "false",
   favorites = "false",
   purchased = "false",
+  sold = 'false',
   messageText,
   hideFilters = false, // if dashboard render this will hide filter ui as needed
 }) => {
@@ -39,8 +40,10 @@ const ItemList = ({
         owner = sellerId ? sellerId : owner,
         userbids,
         favorites,
-        purchased
+        purchased,
+        sold
       );
+      console.log(data)
       setItems(data);
     } catch (error) {
       console.error("Failed to fetch items:", error);

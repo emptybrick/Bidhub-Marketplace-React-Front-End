@@ -10,7 +10,6 @@ const Dashboard = () => {
   const { user } = useContext(UserContext);
   const [activeSection, setActiveSection] = useState("selling");
   const [showItem, setShowItem] = useState(false);
-  console.log(user)
   return (
     <div className="section">
       <div className="dashboard-container container">
@@ -46,12 +45,12 @@ const Dashboard = () => {
           >
             Purchased Items
           </button>
-          {/* <button
-            className={activeSection === "account" ? "active" : ""}
-            onClick={() => setActiveSection("account")}
+          <button
+            className={activeSection === "sold-items" ? "active" : ""}
+            onClick={() => setActiveSection("sold-items")}
           >
-            User Account Profile
-          </button> */}
+            Items Sold
+          </button>
         </div>
 
         <div className="dashboard-content">
@@ -138,14 +137,21 @@ const Dashboard = () => {
             </div>
           )}
 
-          {/* {activeSection === "account" && (
+          {activeSection === "sold-items" && (
             <div className="section-container">
               <div className="section-header">
-                <h2>User Account Profile</h2>
+                <h2>Items Sold</h2>
               </div>
-              <Account onClose={() => setActiveSection("account")} />
+              <ItemList
+                sold={"true"}
+                heroText={null}
+                messageText={
+                  "You have not sold any items.  Post some items for sale now!"
+                }
+                hideFilters={true}
+              />
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </div>
