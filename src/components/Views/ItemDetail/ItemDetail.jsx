@@ -6,7 +6,9 @@ import { getItemById } from "../../../services/itemService.js";
 import { createBid } from "../../../services/bidService.js";
 import Hero from "../../Component/Hero/Hero.jsx";
 import "./itemdetail.css";
-import UploadWidget from "../../../components/Component/UploadWidget/UploadWidget.jsx";  
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import { fill } from "@cloudinary/url-gen/actions/resize";
 
 const ItemDetail = () => {
   const { itemId } = useParams();
@@ -14,11 +16,28 @@ const ItemDetail = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
 
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
+  const cld = new Cloudinary({ cloud: { cloudName } });
+
+  const [images, setImages] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   useEffect(() => {
     const fetchItem = async () => {
       try {
         const response = await getItemById(itemId);
         setItem(response);
+        if (response && Array.isArray(response.images)) {
+          setImages(response.images); // response.images is already an array
+          if (response.images.length === 0) {
+            setCurrentIndex(0);
+          } else if (currentIndex > response.images.length - 1) {
+            setCurrentIndex(response.images.length - 1);
+          }
+        } else {
+          setImages([]); // Set to empty array if no images
+          setCurrentIndex(0);
+        }
       } catch (error) {
         console.error("Error fetching item:", error);
       } finally {
@@ -27,11 +46,22 @@ const ItemDetail = () => {
     };
 
     fetchItem();
-  }, [itemId]);
+  }, [ itemId ]);
+  
+  const prevImage = () => {
+    setCurrentIndex((i) => Math.max(0, i - 1));
+  };
+
+  const nextImage = () => {
+    setCurrentIndex((i) => Math.min(images.length - 1, i + 1));
+  };
+
 
   const handleSubmitBid = async (e) => {
     e.preventDefault();
-    const bidOffered = Number(e.target.elements[ "bid-offer-amount" ].value).toFixed(2);
+    const bidOffered = Number(
+      e.target.elements["bid-offer-amount"].value
+    ).toFixed(2);
     try {
       await createBid(itemId, bidOffered);
       const response = await getItemById(itemId);
@@ -52,10 +82,71 @@ const ItemDetail = () => {
       <div className="item-detail-section">
         <div className="details-top">
           <div className="item-image">
-            <img className="item-detail-image"
-              src="https://cdn.pixabay.com/photo/2015/02/08/17/42/marbles-628820_1280.jpg"
-              alt=""
-            />
+              <div className="image-left">
+                <button
+                  type="button"
+                  className="carousel-btn left"
+                  onClick={prevImage}
+                  disabled={images.length <= 1}
+                  aria-label="Previous image"
+                >
+                  ‹
+                </button>
+
+                <div className="item-detail-image">
+                  {images.length === 0 ? (
+                    <div className="gallery-placeholder">
+                      No images uploaded
+                    </div>
+                  ) : (
+                    <AdvancedImage
+                      cldImg={cld
+                        .image(images[currentIndex])
+                        .resize(fill().width(640).height(640))}
+                      plugins={[responsive(), placeholder()]}
+                    />
+                  )}
+                </div>
+                  
+                <button
+                  type="button"
+                  className="carousel-btn right"
+                  onClick={nextImage}
+                  disabled={images.length <= 1}
+                  aria-label="Next image"
+                >
+                  ›
+                </button>
+              </div>
+
+              <div className="item-detail-image-right">
+                <div className="item-detail-image-gallery">
+                  {images.length === 0 ? (
+                    <div className="gallery-placeholder">No images</div>
+                  ) : (
+                    images.map((pid, idx) => (
+                      <button
+                        key={pid}
+                        type="button"
+                        className={`item-detail-thumb-btn ${
+                          idx === currentIndex ? "active" : ""
+                        }`}
+                        onClick={() => setCurrentIndex(idx)}
+                        aria-label={`Show image ${idx + 1}`}
+                      >
+                        <img
+                          src={cld
+                            .image(pid)
+                            .resize(fill().width(300).height(400))
+                            .toURL()}
+                          alt={`upload-${idx}`}
+                        />
+                      </button>
+                    ))
+                  )}
+                </div>
+              </div>
+
           </div>
           <div className="top-right-section">
             <div className="bid-info">
