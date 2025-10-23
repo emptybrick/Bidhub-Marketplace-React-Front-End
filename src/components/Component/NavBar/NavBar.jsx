@@ -65,17 +65,18 @@ const NavBar = () => {
           {user ? (
             <>
               <li className="nav-bar-link">
-                <Link to="/bidhub/user/account" onClick={() => setMenuOpen(false)}>
-                  Account
-                </Link>
-              </li>
-
-              <li className="nav-bar-link">
                 <Link to="/bidhub/home" onClick={() => setMenuOpen(false)}>
                   Dashboard
                 </Link>
               </li>
-
+              <li className="nav-bar-link">
+                <Link
+                  to="/bidhub/user/account"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Account
+                </Link>
+              </li>
               <li className="nav-bar-link">
                 <Link onClick={handleSignOut}>Sign Out</Link>
               </li>
