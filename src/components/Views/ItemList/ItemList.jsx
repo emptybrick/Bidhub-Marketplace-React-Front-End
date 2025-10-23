@@ -5,8 +5,8 @@ import "./itemlist.css";
 import { categories } from "../../../common/utils.js";
 import Hero from "../../Component/Hero/Hero.jsx";
 import Message from "../../Component/Message/Message.jsx";
-import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { getUsername } from "../../../services/userService.js";
 
 const ItemList = ({
   owner = "none",
@@ -30,8 +30,7 @@ const ItemList = ({
   const [bidSort, setBidSort] = useState("none");
   const [endTimeSort, setEndTimeSort] = useState("none");
   const [createdSort, setCreatedSort] = useState("none");
-  const location = useLocation();
-  const seller = location.state?.seller;
+  const [seller, setSeller] = useState(null);
   const { sellerId } = useParams();
 
   const fetchItems = async () => {
@@ -62,6 +61,13 @@ const ItemList = ({
       setLoading(false);
     }
   };
+
+  if (sellerId) {
+    useEffect(() => {
+      const sellerData = getUsername(sellerId);
+      setSeller(sellerData);
+    });
+  }
 
   useEffect(() => {
     fetchItems();
@@ -316,7 +322,6 @@ const ItemList = ({
                         <option value={30}>30</option>
                         <option value={40}>40</option>
                         <option value={50}>50</option>
-                        
                       </select>
                       per page
                     </label>

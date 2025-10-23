@@ -9,12 +9,14 @@ import "./itemdetail.css";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { fill } from "@cloudinary/url-gen/actions/resize";
+import { getUsername } from "../../../services/userService.js";
 
 const ItemDetail = () => {
   const { itemId } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
+  const [seller, setSeller] = useState(null);
 
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
   const cld = new Cloudinary({ cloud: { cloudName } });
@@ -25,14 +27,16 @@ const ItemDetail = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const response = await getItemById(itemId);
-        setItem(response);
-        if (response && Array.isArray(response.images)) {
-          setImages(response.images); // response.images is already an array
-          if (response.images.length === 0) {
+        const itemData = await getItemById(itemId);
+        setItem(itemData);
+        const sellerData = await getUsername(itemData.owner.id);
+        setSeller(sellerData);
+        if (itemData && Array.isArray(itemData.images)) {
+          setImages(itemData.images); // itemData.images is already an array
+          if (itemData.images.length === 0) {
             setCurrentIndex(0);
-          } else if (currentIndex > response.images.length - 1) {
-            setCurrentIndex(response.images.length - 1);
+          } else if (currentIndex > itemData.images.length - 1) {
+            setCurrentIndex(itemData.images.length - 1);
           }
         } else {
           setImages([]); // Set to empty array if no images
@@ -77,7 +81,7 @@ const ItemDetail = () => {
 
   return (
     <div className="item-detail-container">
-      <Hero heroText={item.item_name} seller={item.owner} />
+      <Hero heroText={item.item_name} seller={seller} />
       <div className="item-detail-section">
         <div className="details-top two-column-equal">
           {/* LEFT column: main image (50%) and thumbnails */}

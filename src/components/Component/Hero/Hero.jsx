@@ -13,8 +13,8 @@ const Hero = ({ heroText, seller }) => {
                 Auction by{" "}
                 <Link
                   className="details-link"
-                  to={"/bidhub/seller/1/"}
-                  state={{ seller: seller }}
+                  to={`/bidhub/seller/${seller.id}/`}
+                  seller={seller}
                 >
                   {seller.username}
                 </Link>

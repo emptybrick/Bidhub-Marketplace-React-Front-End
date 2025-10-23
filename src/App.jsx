@@ -46,7 +46,7 @@ const App = () => {
             path="/bidhub/seller/:sellerId"
             element={
               <ProtectedRoute>
-                <SellerView />
+                <SellerView sellerId={sellerId} />
               </ProtectedRoute>
             }
           />

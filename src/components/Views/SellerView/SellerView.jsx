@@ -2,29 +2,27 @@ import { useState, useEffect } from "react";
 import { getReviews } from "../../../services/reviewService.js";
 import Hero from "../../Component/Hero/Hero.jsx";
 import "./sellerview.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { getSellerProfile } from "../../../services/userService.js";
 
 const SellerView = () => {
   const [reviews, setReviews] = useState([]);
   const [sortOrder, setSortOrder] = useState("-rating"); // Default to highest first
-  const location = useLocation();
-  const seller = location.state?.seller;
-  const sellerId = seller.id
-
+  const [seller, setSeller] = useState(null);
+  const {sellerId} = useParams()
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await getReviews(seller.id, { ordering: sortOrder });
-        setReviews(response.results || response);
+        const reviewsData = await getReviews(sellerId, { ordering: sortOrder });
+        setReviews(reviewsData.results || reviewsData);
+        const sellerData = await getSellerProfile(sellerId);
+        setSeller(sellerData);
       } catch (error) {
         console.error("Error fetching reviews:", error);
       }
     };
-
-    if (seller?.id) {
       fetchReviews();
-    }
-  }, [seller, sortOrder]);
+  }, [sortOrder]);
 
   const handleSortChange = (newSortOrder) => {
     setSortOrder(newSortOrder);
