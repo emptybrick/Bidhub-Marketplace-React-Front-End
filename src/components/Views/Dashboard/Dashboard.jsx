@@ -46,12 +46,12 @@ const Dashboard = () => {
           >
             Purchased Items
           </button>
-          <button
+          {/* <button
             className={activeSection === "account" ? "active" : ""}
             onClick={() => setActiveSection("account")}
           >
             User Account Profile
-          </button>
+          </button> */}
         </div>
 
         <div className="dashboard-content">
@@ -138,14 +138,14 @@ const Dashboard = () => {
             </div>
           )}
 
-          {activeSection === "account" && (
+          {/* {activeSection === "account" && (
             <div className="section-container">
               <div className="section-header">
                 <h2>User Account Profile</h2>
               </div>
               <Account onClose={() => setActiveSection("account")} />
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

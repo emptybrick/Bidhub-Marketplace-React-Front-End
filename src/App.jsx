@@ -14,6 +14,7 @@ import Page404 from "./components/Views/Page404/Page404.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import SellerView from "./components/Views/SellerView/SellerView.jsx";
 import ItemList from "./components/Views/ItemList/ItemList.jsx";
+import Account from "./components/Views/Account/Account.jsx";
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -46,6 +47,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <SellerView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bidhub/user/account"
+            element={
+              <ProtectedRoute>
+                <Account />
               </ProtectedRoute>
             }
           />

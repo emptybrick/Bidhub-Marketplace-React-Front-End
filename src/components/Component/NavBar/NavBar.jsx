@@ -65,6 +65,12 @@ const NavBar = () => {
           {user ? (
             <>
               <li className="nav-bar-link">
+                <Link to="/bidhub/user/account" onClick={() => setMenuOpen(false)}>
+                  Account
+                </Link>
+              </li>
+
+              <li className="nav-bar-link">
                 <Link to="/bidhub/home" onClick={() => setMenuOpen(false)}>
                   Dashboard
                 </Link>
@@ -78,8 +84,8 @@ const NavBar = () => {
             <>
               <li className="nav-bar-link">
                 <Link onClick={() => setShowLogin(!showLogin)}>
-                    {/* { showLogin ? "Click x to close" : "Login" } */}
-                    Login
+                  {/* { showLogin ? "Click x to close" : "Login" } */}
+                  Login
                 </Link>
               </li>
               {showLogin && (
@@ -89,8 +95,8 @@ const NavBar = () => {
               )}
               <li className="nav-bar-link">
                 <Link onClick={() => setShowRegister(!showRegister)}>
-                    {/* { showRegister ? "Click x to close" : "Register" } */}
-                    Register
+                  {/* { showRegister ? "Click x to close" : "Register" } */}
+                  Register
                 </Link>
               </li>
               {showRegister && (

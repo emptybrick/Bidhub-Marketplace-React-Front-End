@@ -127,7 +127,7 @@ const SellerView = () => {
                   <li>
                     Joined:{" "}
                     <span className="span-bold">
-                      {new Date(seller.created_at).toLocaleDateString()}
+                      {new Date(seller.date_joined).toLocaleDateString()}
                     </span>
                   </li>
                   <li>

@@ -68,4 +68,14 @@ const getFavorites = async () => {
     }
 };
 
-export { register, login, toggleFavorite, getFavorites };
+const getShippingInfo = async (itemId) => {
+    try {
+        const response = await axios.get(`${ BASE_URL }/user/items/${itemId}/shipping`);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+export { register, login, toggleFavorite, getFavorites, getShippingInfo };
