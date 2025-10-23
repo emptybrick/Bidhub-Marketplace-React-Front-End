@@ -37,4 +37,56 @@ const updateUser = async (userId, userData) => {
   }
 };
 
-export { getUser, updateUser };
+const toggleFavorite = async (itemId) => {
+  try {
+    const response = await axios.post(`${ BASE_URL }/user/favorites/toggle/`, {
+      item_id: itemId,
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getFavorites = async () => {
+  try {
+    const response = await axios.get(`${ BASE_URL }/user/favorites/`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getShippingInfo = async (itemId) => {
+  try {
+    const response = await axios.get(`${ BASE_URL }/user/items/${ itemId }/shipping`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getUsername = async (sellerId) => {
+  try {
+    const response = await axios.get(`${ BASE_URL }/user/seller/${ sellerId }`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getSellerProfile = async (sellerId) => {
+  try {
+    const response = await axios.get(`${ BASE_URL }/user/seller/${ sellerId }/profile`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+export { getUser, updateUser, toggleFavorite, getFavorites, getShippingInfo, getUsername, getSellerProfile };
