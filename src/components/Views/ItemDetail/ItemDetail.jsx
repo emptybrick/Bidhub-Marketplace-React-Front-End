@@ -79,18 +79,21 @@ const ItemDetail = () => {
     <div className="item-detail-container">
       <Hero heroText={item.item_name} seller={item.owner} />
       <div className="item-detail-section">
-        <div className="details-top">
-          <div className="item-image">
+        <div className="details-top two-column-equal">
+          {/* LEFT column: main image (50%) and thumbnails */}
+          <div className="left-50">
             <div className="image-left">
-              <button
-                type="button"
-                className="carousel-btn left"
-                onClick={prevImage}
-                disabled={images.length <= 1}
-                aria-label="Previous image"
-              >
-                ‹
-              </button>
+              <div className="image-controls">
+                <button
+                  type="button"
+                  className="carousel-btn left"
+                  onClick={prevImage}
+                  disabled={images.length <= 1}
+                  aria-label="Previous image"
+                >
+                  ‹
+                </button>
+              </div>
 
               <div className="item-detail-image">
                 {images.length === 0 ? (
@@ -99,105 +102,98 @@ const ItemDetail = () => {
                   <AdvancedImage
                     cldImg={cld
                       .image(images[currentIndex])
-                      .resize(fill().width(640).height(640))}
+                      .resize(fill().width(420).height(420))}
                     plugins={[responsive(), placeholder()]}
                   />
                 )}
               </div>
 
-              <button
-                type="button"
-                className="carousel-btn right"
-                onClick={nextImage}
-                disabled={images.length <= 1}
-                aria-label="Next image"
-              >
-                ›
-              </button>
+              <div className="image-controls">
+                <button
+                  type="button"
+                  className="carousel-btn right"
+                  onClick={nextImage}
+                  disabled={images.length <= 1}
+                  aria-label="Next image"
+                >
+                  ›
+                </button>
+              </div>
             </div>
 
-            <div className="item-detail-image-right">
-              <div className="item-detail-image-gallery">
-                {images.length === 0 ? (
-                  <div className="gallery-placeholder">No images</div>
-                ) : (
-                  images.map((pid, idx) => (
-                    <button
-                      key={pid}
-                      type="button"
-                      className={`item-detail-thumb-btn ${
-                        idx === currentIndex ? "active" : ""
-                      }`}
-                      onClick={() => setCurrentIndex(idx)}
-                      aria-label={`Show image ${idx + 1}`}
-                    >
-                      <img
-                        src={cld
-                          .image(pid)
-                          .resize(fill().width(300).height(400))
-                          .toURL()}
-                        alt={`upload-${idx}`}
-                      />
-                    </button>
-                  ))
-                )}
-              </div>
+            <div className="item-detail-image-gallery">
+              {images.length === 0 ? (
+                <div className="gallery-placeholder">No images</div>
+              ) : (
+                images.map((pid, idx) => (
+                  <button
+                    key={pid}
+                    type="button"
+                    className={`item-detail-thumb-btn ${
+                      idx === currentIndex ? "active" : ""
+                    }`}
+                    onClick={() => setCurrentIndex(idx)}
+                    aria-label={`Show image ${idx + 1}`}
+                  >
+                    <img
+                      src={cld
+                        .image(pid)
+                        .resize(fill().width(200).height(260))
+                        .toURL()}
+                      alt={`upload-${idx}`}
+                    />
+                  </button>
+                ))
+              )}
             </div>
           </div>
-          <div className="top-right-section">
-            <div className="bid-info">
-              <div className="bid-info-left">
-                <div className="current-bid">
-                  Current Bid:{" "}
-                  <span className="span-bold">${item.current_bid}</span>
-                </div>
-                <div className="initial-bid">
-                  Initial Bid:{" "}
-                  <span className="span-bold">${item.initial_bid}</span>
-                </div>
 
-                <div className="bid-end">
-                  Time left:{" "}
-                  <span className="span-bold">
-                    {Math.ceil(
-                      (new Date(item.end_time) - new Date()) /
-                        (1000 * 60 * 60 * 24)
-                    )}
-                    day(s) left
-                  </span>
-                </div>
+          {/* RIGHT column: stacked sections (each takes a third of right column vertical space) */}
+          <div className="right-50">
+            {/* Top: Current Bid */}
+            <div className="right-section current-bid-section">
+              <div className="current-bid">
+                Current Bid:{" "}
+                <span className="span-bold">${item.current_bid}</span>
               </div>
-              <div className="bid-info-right">
-                <div className="bid-offer">
-                  <div className="bid-input-section">
-                    <form onSubmit={handleSubmitBid} className="bid-form">
-                      <div className="bid-offer">
-                        <label htmlFor="bid-offer-amount">Bid Offer ($)</label>
-                        <div className="bid-label">
-                          <input
-                            className="bid-input"
-                            type="number"
-                            id="bid-offer-amount"
-                            min={item.current_bid}
-                            onChange={(e) => {
-                              e.target.value = Number(e.target.value).toFixed(
-                                2
-                              );
-                            }}
-                            required
-                          />
-                          <button type="submit" className="bid-offer-button">
-                            Submit Bid
-                          </button>
-                        </div>
-                      </div>
-                    </form>
+              <div className="initial-bid">
+                Initial Bid:{" "}
+                <span className="span-bold">${item.initial_bid}</span>
+              </div>
+              <div className="bid-end">
+                Time left:{" "}
+                <span className="span-bold">
+                  {Math.ceil(
+                    (new Date(item.end_time) - new Date()) /
+                      (1000 * 60 * 60 * 24)
+                  )}
+                  day(s) left
+                </span>
+              </div>
+              <div className="bid-form-wrap">
+                <form onSubmit={handleSubmitBid} className="bid-form">
+                  <label htmlFor="bid-offer-amount">Bid Offer ($)</label>
+                  <div className="bid-label">
+                    <input
+                      className="bid-input"
+                      type="number"
+                      id="bid-offer-amount"
+                      min={item.current_bid}
+                      onChange={(e) => {
+                        e.target.value = Number(e.target.value).toFixed(2);
+                      }}
+                      required
+                    />
+                    <button type="submit" className="bid-offer-button">
+                      Submit Bid
+                    </button>
                   </div>
-                </div>
-                <button className="bid-history-button">VIEW BID HISTORY</button>
+                </form>
               </div>
             </div>
-            <div className="item-info-section">
+
+            {/* Middle: Item Details */}
+            <div className="right-section item-details-section">
               <div className="item-detail-subtitle">Item Details</div>
               <div className="item-info">
                 <ul className="item-info-left">
@@ -208,23 +204,19 @@ const ItemDetail = () => {
                     Condition:{" "}
                     <span className="span-bold">{item.condition}</span>
                   </li>
-                  {item.manufacture_year ? (
+                  {item.manufacture_year && (
                     <li>
                       Manufacture Year:{" "}
                       <span className="span-bold">{item.manufacture_year}</span>
                     </li>
-                  ) : (
-                    ""
                   )}
-                  {item.country_of_origin ? (
+                  {item.country_of_origin && (
                     <li>
                       Country of Origin:{" "}
                       <span className="span-bold">
                         {item.country_of_origin}
                       </span>
                     </li>
-                  ) : (
-                    ""
                   )}
                 </ul>
                 <ul className="item-info-right">
@@ -243,11 +235,13 @@ const ItemDetail = () => {
                 </ul>
               </div>
             </div>
+
+            {/* Bottom: Item Description */}
+            <div className="right-section item-description-section">
+              <div className="item-description-subtitle">Item Description</div>
+              <div className="item-description">{item.description}</div>
+            </div>
           </div>
-        </div>
-        <div className="details-bottom">
-          <div className="item-description-subtitle">Item Description</div>
-          <div className="item-description">{item.description}</div>
         </div>
       </div>
     </div>

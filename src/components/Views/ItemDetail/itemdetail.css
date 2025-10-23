@@ -8,37 +8,72 @@
 
 .item-detail-section {
   width: 80vw;
-  height: 100%;
+  height: 80vh;
   background-color: rgba(218, 165, 32, 0.07);
   border-radius: 10px;
   box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
-  padding: 30px;
+  padding: 20px;
+  font-size: 18px; /* all normal text in this section increased to 18px*/
+  line-height: 1.4;
 }
 
+/* Headings: style Current Bid, Item Details and Item Description like h2 */
+.current-bid,
+.item-detail-subtitle,
+.item-description-subtitle {
+  font-size: 32px;   /* h2-like sizing (adjust if you want larger/smaller) */
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+/* ensure other UI text (labels, list items, small bits) remain legible */
+.item-info,
+.item-info-left li,
+.item-info-right li,
+.initial-bid,
+.bid-end,
+.bid-label label,
+.bid-input,
+.bid-offer-button,
+.bid-history-button {
+  font-size: 18px; /* keep consistent with base size */
+}
+
+/* make top area a two-column layout: left = image + bottom details, right = current bid */
 .details-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 360px; /* left fluid, right fixed for current bid */
+  gap: 24px;
+  align-items: start;
 }
 
+/* reduce main image size */
 .item-detail-image {
-  width: 640px;
-  max-height: 640px;
+  width: 480px;       /* change this to control main image width */
+  max-width: 100%;
+  max-height: 480px;  /* change this to control main image height */
   background-color: rgba(0, 0, 0, 0.052);
-  padding: 40px;
+  padding: 20px;      /* reduce padding so image occupies less space */
   border-radius: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 12px;
   display: contents;
 }
 
-.item-detail-image-right {
-  justify-self: center;
-  align-self: center;
+/* left column container */
+.left-column {
+  display: grid;
+  flex-direction: column;
+  gap: 100px;
+  align-items: stretch;
 }
 
+/* thumbnails: smaller size */
 .item-detail-thumb-btn {
-    border: none;
+  border: none;
   background: transparent;
   padding: 0;
-  max-height: 200px;
+  width: 64px;         /* thumbnail width (adjust here) */
+  height: 88px;        /* thumbnail height (adjust here) */
   aspect-ratio: 3 / 4;
   border-radius: 6px;
   overflow: hidden;
@@ -54,130 +89,266 @@
   display: block;
 }
 
-.item-detail-thumb-btn.active { outline: 4px solid var(--green-seaweed); }
-
-.item-detail-image-gallery {
-  padding: 20px;
+/* details-bottom-grid sits under the image area on the left column */
+.details-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* left: item details, right: description */
+  gap: 16px;
+  width: 100%;
+  align-items: start;
 }
 
+/* reduce item description size */
+.item-description {
+  font-size: 18px; /* smaller font for description */
+  padding: 12px 16px;
+  line-height: 1.4;
+}
+
+/* item info box (left bottom) — keep readable but smaller */
+.item-info-section {
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.04);
+  padding: 12px;
+}
+
+/* adjust subtitle sizes */
+.item-detail-subtitle,
+.item-description-subtitle {
+  font-size: 24px;
+  padding-top: 6px;
+}
+
+/* keep Current Bid block (top-right) visually unchanged but ensure it aligns top */
 .top-right-section {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  flex: 1;
-  margin-bottom: 30px;
+  gap: 12px;
+  align-items: stretch;
 }
 
-.bid-form {
+/* TWO equal columns: left = images, right = stacked sections */
+.details-top.two-column-equal {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* LEFT 50% / RIGHT 50% */
+  gap: 24px;
+  align-items: start;
+  height: calc(100%); /* make the two columns fill the section height */
+}
+
+/* LEFT 50% wrapper - stack main image (flex-grow) above thumbnails */
+.left-50 {
   display: flex;
-  padding: 0 !important;
-}
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+  height: 100%;
 
-.bid-input {
-  width: 100px;
-  margin-top: 10px;
-}
-
-.bid-info {
-  display: flex;
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.052);
-  width: 80%;
-  align-self: center;
+  /* push thumbnails to the bottom and move main image slightly down */
   justify-content: space-between;
-  min-width: fit-content;
-  padding: 20px;
+  padding-top: 32px;
+  padding-bottom: 16px;
 }
 
-.bid-info-right {
+/* Main image: reduce size so it can't overflow the top */
+.item-detail-image {
+  width: 100%;
+  max-width: 100%;
+  flex: 0 0 auto; 
+  /* use viewport-relative max-height so image fits inside the 80vh modal */
+  max-height: 45vh;        /* <-- reduce this to make image smaller (eg 40-45vh) */
+  min-height: 120px;
+  background-color: rgba(0, 0, 0, 0.04);
+  padding: 8px;
+  border-radius: 8px;
   display: flex;
-  flex-direction: column;
-  align-self: center;
-  justify-content: center;
-}
-
-.current-bid,
-.initial-bid,
-.bid-end,
-.bid-offer {
-  font-size: 20px;
-}
-
-.initial-bid,
-.bid-end {
-  padding-top: 10px;
-}
-
-.span-bold {
-  font-weight: bold;
-}
-
-.bid-offer {
-  display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  box-sizing: border-box;
 }
 
-.bid-history {
-  background-color: darkkhaki;
+/* Main image rendered */
+.item-detail-image img,
+.item-detail-image .cld-responsive,
+.item-detail-image > * {
+  width: 70%;
+  height: 70%;
+  max-height: 90%;
+  object-fit: contain;
+  display: block;
 }
 
-.bid-history-button {
-  width: fit-content;
-  align-self: center;
-  margin-top: 10px;
+/* Thumbnail gallery: center thumbnails in the left column and keep them compact */
+.item-detail-image-gallery {
+  display: block;               /* center thumbnails horizontally */
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;     /* <-- centered */
+  align-items: center;
+  width: 100%;
+  flex: 0 0 auto; 
+  margin-bottom: 4px;
 }
 
+/* Thumbnail sizes + remove left offset so they are centered */
+.item-detail-thumb-btn {
+  width: 56px;   /* thumbnail width (adjust) */
+  height: 80px;  /* thumbnail height (adjust) */
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  cursor: pointer;
+  margin: 4px;   /* small margin so grid looks even when centered */
+}
+
+.item-detail-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* details-bottom-grid sits under the image area on the left column */
+.details-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* left: item details, right: description */
+  gap: 16px;
+  width: 100%;
+  align-items: stretch;
+}
+
+/* reduce item description size */
+.item-description {
+  font-size: 18px; /* smaller font for description */
+  padding: 12px 16px;
+  line-height: 1.4;
+}
+
+/* item info box (left bottom) — keep readable but smaller */
+.item-info-section {
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.04);
+  padding: 12px;
+}
+
+/* adjust subtitle sizes */
 .item-detail-subtitle,
 .item-description-subtitle {
-  justify-self: center;
-  align-self: center;
-  font-size: 32px;
-  padding-top: 20px;
-}
-
-.item-info-section {
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.052);
-  width: 80%;
-  align-self: center;
-  min-width: fit-content;
-}
-
-.item-info {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.item-info-left {
-  font-size: 24px;
-  padding: 20px;
-}
-
-.item-info-right {
-  font-size: 24px;
-  padding: 20px;
-}
-
-.item-info-left li,
-.item-info-right li {
-  padding-bottom: 10px;
-}
-
-.details-bottom {
-  height: fit-content;
-  min-height: 200px;
-  padding-top: 20px;
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.052);
-}
-
-.item-description {
   font-size: 20px;
-  padding: 20px 40px 20px 40px;
+  padding-top: 6px;
 }
 
-.details-link {
-  color: goldenrod;
+/* keep Current Bid block (top-right) visually unchanged but ensure it aligns top */
+.top-right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+
+/* TWO equal columns: left = images, right = stacked sections */
+.details-top.two-column-equal {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* LEFT 50% / RIGHT 50% */
+  gap: 24px;
+  align-items: start;
+  height: calc(100%); /* make the two columns fill the section height */
+}
+
+/* LEFT 50% wrapper - stack main image (flex-grow) above thumbnails */
+.left-50 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+  height: 100%;
+
+  /* push thumbnails to the bottom and move main image slightly down */
+  justify-content: space-between;
+  padding-top: 32px;   /* increased so main image is pushed down from the very top */
+  padding-bottom: 16px;
+}
+
+/* Main image: don't let it overflow the top; limit height so thumbnails remain visible */
+.item-detail-image {
+  width: 100%;
+  max-width: 100%;
+  flex: 0 0 auto;               /* do not stretch to fill whole column */
+  /* reduce the main image max height so it can't overflow the top */
+  max-height: 10%;              /* <-- reduce this value to make image smaller */
+  min-height: 100px;
+  background-color: rgba(0, 0, 0, 0.04);
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;             /* push image further down from the top */
+  box-sizing: border-box;
+}
+
+/* Thumbnail gallery stays compact and sits at the bottom due to justify-content: space-between */
+.item-detail-image-gallery {
+  display: block;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  flex: 0 0 auto;    /* thumbnails do not grow */
+  align-items: start;
+  margin-bottom: 4px; /* small gap from the bottom of the left column */
+}
+
+/* RIGHT 50% stacked sections — make them full height and share vertical space */
+.right-50 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+
+/* each right section takes equal vertical space and scrolls if content overflows */
+.right-section {
+  background: rgba(0,0,0,0.02);
+  padding: 12px;
+  border-radius: 8px;
+  flex: 1 1 0;              /* <-- equal-height stacked sections */
+  overflow: auto;
+}
+
+/* smaller description text — edit to change description font size */
+.item-description {
+  font-size: 18px; /* <-- change description text size here */
+  line-height: 1.45;
+  height: 100%;
+  overflow: auto;
+  padding-top: 6px;
+}
+
+/* keep Current Bid compact */
+.current-bid {
+  font-size: 30px;
+  margin-bottom: 6px;
+}
+
+/* reduce subtitle sizes */
+.item-detail-subtitle, .item-description-subtitle {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+/* responsive adjustments (preserve stacking on small screens) */
+@media (max-width: 920px) {
+  .details-top.two-column-equal { grid-template-columns: 1fr; }
+  .left-50, .right-50 { width: 100%; height: auto; }
+  .item-detail-image { width: 100%; max-height: 360px; flex: none; }
+  .item-detail-thumb-btn { width: 48px; height: 72px; }
+  .item-detail-section { font-size: 20px; }
+  .current-bid,
+  .item-detail-subtitle,
+  .item-description-subtitle { font-size: 28px; }
+  .item-description { font-size: 20px; }
 }
