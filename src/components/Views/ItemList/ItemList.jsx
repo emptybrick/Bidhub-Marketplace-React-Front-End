@@ -6,9 +6,10 @@ import { categories } from "../../../common/utils.js";
 import Hero from "../../Component/Hero/Hero.jsx";
 import Message from "../../Component/Message/Message.jsx";
 import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const ItemList = ({
-  owner = null,
+  owner = 'none',
   heroText = "BidHub Marketplace",
   userbids = "false",
   favorites = "false",
@@ -25,6 +26,7 @@ const ItemList = ({
   const [ createdSort, setCreatedSort ] = useState("none");
   const location = useLocation();
   const seller = location.state?.seller;
+   const { sellerId } = useParams();
 
   const fetchItems = async () => {
     try {
@@ -34,7 +36,7 @@ const ItemList = ({
         hideFilters && !isFiltered() ? "none" : endTimeSort,
         hideFilters && !isFiltered() ? "none" : createdSort,
         hideFilters && !isFiltered() ? "none" : bidSort,
-        owner,
+        owner = sellerId ? sellerId : 'none',
         userbids,
         favorites,
         purchased

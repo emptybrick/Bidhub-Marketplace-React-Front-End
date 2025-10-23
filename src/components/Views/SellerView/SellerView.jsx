@@ -9,6 +9,7 @@ const SellerView = () => {
   const [sortOrder, setSortOrder] = useState("-rating"); // Default to highest first
   const location = useLocation();
   const seller = location.state?.seller;
+  const sellerId = seller.id
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -109,9 +110,9 @@ const SellerView = () => {
           </div>
           <div className="top-right-section">
             <Link
-              to={`/bidhub/marketplace/?category=all&condition=all&owner=${seller.id}&end=none&start=none&bid=none&userbids=false&favorites=false&purchased=false`}
+              to={`/bidhub/seller/${sellerId}/marketplace`}
               className="marketplace-link"
-              state={ { seller: seller}}
+              state={{ seller: seller }}
             >
               View {seller.username}'s Marketplace
             </Link>

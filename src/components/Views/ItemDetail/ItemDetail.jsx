@@ -46,8 +46,8 @@ const ItemDetail = () => {
     };
 
     fetchItem();
-  }, [ itemId ]);
-  
+  }, [itemId]);
+
   const prevImage = () => {
     setCurrentIndex((i) => Math.max(0, i - 1));
   };
@@ -55,7 +55,6 @@ const ItemDetail = () => {
   const nextImage = () => {
     setCurrentIndex((i) => Math.min(images.length - 1, i + 1));
   };
-
 
   const handleSubmitBid = async (e) => {
     e.preventDefault();
@@ -82,71 +81,68 @@ const ItemDetail = () => {
       <div className="item-detail-section">
         <div className="details-top">
           <div className="item-image">
-              <div className="image-left">
-                <button
-                  type="button"
-                  className="carousel-btn left"
-                  onClick={prevImage}
-                  disabled={images.length <= 1}
-                  aria-label="Previous image"
-                >
-                  ‹
-                </button>
+            <div className="image-left">
+              <button
+                type="button"
+                className="carousel-btn left"
+                onClick={prevImage}
+                disabled={images.length <= 1}
+                aria-label="Previous image"
+              >
+                ‹
+              </button>
 
-                <div className="item-detail-image">
-                  {images.length === 0 ? (
-                    <div className="gallery-placeholder">
-                      No images uploaded
-                    </div>
-                  ) : (
-                    <AdvancedImage
-                      cldImg={cld
-                        .image(images[currentIndex])
-                        .resize(fill().width(640).height(640))}
-                      plugins={[responsive(), placeholder()]}
-                    />
-                  )}
-                </div>
-                  
-                <button
-                  type="button"
-                  className="carousel-btn right"
-                  onClick={nextImage}
-                  disabled={images.length <= 1}
-                  aria-label="Next image"
-                >
-                  ›
-                </button>
+              <div className="item-detail-image">
+                {images.length === 0 ? (
+                  <div className="gallery-placeholder">No images uploaded</div>
+                ) : (
+                  <AdvancedImage
+                    cldImg={cld
+                      .image(images[currentIndex])
+                      .resize(fill().width(640).height(640))}
+                    plugins={[responsive(), placeholder()]}
+                  />
+                )}
               </div>
 
-              <div className="item-detail-image-right">
-                <div className="item-detail-image-gallery">
-                  {images.length === 0 ? (
-                    <div className="gallery-placeholder">No images</div>
-                  ) : (
-                    images.map((pid, idx) => (
-                      <button
-                        key={pid}
-                        type="button"
-                        className={`item-detail-thumb-btn ${
-                          idx === currentIndex ? "active" : ""
-                        }`}
-                        onClick={() => setCurrentIndex(idx)}
-                        aria-label={`Show image ${idx + 1}`}
-                      >
-                        <img
-                          src={cld
-                            .image(pid)
-                            .resize(fill().width(300).height(400))
-                            .toURL()}
-                          alt={`upload-${idx}`}
-                        />
-                      </button>
-                    ))
-                  )}
-                </div>
-              </div>
+              <button
+                type="button"
+                className="carousel-btn right"
+                onClick={nextImage}
+                disabled={images.length <= 1}
+                aria-label="Next image"
+              >
+                ›
+              </button>
+            </div>
 
+            <div className="item-detail-image-right">
+              <div className="item-detail-image-gallery">
+                {images.length === 0 ? (
+                  <div className="gallery-placeholder">No images</div>
+                ) : (
+                  images.map((pid, idx) => (
+                    <button
+                      key={pid}
+                      type="button"
+                      className={`item-detail-thumb-btn ${
+                        idx === currentIndex ? "active" : ""
+                      }`}
+                      onClick={() => setCurrentIndex(idx)}
+                      aria-label={`Show image ${idx + 1}`}
+                    >
+                      <img
+                        src={cld
+                          .image(pid)
+                          .resize(fill().width(300).height(400))
+                          .toURL()}
+                        alt={`upload-${idx}`}
+                      />
+                    </button>
+                  ))
+                )}
+              </div>
+            </div>
           </div>
           <div className="top-right-section">
             <div className="bid-info">

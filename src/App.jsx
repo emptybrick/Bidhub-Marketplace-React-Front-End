@@ -2,7 +2,7 @@
 import { Routes, Route } from "react-router";
 import { UserContext } from "./contexts/UserContext";
 import { useContext } from "react";
-
+import { useParams } from "react-router-dom";
 import About from "./components/Views/About/About.jsx";
 import Dashboard from "./components/Views/Dashboard/Dashboard.jsx";
 import Footer from "./components/Component/Footer/Footer.jsx";
@@ -13,9 +13,11 @@ import NavBar from "./components/Component/NavBar/NavBar.jsx";
 import Page404 from "./components/Views/Page404/Page404.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import SellerView from "./components/Views/SellerView/SellerView.jsx";
+import ItemList from "./components/Views/ItemList/ItemList.jsx";
 
 const App = () => {
   const { user } = useContext(UserContext);
+  const { sellerId } = useParams();
 
   return (
     <>
@@ -40,10 +42,18 @@ const App = () => {
             }
           />
           <Route
-            path="/bidhub/seller/:sellerId/"
+            path="/bidhub/seller/:sellerId"
             element={
               <ProtectedRoute>
                 <SellerView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bidhub/seller/:sellerId/marketplace"
+            element={
+              <ProtectedRoute>
+                <ItemList owner={sellerId} />
               </ProtectedRoute>
             }
           />
