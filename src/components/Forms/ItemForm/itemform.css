@@ -240,7 +240,7 @@ body {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0px;
 }
 
 /* make textarea smaller and scroll internally if content exceeds limit */
@@ -462,177 +462,164 @@ h1 {
   max-height: calc(100vh - 80px);
 }
 
-/* Top area: left = main image, right = upload + thumbnails */
+/* Top area: left = main image, right = upload + thumbnails
+   Ensure the top area is exactly 50% of the modal and is split 50/50 left/right */
 .image-display {
   display: flex;
-  gap: 18px;
-  align-items: stretch;
+  gap: 40px; /* gap between left main image & right thumbnail image gallery */
+  align-items: flex-start;   /* align top edges */
   justify-content: center;
   padding: 8px 12px;
-  height: 50%; 
+  flex: 0 0 50%;  /* top 50% of modal */
+  box-sizing: border-box;
+  min-height: 220px;
 }
 
-/* left side - main image + carousel buttons */
+/* LEFT: main image takes exactly 50% of the top area */
 .image-left {
-  flex: 1 1 auto;
+  flex: 0 0 50%;      /* fixed half of the top area */
   min-width: 0;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  height: 40vh;
 }
 
-/* adjust image card to fit left column */
+/* Ensure the image card fills the left column and image scales to fit */
 .image-left .image-card {
-  width: 60%;
-  max-width: 600px; /* cap width so right column fits */
-  aspect-ratio: 3 / 4;
-  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
   overflow: hidden;
   background: #fafafa;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.image-left .image-card img,
+.image-left .image-card .cld-responsive {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-/* position carousel buttons relative to .image-left and vertically centered */
-.image-left .carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(242, 198, 40, 0.9);
-  border: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  font-size: 26px;
-  color: var(--blue-queen);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 20;
-}
-
-.image-left .carousel-btn.left { left: 8px; }
-.image-left .carousel-btn.right { right: 8px; }
-
-.image-left .carousel-btn:disabled { opacity: 0.35; cursor: default; }
-
-/* right side - upload and thumbnails */
+/* RIGHT: upload + thumbnails take the other 50% of the top half,
+   and stack from the top with upload button centered horizontally. */
 .image-right {
-  width: 320px; /* fixed column for upload + thumbnails */
+  flex: 0 0 50%;
+  max-width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  align-items: stretch;
-  justify-content: flex-start;
+  gap: 8px;
+  box-sizing: border-box;
+  align-items: center;       /* center upload button horizontally */
+  justify-content: flex-start; /* pin content to top */
+  padding-top: 0;            /* align with top of left image */
+  height: 100%;
 }
 
-/* keep upload guidance centered */
+/* center the upload button and keep it aligned with the top of left image */
+.image-right .cloudinary-button,
+.image-right button#upload_widget {
+  margin: 0;
+  align-self: center;    /* center horizontally within right column */
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* upload guidance sits immediately under upload button and centered */
 .image-right .upload-guidance {
   text-align: center;
-  color: #666;
   font-size: 12px;
+  color: #666;
+  margin-top: 6px;
+  width: 100%;
+  max-width: 320px;
+  align-self: center;
 }
 
-/* horizontal thumbnails but stacked in right column (wrap if needed) */
-.image-right .image-gallery {
+/* thumbnails grid — positioned under upload button and guidance,
+   constrained to the right-top half (100% of .image-right which is top 50% of modal) */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Thumbnail grid */
+  gap: 6px;
+  align-items: start;
+  justify-items: stretch;
+  padding: 0px;
+  box-sizing: boarder-box;
+  width: 450px;
+  max-width: 500px; /* keep thumbnails narrow so they don't push layout */
+  margin-top: 6px;
+  /* fill remaining vertical space inside the right column but do not grow modal */
+  height: calc(100% - 40px); /* leave space for upload button + guidance */
+  overflow-y: auto; /* internal scrolling only if many thumbnails */
+  align-self: flex-start;
+}
+
+/* Placeholder that appears when there are no images — center under upload button */
+.gallery-placeholder {
+  width: 100%;
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
-  padding-top: 6px;
+  justify-content: center;
+  padding: 10px;
+  color: #666;
+  background: transparent;
+  box-sizing: border-box;
 }
 
-/* thumbnail button */
+/* thumbnail button appearance */
 .thumb-btn {
+  width: 96px;
+  height: 128px; /* 3:4 */
+  padding: 0;
   border: none;
   background: transparent;
-  padding: 0;
-  width: 92px;
-  height: 122px; /* 3:4 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-  cursor: pointer;
 }
-.thumb-btn img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.thumb-btn.active { outline: 2px solid var(--green-seaweed); }
 
-/* ensure main image covers card */
-.image-card img,
-.image-card picture {
+.thumb-btn img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* ensure overall modal keeps contents visible */
-.item-form { overflow: hidden; }
-.form-area { overflow: hidden; }
-
-/* responsive adjustments */
-@media (max-width: 1100px) {
-  .image-right { width: 260px; }
-  .image-left .image-card { max-width: 520px; }
+.thumb-btn.active {
+  outline: 3px solid rgba(2,128,144,0.14);
+  transform: scale(1.02);
 }
 
-@media (max-width: 800px) {
-  /* stack right column below on small screens */
-  .image-display {
-    flex-direction: column;
-    height: auto;
-  }
-  .image-right { width: 100%; order: 2; }
-  .image-left { order: 1; }
-  .image-left .carousel-btn.left { left: 6px; }
-  .image-left .carousel-btn.right { right: 6px; }
+/* Ensure top area does not force modal to grow beyond viewport */
+.image-right,
+.image-gallery,
+.thumb-btn,
+.gallery-placeholder {
+  box-sizing: border-box;
 }
-
-/* ensure top area occupies half the modal */
-.image-display {
-  display: flex;
-  gap: 100px;
-  align-items: stretch;
-  justify-content: center;
-  padding: 8px 12px;
-  height: 50%;
-}
-
 /* bottom 50% reserved for form */
 .form-area {
   flex: 0 0 50%;
-  padding: 6px 8px;
-  overflow: hidden;
+  padding: 8px 10px;
+  overflow: hidden; /* prevent outer scrolling */
   display: flex;
   align-items: stretch;
   justify-content: center;
+  box-sizing: border-box;
 }
 
-/* Two-column form grid that fills the bottom half */
-.form-grid.two-column {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  width: 100%;
-  align-items: start; /* top-align columns */
-  height: 100%;
-}
-
-/* make each column distribute its fields evenly so labels line up */
-.form-grid.two-column .form-column {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* evenly spread fields vertically */
-  gap: 12px;
-}
-
-/* three-column grid for bottom half */
+/* three-column grid for bottom half (use this class in JSX) */
 .form-grid.three-column {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -640,22 +627,25 @@ h1 {
   width: 100%;
   align-items: start;
   height: 100%;
+  box-sizing: border-box;
 }
 
-/* make each column a vertical stack and distribute fields evenly */
+/* each column stacks fields from top, no space-between to avoid stretching */
 .form-grid.three-column .form-column {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* spreads fields so they fit bottom area */
+  justify-content: flex-start;
   gap: 10px;
+  box-sizing: border-box;
 }
 
-/* slightly reduce label/control vertical space to fit everything */
+/* reduce vertical footprint of labels/controls so everything fits */
 .form-field label {
   margin-bottom: 6px;
   font-size: 13px;
-  min-height: 20px;
+  min-height: 18px;
 }
+
 .form-field input,
 .form-field select,
 .form-field textarea,
@@ -663,26 +653,34 @@ h1 {
   height: 36px;
   padding: 6px 8px;
   font-size: 14px;
-}
-
-/* ensure description is compact */
-.form-field.description-field textarea {
-  min-height: 56px;
-  max-height: 110px;
-  overflow-y: auto;
-}
-
-/* pin buttons to the interior bottom so they remain visible */
-.item-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding-bottom: 68px; /* make room for buttons */
   box-sizing: border-box;
 }
 
-/* place form-buttons absolute inside card bottom */
+/* keep the description compact so it doesn't push the modal taller */
+.form-field.description-field textarea {
+  min-height: 56px;
+  max-height: 96px;
+  overflow-y: auto;
+  resize: vertical;
+}
+
+/* make dimensions inputs small and inline */
+.dimensions-row {
+  display: flex;
+  gap: 8px;
+}
+.dimensions-row .dimension input {
+  height: 36px;
+  padding: 6px 8px;
+}
+
+/* ensure buttons area remains visible and fixed inside modal */
+.item-form {
+  padding-bottom: 84px; /* room for buttons */
+  box-sizing: border-box;
+}
+
+/* keep submit/cancel pinned to bottom of the modal */
 .form-buttons {
   position: absolute;
   left: 0;
@@ -695,16 +693,25 @@ h1 {
   box-sizing: border-box;
 }
 
-/* reduce button widths slightly to help fit */
-.form-buttons button { width: 110px; }
+/* Ensure entire modal doesn't require external scrolling */
+.modal {
+  padding: 20px; /* breathing room so modal center isn't clipped */
+  box-sizing: border-box;
+}
 
-/* ensure bottom area doesn't overflow */
-.form-area { overflow: hidden; }
-
-/* responsive: collapse to two rows on small screens */
+/* Responsive fallback: collapse to two columns on narrow widths */
 @media (max-width: 980px) {
   .form-grid.three-column {
     grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content;
   }
-  .item-form { width: 94vw; }
+  .image-right { width: 260px; }
+  .image-left .image-card { max-width: 420px; }
+}
+
+/* small height screens: slightly shrink top area to fit controls */
+@media (max-height: 720px) {
+  .image-display { flex: 0 0 44%; min-height: 160px; }
+  .form-area { flex: 0 0 56%; overflow-y: hidden; }
+  .form-field.description-field textarea { max-height: 80px; }
 }

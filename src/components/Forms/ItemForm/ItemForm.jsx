@@ -237,8 +237,8 @@ const ItemForm = ({ onClose }) => {
             </div>
 
             <div className="form-area">
-              <div className="form-grid two-column">
-                {/* LEFT column */}
+              <div className="form-grid three-column">
+                {/* COLUMN 1 */}
                 <div className="form-column">
                   <div className="form-field">
                     <label htmlFor="item_name">Item Name</label>
@@ -269,6 +269,21 @@ const ItemForm = ({ onClose }) => {
                   </div>
 
                   <div className="form-field">
+                    <label htmlFor="manufacture_year">Year Made</label>
+                    <input
+                      type="text"
+                      id="manufacture_year"
+                      value={manufacture_year}
+                      name="manufacture_year"
+                      placeholder="e.g. 2024"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
+                {/* COLUMN 2 */}
+                <div className="form-column">
+                  <div className="form-field">
                     <label htmlFor="condition">Condition</label>
                     <select
                       id="condition"
@@ -283,33 +298,98 @@ const ItemForm = ({ onClose }) => {
                   </div>
 
                   <div className="form-field">
-                    <label htmlFor="manufacture_year">Year Made</label>
-                    <input
-                      type="text"
-                      id="manufacture_year"
-                      value={manufacture_year}
-                      name="manufacture_year"
-                      placeholder="Enter manufacture year. e.g. 2024"
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-
-                  {/* moved: Country of origin */}
-                  <div className="form-field">
                     <label htmlFor="country_of_origin">Country</label>
                     <input
                       type="text"
                       id="country_of_origin"
                       value={country_of_origin}
                       name="country_of_origin"
-                      placeholder="Enter country of origin"
+                      placeholder="Country of origin"
                       onChange={handleChange}
-                      required
                     />
                   </div>
 
-                  {/* moved: Description */}
+                  <div className="dimensions-container">
+                    <div className="form-field">
+                      <label>Dimensions (cm)</label>
+                    </div>
+                    <div className="dimensions-row">
+                      <div className="form-field dimension">
+                        <input
+                          type="number"
+                          id="height"
+                          value={height}
+                          name="height"
+                          placeholder="H"
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                      <div className="form-field dimension">
+                        <input
+                          type="number"
+                          id="width"
+                          value={width}
+                          name="width"
+                          placeholder="W"
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                      <div className="form-field dimension">
+                        <input
+                          type="number"
+                          id="length"
+                          value={length}
+                          name="length"
+                          placeholder="L"
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* COLUMN 3 */}
+                <div className="form-field">
+                  <label htmlFor="weight">Weight (kg)</label>
+                  <input
+                    type="number"
+                    id="weight"
+                    value={weight}
+                    name="weight"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-field">
+                  <label htmlFor="initial_bid">Starting Bid ($)</label>
+                  <input
+                    type="number"
+                    id="initial_bid"
+                    value={initial_bid}
+                    name="initial_bid"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-field">
+                  <label htmlFor="end_time">End Date & Time</label>
+                  <DatePicker
+                    selected={end_time}
+                    onChange={handleDateChange}
+                    showTimeSelect
+                    dateFormat="MM/dd/yy h:mm aa"
+                    placeholderText="Select date and time"
+                    required
+                    className="date-picker-input"
+                  />
+                </div>
+
+                <div className="form-column">
                   <div className="form-field description-field">
                     <label htmlFor="description">Description</label>
                     <textarea
@@ -321,93 +401,9 @@ const ItemForm = ({ onClose }) => {
                     />
                   </div>
                 </div>
-
-                <div className="form-column">
-                  {/* MIDDLE column */}
-                  <div className="form-field">
-                    {/* dimensions and remaining fields stay here */}
-                  </div>
-                  <div className="dimensions-container moved">
-                    <div className="form-field">
-                      <label htmlFor="Dimensions">Dimensions (cm)</label>
-                    </div>
-                    <div className="dimensions-row">
-                      <div className="form-field dimension">
-                        <input
-                          type="number"
-                          id="height"
-                          value={height}
-                          name="height"
-                          placeholder="height"
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                      <div className="form-field dimension">
-                        <input
-                          type="number"
-                          id="width"
-                          value={width}
-                          name="width"
-                          placeholder="width"
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                      <div className="form-field dimension">
-                        <input
-                          type="number"
-                          id="length"
-                          value={length}
-                          name="length"
-                          placeholder="length"
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-field">
-                    <label htmlFor="weight">Weight (kg)</label>
-                    <input
-                      type="number"
-                      id="weight"
-                      value={weight}
-                      name="weight"
-                      placeholder="Enter weight"
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-
-                  <div className="form-field">
-                    <label htmlFor="initial_bid">Starting Bid ($)</label>
-                    <input
-                      type="number"
-                      id="initial_bid"
-                      value={initial_bid}
-                      name="initial_bid"
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-
-                  <div className="form-field">
-                    <label htmlFor="end_time">End Date & Time</label>
-                    <DatePicker
-                      selected={end_time}
-                      onChange={handleDateChange}
-                      showTimeSelect
-                      dateFormat="MM/dd/yy h:mm aa"
-                      placeholderText="Select date and time"
-                      required
-                      className="date-picker-input"
-                    />
-                  </div>
-                </div>
               </div>
             </div>
+
             {/* end form-area */}
 
             <div className="form-buttons">
