@@ -189,7 +189,9 @@ const Account = ({ onClose }) => {
             </div>
           </div>
           <div className="form-buttons">
-            <button type="submit">Save Changes</button>
+            <button type="submit" className="save-changes-btn">
+              Save Changes
+            </button>
             <button type="button" onClick={handleEditToggle}>
               Cancel
             </button>
@@ -234,22 +236,6 @@ const Account = ({ onClose }) => {
               <label>Country</label>
             </div>
           </div>
-          {!isEditing ? (
-            <div className="form-buttons">
-              <button
-                type="button"
-                className="edit-profile-btn"
-                onClick={handleEditToggle}
-              >
-                Edit Profile
-              </button>
-              {onClose && (
-                <button type="button" onClick={onClose}>
-                  Cancel
-                </button>
-              )}
-            </div>
-          ) : null}
         </div>
       )}
       <div className="profile-wallet">
@@ -273,6 +259,26 @@ const Account = ({ onClose }) => {
           </span>
         </div>
       </div>
+
+      {/* bottom actions: pinned to bottom of the account panel in non-edit mode */}
+      {!isEditing ? (
+        <div className="bottom-actions">
+          <div className="form-buttons">
+            <button
+              type="button"
+              className="edit-profile-btn"
+              onClick={handleEditToggle}
+            >
+              Edit Profile
+            </button>
+            {onClose && (
+              <button type="button" onClick={onClose}>
+                Cancel
+              </button>
+            )}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

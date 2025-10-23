@@ -1,250 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
-@import '../ItemList/itemlist.css';
 
-/* Account sections layout */
-.account-sections {
-  margin-top: 30px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
+:root {
+  --green-seaweed: rgba(2, 128, 144, 1);
+  --blue-queen: rgba(69, 105, 144, 1);
+  --red-fire: rgba(244, 91, 105, 1);
+  --card-shadow: 5px 10px 10px rgba(2,128,144,0.2);
 }
 
+body {
+  font-family: 'Asap', sans-serif;
+}
+
+/* Modal wrapper (matches RegisterForm look) */
+.account-modal-wrapper,
 .account-section {
-  margin-bottom: 20px;
-}
-
-.account-section h2 {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #333;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
-}
-
-.account-section h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 15px 0 10px;
-  color: #555;
-}
-
-/* Account info card styling */
-.account-info-card {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
-
-/* Field styling */
-.account-field {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.account-field:last-child {
-  border-bottom: none;
-}
-
-.field-label {
-  font-weight: 600;
-  color: #777;
-  font-size: 14px;
-}
-
-.field-value {
-  font-weight: 400;
-  color: #333;
-  font-size: 16px;
-}
-
-/* Gold text */
-.gold-text {
-  color: var(--gold);
-  font-weight: 700;
-}
-
-/* Rating styles */
-.rating {
-  display: flex;
-  align-items: center;
-}
-
-.star {
-  color: var(--gold);
-  margin-left: 5px;
-}
-
-/* Address section */
-.account-address {
-  margin-top: 15px;
-}
-
-.address-details {
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-/* Edit button */
-.account-action-btn {
-  background-color: var(--gold);
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 5px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 14px;
-  text-transform: uppercase;
-}
-
-.account-action-btn:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  transform: translateY(-2px);
-}
-
-.account-action-btn.cancel {
-  background-color: #999;
-}
-
-/* Message banner */
-.message-banner {
-  padding: 12px 20px;
-  border-radius: 5px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-weight: 600;
-  text-align: center;
-}
-
-.message-banner.success {
-  background-color: rgba(76, 175, 80, 0.1);
-  border: 1px solid rgba(76, 175, 80, 0.3);
-  color: #2e7d32;
-}
-
-.message-banner.error {
-  background-color: rgba(244, 67, 54, 0.1);
-  border: 1px solid rgba(244, 67, 54, 0.3);
-  color: #d32f2f;
-}
-
-/* Form styling */
-.edit-form {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.form-field {
-  margin-bottom: 15px;
-}
-
-.form-field label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #555;
-  font-size: 14px;
-}
-
-.form-field input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-}
-
-.form-field input:focus {
-  outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 0 2px rgba(200, 173, 120, 0.2);
-}
-
-/* Form buttons */
-.form-buttons {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.form-buttons button {
-  background-color: var(--gold);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.form-buttons button:hover {
-  background-color: #b39a69;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  transform: translateY(-2px);
-}
-
-.form-buttons button.edit-profile-btn {
-  background-color: var(--red-fire);
-  color: #fff;
-  transition: background-color 300ms;
-}
-
-.form-buttons button.edit-profile-btn:hover {
-  background-color: #e8394e;
-}
-
-/* Modal styles */
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.account-modal-wrapper {
   position: relative;
   width: 800px;
-  height: auto;
-  overflow: visible;
+  max-width: 95%;
+  margin: 0 auto;
 }
 
-.account-modal {
-  position: relative;
-  background: white;
+/* Make the account panel taller so footer is pushed down (adjust as needed) */
+.account-section,
+.account-modal-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 100px); /* main area taller; tweak offset if you have header/footer height */
+  box-sizing: border-box;
+  padding-bottom: 20px;
+}
+
+/* Card */
+.account-modal,
+.account-section .account-info-card {
+  overflow: hidden;
+  background-color: #fff;
   padding: 40px 30px 30px 30px;
   border-radius: 10px;
-  width: 800px;
-  box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+  position: relative;
+  box-shadow: var(--card-shadow);
   color: #333;
-  z-index: 10;
-  overflow: visible;
 }
 
-.account-modal::before, 
-.account-modal::after {
+/* Decorative waves (same effect as RegisterForm) */
+.account-modal::before,
+.account-modal::after,
+.account-section .account-info-card::before,
+.account-section .account-info-card::after {
   content: '';
   position: absolute;
   width: 1000px;
@@ -256,14 +58,16 @@
   z-index: -1;
 }
 
-.account-modal::before {
+.account-modal::before,
+.account-section .account-info-card::before {
   left: 40%;
   bottom: -130%;
   background-color: rgba(69, 105, 144, 0.15);
   animation: waves 6s infinite linear;
 }
 
-.account-modal::after {
+.account-modal::after,
+.account-section .account-info-card::after {
   left: 35%;
   bottom: -125%;
   background-color: rgba(2, 128, 144, 0.2);
@@ -275,10 +79,11 @@
   to { transform: rotate(360deg); }
 }
 
+/* Close button (matching register style) */
 .form-close-btn {
   position: absolute;
-  top: -15px;
-  right: -15px;
+  top: 12px;
+  right: 12px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -295,13 +100,11 @@
   z-index: 1100;
   transition: all 0.2s ease;
 }
+.form-close-btn:hover { transform: scale(1.1); background: #f8f8f8; }
 
-.form-close-btn:hover {
-  background-color: #f8f8f8;
-  transform: scale(1.1);
-}
-
-.account-modal h1 {
+/* Headings */
+.account-modal h1,
+.account-section h1 {
   text-align: center;
   margin-bottom: 15px;
   color: #333;
@@ -311,7 +114,8 @@
   text-transform: uppercase;
 }
 
-.account-modal h2 {
+.account-modal h2,
+.account-section h2 {
   font-size: 22px;
   text-transform: uppercase;
   padding-bottom: 5px;
@@ -319,9 +123,17 @@
   font-weight: 400;
   color: #333;
   margin: 15px 0 8px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
+/* Ensure form columns don't overlap the section heading (Address) */
+.account-section h2 + .form-columns {
+  margin-top: 2px;    /* space between the h2 and the grid */
+  padding-top: 40px;    /* small extra padding so absolute labels have room */
+  box-sizing: border-box;
+}
+
+/* Profile header */
 .profile-section {
   display: flex;
   align-items: center;
@@ -333,16 +145,6 @@
   flex-shrink: 0;
 }
 
-.profile-details {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* left align */
-  justify-content: center;
-  text-align: left;
-  font-size: 20px
-}
-
 .profile-avatar img {
   width: 120px;
   height: 120px;
@@ -351,6 +153,35 @@
   border: 5px solid #e3e6f0;
 }
 
+/* Profile details */
+.profile-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  font-size: 18px;
+}
+
+/* Wallet / stats block */
+.profile-wallet {
+  margin-top: 30px;
+  font-size: 16px;
+  color: #333;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  text-align: left;
+  background: rgba(255,255,255,0.6);
+  flex: 0 0 auto;
+}
+
+/* Form layout (use same 3-column / responsive behavior as RegisterForm) */
 .form-columns {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -363,28 +194,30 @@
   margin-bottom: 20px;
 }
 
+/* Labels positioned above inputs (register style) */
 .form-group label {
   position: absolute;
   top: -18px;
-  left: 20px;
+  left: 0;
   font-size: 12px;
-  opacity: 0.6;
+  opacity: 0.9;
   text-transform: uppercase;
   transition: all 0.3s ease-in-out;
 }
 
+/* Inputs styling */
 .form-group input {
   border: none;
   width: 100%;
   padding: 10px;
   height: 38px;
   border-radius: 5px;
-  background: white;
+  background: rgba(255, 255, 255, 0.9);
   border: 0;
   color: #333;
   font-family: 'Asap', sans-serif;
   font-size: 14px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.12);
   transition: all 0.3s ease-in-out;
 }
 
@@ -398,14 +231,16 @@
   color: var(--green-seaweed);
 }
 
+/* Buttons - centered like register */
 .form-buttons {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  gap: 20px;
+  gap: 12px;
 }
 
 .form-buttons button {
+  width: 200px;
   font-family: 'Asap', sans-serif;
   cursor: pointer;
   color: #fff;
@@ -415,28 +250,29 @@
   padding: 10px 0;
   border-radius: 5px;
   transition: background-color 300ms;
-  width: 200px;
 }
 
-.form-buttons button[type="submit"], .form-buttons button:not([type]) {
+/* Primary / secondary colors */
+.form-buttons button[type="submit"],
+.form-buttons button:not([type]) {
   background-color: var(--red-fire);
 }
-
-.form-buttons button[type="submit"]:hover, .form-buttons button:not([type]):hover {
+.form-buttons button[type="submit"]:hover,
+.form-buttons button:not([type]):hover {
   background-color: #e8394e;
 }
 
 .form-buttons button[type="button"] {
   background-color: var(--blue-queen);
 }
-
 .form-buttons button[type="button"]:hover {
-  background-color: rgba(69, 105, 144, 0.8);
+  background-color: rgba(69,105,144,0.8);
 }
 
+/* Error / success messages */
 .error-message {
   color: var(--red-fire);
-  background-color: rgba(244, 91, 105, 0.1);
+  background-color: rgba(244,91,105,0.1);
   padding: 8px;
   border-radius: 4px;
   margin-bottom: 10px;
@@ -445,55 +281,74 @@
 }
 
 .success-message {
-  color: var(--success-color);
-  background-color: rgba(28, 200, 138, 0.1);
+  color: #1cc88a;
+  background-color: rgba(28,200,138,0.08);
+  padding: 8px;
+  border-radius: 4px;
 }
 
-.profile-wallet {
-  margin-top: 30px;
-  font-size: 16px;
-  color: #333;
-  background: var(--secondary-color);
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 0 3px rgba(0,0,0,0.05);
+/* bottom-actions sits at the bottom of the .account-section */
+.bottom-actions {
+  margin-top: auto; /* pushes this block to the bottom of the panel */
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start; /* left align */
-  text-align: left;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 0 20px;
+  box-sizing: border-box;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .address-details {
-    grid-template-columns: 1fr;
-  }
-  
-  .account-field {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .field-label {
-    margin-bottom: 5px;
-  }
+/* Keep form-buttons styling for the bottom area */
+.bottom-actions .form-buttons {
+  margin-top: 0;
 }
 
+/* Optionally make edit button slightly larger at bottom */
+.edit-profile-btn {
+  min-width: 220px;
+}
+
+/* Make the Save Changes button wider and keep the label on one line on desktop */
+.save-changes-btn {
+  min-width: 280px;       /* increase width so text stays on one line */
+  white-space: nowrap;    /* prevent the button text from wrapping */
+  padding: 10px 18px;
+  box-sizing: border-box;
+}
+
+/* Keep responsive layout: on small screens allow full-width buttons */
 @media screen and (max-width: 900px) {
-  .account-modal-wrapper {
-    width: 95%;
-    height: auto;
-  }
-  .account-modal {
+  .account-modal-wrapper,
+  .account-section {
     width: 100%;
-    padding: 25px;
+    padding: 0 15px;
   }
+
+  .account-modal,
+  .account-section .account-info-card {
+    padding: 30px 20px 20px 20px;
+  }
+
+  .profile-avatar img {
+    width: 100px;
+    height: 100px;
+  }
+
   .form-columns {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .form-buttons button {
+    width: 100%;
+  }
+
+  .save-changes-btn {
+    min-width: auto;
+    width: 100%;
+    white-space: normal;
   }
 }
