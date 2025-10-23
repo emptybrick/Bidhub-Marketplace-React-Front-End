@@ -365,6 +365,41 @@ ul {
   color: white;
 }
 
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 16px auto 32px; /* space below the cards */
+  box-sizing: border-box;
+}
+
+/* new wrapper ensures grid and pagination stack vertically and center */
+.cards-and-pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center pagination and grid */
+  width: 100%;
+}
+
+/* ensure the grid itself centers its content when container is wider */
+.cards-and-pagination .item-grid {
+  justify-content: center; /* centers the grid columns */
+}
+
+/* keep pagination visually separated from grid */
+.cards-and-pagination .pagination-controls {
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+/* optional: make the select a bit tighter */
+.pagination-controls select {
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
 @media (max-width: 1750px) {
   .item-grid {
     grid-template-columns: repeat(3, 350px);

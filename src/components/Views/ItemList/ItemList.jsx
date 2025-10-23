@@ -9,22 +9,27 @@ import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const ItemList = ({
-  owner = 'none',
+  owner = "none",
   heroText = "BidHub Marketplace",
   userbids = "false",
   favorites = "false",
   purchased = "false",
-  sold = 'false',
+  sold = "false",
   messageText,
   hideFilters = false, // if dashboard render this will hide filter ui as needed
 }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5); // default choices: 5,10,20
+  const [totalCount, setTotalCount] = useState(0);
+  const [nextPageUrl, setNextPageUrl] = useState(null);
+  const [prevPageUrl, setPrevPageUrl] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [conditionFilter, setConditionFilter] = useState("all");
   const [bidSort, setBidSort] = useState("none");
   const [endTimeSort, setEndTimeSort] = useState("none");
-  const [ createdSort, setCreatedSort ] = useState("none");
+  const [createdSort, setCreatedSort] = useState("none");
   const location = useLocation();
   const seller = location.state?.seller;
   const { sellerId } = useParams();
@@ -37,14 +42,20 @@ const ItemList = ({
         hideFilters && !isFiltered() ? "none" : endTimeSort,
         hideFilters && !isFiltered() ? "none" : createdSort,
         hideFilters && !isFiltered() ? "none" : bidSort,
-        owner = sellerId ? sellerId : owner,
+        (owner = sellerId ? sellerId : owner),
         userbids,
         favorites,
         purchased,
-        sold
+        sold,
+        page,
+        pageSize
       );
-      console.log(data)
-      setItems(data);
+      // data is paginated: { count, next, previous, results }
+      console.log("paginated response", data);
+      setItems(data.results || []);
+      setTotalCount(data.count || 0);
+      setNextPageUrl(data.next || null);
+      setPrevPageUrl(data.previous || null);
     } catch (error) {
       console.error("Failed to fetch items:", error);
     } finally {
@@ -62,6 +73,8 @@ const ItemList = ({
     createdSort,
     favorites,
     hideFilters,
+    page,
+    pageSize,
   ]);
 
   useEffect(() => {
@@ -106,7 +119,9 @@ const ItemList = ({
   return (
     <div className="market-container">
       <div className="item-list">
-        <Hero heroText={ seller ? `${seller.username}'s MarketPlace` : heroText } />
+        <Hero
+          heroText={seller ? `${seller.username}'s MarketPlace` : heroText}
+        />
         {showFilters && (
           <>
             <div className="sort-container">
@@ -244,24 +259,70 @@ const ItemList = ({
               </>
             )}
             {items.length > 0 ? (
-              <div className="item-grid">
-                <div className="item-card-container">
-                  {items.map((item, idx) => (
-                    <ItemCard
-                      item={item}
-                      key={idx}
-                      onFavoriteToggle={handleFavoriteToggle}
-                    />
-                  ))}
-                  {items.length < 4 &&
-                    Array.from({ length: 4 - items.length }, (_, idx) => (
-                      <ItemCard
-                        key={`placeholder-${idx}`}
-                        isPlaceholder={true}
-                      />
-                    ))}
+              <>
+                <div className="cards-and-pagination">
+                  <div className="item-grid">
+                    <div className="item-card-container">
+                      {items.map((item, idx) => (
+                        <ItemCard
+                          item={item}
+                          key={idx}
+                          onFavoriteToggle={handleFavoriteToggle}
+                        />
+                      ))}
+                      {items.length < 4 &&
+                        Array.from({ length: 4 - items.length }, (_, idx) => (
+                          <ItemCard
+                            key={`placeholder-${idx}`}
+                            isPlaceholder={true}
+                          />
+                        ))}
+                    </div>
+                  </div>
+
+                  {/* Pagination controls centered beneath the cards */}
+                  <div className="pagination-controls">
+                    <button
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      disabled={!prevPageUrl && page === 1}
+                    >
+                      Previous
+                    </button>
+
+                    <div>
+                      Page {page} — {totalCount} items
+                    </div>
+
+                    <button
+                      onClick={() => setPage((p) => p + 1)}
+                      disabled={!nextPageUrl}
+                    >
+                      Next
+                    </button>
+
+                    <label style={{ marginLeft: 16 }}>
+                      Show
+                      <select
+                        value={pageSize}
+                        onChange={(e) => {
+                          setPageSize(Number(e.target.value));
+                          setPage(1); // reset to first page when size changes
+                        }}
+                        style={{ marginLeft: 8 }}
+                      >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={20}>20</option>
+                        <option value={30}>30</option>
+                        <option value={40}>40</option>
+                        <option value={50}>50</option>
+                        
+                      </select>
+                      per page
+                    </label>
+                  </div>
                 </div>
-              </div>
+              </>
             ) : (
               <div className="no-items-message">
                 {isFiltered() ? (

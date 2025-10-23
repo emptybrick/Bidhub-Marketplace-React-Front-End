@@ -23,23 +23,28 @@ const getFilteredItems = async (
   userbids = "false",
   favorites = "false",
   purchased = "false",
-  sold = 'false'
+  sold = "false",
+  page = 1,
+  pageSize = 20
 ) => {
   try {
     const res = await axios.get(`${BASE_URL}/`, {
       params: {
         category: categoryFilter,
         condition: conditionFilter,
-        owner: owner,
+        owner,
         end: endTime,
         start: startTime,
         bid: currentBid,
-        userbids: userbids,
-        favorites: favorites,
-        purchased: purchased,
-        sold: sold,
+        userbids,
+        favorites,
+        purchased,
+        sold,
+        page,
+        page_size: pageSize,
       },
     });
+    // Return the full paginated response (count, next, previous, results)
     return res.data;
   } catch (err) {
     console.log(err);
