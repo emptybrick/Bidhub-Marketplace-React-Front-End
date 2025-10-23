@@ -26,7 +26,7 @@ const ItemList = ({
   const [ createdSort, setCreatedSort ] = useState("none");
   const location = useLocation();
   const seller = location.state?.seller;
-   const { sellerId } = useParams();
+  const { sellerId } = useParams();
 
   const fetchItems = async () => {
     try {
@@ -36,7 +36,7 @@ const ItemList = ({
         hideFilters && !isFiltered() ? "none" : endTimeSort,
         hideFilters && !isFiltered() ? "none" : createdSort,
         hideFilters && !isFiltered() ? "none" : bidSort,
-        owner = sellerId ? sellerId : 'none',
+        owner = sellerId ? sellerId : owner,
         userbids,
         favorites,
         purchased

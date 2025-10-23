@@ -10,7 +10,7 @@ const Dashboard = () => {
   const { user } = useContext(UserContext);
   const [activeSection, setActiveSection] = useState("selling");
   const [showItem, setShowItem] = useState(false);
-
+  console.log(user)
   return (
     <div className="section">
       <div className="dashboard-container container">
