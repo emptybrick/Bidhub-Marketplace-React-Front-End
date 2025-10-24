@@ -50,7 +50,6 @@ const ItemList = ({
         pageSize
       );
       // data is paginated: { count, next, previous, results }
-      console.log("paginated response", data);
       setItems(data.results || []);
       setTotalCount(data.count || 0);
       setNextPageUrl(data.next || null);
@@ -62,12 +61,15 @@ const ItemList = ({
     }
   };
 
-  if (sellerId) {
-    useEffect(() => {
-      const sellerData = getUsername(sellerId);
+  useEffect(() => {
+    const fetchData = async () => {
+      const sellerData = await getUsername(sellerId);
       setSeller(sellerData);
-    });
-  }
+    };
+    if (sellerId) {
+      fetchData();
+    }
+  }, [sellerId]);
 
   useEffect(() => {
     fetchItems();
