@@ -22,18 +22,14 @@ const SellerView = () => {
         setReviews(reviewsData.results || reviewsData);
         const sellerData = await getSellerProfile(sellerId);
         setSeller(sellerData);
-        console.log(reviewsData.results)
         const userReviewCheck = reviewsData.results.filter(
           (review) => review.author.id === user.id
         );
         if (userReviewCheck.length >= 1) {
-          console.log('marking hasreviews true')
           setHasReviewed(true);
         } else {
-          console.log("marking hasreviews false");
           setHasReviewed(false);
         }
-        console.log(hasReviewed)
       } catch (error) {
         console.error("Error fetching reviews:", error);
       }

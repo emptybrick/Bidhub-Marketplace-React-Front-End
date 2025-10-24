@@ -1,11 +1,10 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext.jsx";
 import { updateUser } from "../../../services/userService.js";
-import userProfileIcon from "../../../assets/user_profile_icon.png";
 import "./account.css";
 
 const Account = ({ onClose }) => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState(""); // "success" or "error"
@@ -36,7 +35,7 @@ const Account = ({ onClose }) => {
     setIsEditing(!isEditing);
     setMessage("");
   };
-
+  console.log(user)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -46,7 +45,7 @@ const Account = ({ onClose }) => {
     e.preventDefault();
     try {
       const updatedUser = await updateUser(user.id, formData);
-      setUser({ ...user, ...updatedUser });
+      // setUser({ ...user, ...updatedUser }); incorrect usage of user.. this is useState, but user is useContext
       setMessage("Profile updated successfully!");
       setMessageType("success");
       setIsEditing(false);
@@ -79,7 +78,7 @@ const Account = ({ onClose }) => {
       )}
       <div className="profile-section">
         <div className="profile-avatar">
-          <img src={userProfileIcon} alt="Profile" />
+          <img src={user.profile_image} alt="Profile Icon" />
         </div>
         <div className="profile-details">
           <div>

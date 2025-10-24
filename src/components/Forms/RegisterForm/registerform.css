@@ -257,6 +257,34 @@ button:focus {
   outline: none;
 }
 
+.profile-image-picker {
+  margin-bottom: 1rem;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(60px, 1fr));
+  gap: 10px;
+}
+
+.image-option {
+  cursor: pointer;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+.image-option img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-option.selected {
+  border-color: #007bff; /* Highlight the selected image */
+}
+
 /* Modal styling - already in navbar.css */
 .modal {
   position: fixed;

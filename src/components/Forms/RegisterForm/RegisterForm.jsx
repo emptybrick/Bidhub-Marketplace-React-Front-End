@@ -16,6 +16,7 @@ const RegisterForm = ({ onClose }) => {
     last_name: "",
     username: "",
     user_rating: "",
+    profile_image: "",
   });
 
   // Destructure formData
@@ -26,7 +27,27 @@ const RegisterForm = ({ onClose }) => {
     first_name,
     last_name,
     username,
+    profile_image,
   } = formData;
+
+  const profileImages = [
+    { src: "/user-icon-1.png", alt: "profile icon" },
+    { src: "/user-icon-2.png", alt: "profile icon" },
+    { src: "/user-icon-3.png", alt: "profile icon" },
+    { src: "/user-icon-4.png", alt: "profile icon" },
+    { src: "/user-icon-5.png", alt: "profile icon" },
+    { src: "/user-icon-6.png", alt: "profile icon" },
+    { src: "/user-icon-7.png", alt: "profile icon" },
+    { src: "/user-icon-8.png", alt: "profile icon" },
+    { src: "/user-icon-9.png", alt: "profile icon" },
+    { src: "/user-icon-10.png", alt: "profile icon" },
+    { src: "/user-icon-11.png", alt: "profile icon" },
+    { src: "/user-icon-12.png", alt: "profile icon" },
+    { src: "/user-icon-13.png", alt: "profile icon" },
+    { src: "/user-icon-14.png", alt: "profile icon" },
+    { src: "/user-icon-15.png", alt: "profile icon" },
+    { src: "/user-icon-16.png", alt: "profile icon" },
+  ];
 
   const handleChange = (evt) => {
     setMessage("");
@@ -51,7 +72,8 @@ const RegisterForm = ({ onClose }) => {
       password &&
       password === password_confirmation &&
       first_name &&
-      last_name
+      last_name &&
+      profile_image
     );
   };
 
@@ -136,6 +158,24 @@ const RegisterForm = ({ onClose }) => {
                 required
               />
               <label htmlFor="password_confirmation">Confirm Password</label>
+            </div>
+            <div className="form-group profile-image-picker">
+              <label htmlFor="profile-image">Select Profile Image</label>
+              <div className="image-grid">
+                {profileImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`image-option ${
+                      formData.profile_image === image.src ? "selected" : ""
+                    }`}
+                    onClick={() =>
+                      setFormData({ ...formData, profile_image: image.src })
+                    }
+                  >
+                    <img src={image.src} alt={`Profile icon ${index + 1}`} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="form-buttons">
