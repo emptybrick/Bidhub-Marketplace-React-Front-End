@@ -99,7 +99,7 @@ body {
   font-size: 14px;
 }
 
-/* For modal display when used in popup */
+/* Modal display when used in popup */
 .modal {
   position: fixed;
   top: 0;
@@ -179,7 +179,7 @@ body {
   position: relative;
   width: 460px;
   height: auto;             /* allow content to set height */
-  min-height: 420px;       /* ensure enough height for inputs + buttons */
+  min-height: 460px;       /* ensure enough height for inputs + buttons */
   overflow: visible;       /* Allow waves to overflow */
   padding: 0;
   box-sizing: border-box;
@@ -229,7 +229,7 @@ body {
   top: 12px;
   left: 50%;
   width: 450x;
-  height: 230px;
+  height: 300px; /* modal height */
   overflow: hidden;
   background-color: white;
   padding: 40px 30px 30px 30px;
