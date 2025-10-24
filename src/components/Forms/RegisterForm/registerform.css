@@ -68,7 +68,7 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* Close button - identical to login form */
+/* 'x' - Close button*/
 .form-close-btn {
   position: absolute;
   top: -6px; 
