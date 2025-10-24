@@ -22,14 +22,18 @@ const SellerView = () => {
         setReviews(reviewsData.results || reviewsData);
         const sellerData = await getSellerProfile(sellerId);
         setSeller(sellerData);
-        const userReviewCheck = reviewsData.filter(
-          (review) => review.author === user.id
+        console.log(reviewsData.results)
+        const userReviewCheck = reviewsData.results.filter(
+          (review) => review.author.id === user.id
         );
-        if (userReviewCheck) {
+        if (userReviewCheck.length >= 1) {
+          console.log('marking hasreviews true')
           setHasReviewed(true);
         } else {
+          console.log("marking hasreviews false");
           setHasReviewed(false);
         }
+        console.log(hasReviewed)
       } catch (error) {
         console.error("Error fetching reviews:", error);
       }
@@ -175,7 +179,7 @@ const SellerView = () => {
           <div className="reviews-subtitle">Reviews</div>
           <div className="sort-container reviews">
             <div className="create-review-button">
-              {hasReviewed && (
+              {!hasReviewed && (
                 <button className="create-review" onClick={handleCreateReview}>New Review</button>
               )}
             </div>

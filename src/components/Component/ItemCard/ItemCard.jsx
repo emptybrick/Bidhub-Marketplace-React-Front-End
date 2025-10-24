@@ -17,7 +17,6 @@ const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle, sold = 'false
   const [ currentIndex, setCurrentIndex ] = useState(0);
   
   useEffect(() => {
-    console.log(item)
     // Ensure item and item.images exist before setting images
     if (item && Array.isArray(item.images)) {
       setImages(item.images); // item.images is already an array
