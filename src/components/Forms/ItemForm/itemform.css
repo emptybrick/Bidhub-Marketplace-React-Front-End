@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap");
 
 :root {
   --green-seaweed: rgba(2, 128, 144, 1);
@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: 'Asap', sans-serif;
+  font-family: "Asap", sans-serif;
 }
 
 /* Item form wrapper for positioning */
@@ -32,7 +32,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1000px;            /* widen to fit three columns and gallery */
+  width: 1000px; /* widen to fit three columns and gallery */
   max-width: 95vw;
   transform: translate(-50%, -50%);
   transition: transform 300ms, box-shadow 300ms;
@@ -84,9 +84,9 @@ body {
 }
 
 /* Wave effects */
-.item-form::before, 
+.item-form::before,
 .item-form::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 2000px; /* Wider for larger form */
   height: 2000px; /* Taller for larger form */
@@ -112,8 +112,12 @@ body {
 }
 
 @keyframes waves {
-  from { transform: rotate(0); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .form-close-btn {
@@ -132,7 +136,7 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1100;
   transition: all 0.2s ease;
 }
@@ -140,8 +144,8 @@ body {
 /* ensure the X sits neatly inside the top-right corner of the card */
 .item-form .form-close-btn {
   position: absolute;
-  top: 12px;    /* adjust this to move the X up/down */
-  right: 12px;  /* adjust this to move the X left/right */
+  top: 12px; /* adjust this to move the X up/down */
+  right: 12px; /* adjust this to move the X left/right */
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -154,7 +158,7 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1100;
   transition: all 0.2s ease;
 }
@@ -167,14 +171,14 @@ body {
 /* Form layout - 2 columns instead of 3 */
 .form-grid {
   display: flex;
-  gap: 30px;  /* Increased gap */
+  gap: 30px; /* Increased gap */
 }
 
 .form-column {
-  flex: 1;  /* Each column takes equal space */
+  flex: 1; /* Each column takes equal space */
   display: flex;
   flex-direction: column;
-  gap: 16px;  /* Increased gap between fields */
+  gap: 16px; /* Increased gap between fields */
 }
 
 /* Form fields */
@@ -184,28 +188,27 @@ body {
 
 .form-field label {
   display: block;
-  margin-bottom: 4px;  /* Slightly increased */
+  margin-bottom: 4px; /* Slightly increased */
   font-weight: 500;
   color: #333;
-  font-size: 14px;  /* Increased font size */
+  font-size: 14px; /* Increased font size */
 }
 
 .form-field input,
 .form-field select,
 .form-field textarea,
 .react-datepicker-wrapper {
-  font-family: 'Asap', sans-serif;
+  font-family: "Asap", sans-serif;
   display: block;
   border-radius: 5px;
-  font-size: 15px;  /* Increased font size */
-  background: white;
+  font-size: 15px; /* Increased font size */
+  background: rgba(232, 232, 232, 0.5);
   width: 100%;
   border: 0;
-  padding: 10px;  /* Increased padding */
+  padding: 10px; /* Increased padding */
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-  height: 40px;  /* Increased height */
+  height: 40px; /* Increased height */
 }
-
 
 .react-datepicker-wrapper,
 .react-datepicker__input-container {
@@ -215,13 +218,12 @@ body {
   margin: 0;
 }
 
-
 .date-picker-input {
-  font-family: 'Asap', sans-serif;
+  font-family: "Asap", sans-serif;
   display: block;
   border-radius: 5px;
   font-size: 15px;
-  background: white;
+  background: rgba(232, 232, 232, 0.5) !important;
   width: 100%;
   border: 0;
   padding: 10px;
@@ -241,24 +243,26 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0px;
+
+  background-color: rgba(255, 255, 255, 0);
 }
 
 /* make textarea smaller and scroll internally if content exceeds limit */
 .form-field textarea {
-  font-family: 'Asap', sans-serif;
+  font-family: "Asap", sans-serif;
   display: block;
   border-radius: 5px;
   font-size: 15px;
-  background: white;
+  background: rgba(232, 232, 232, 0.5);
   width: 100%;
   border: 0;
   padding: 10px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   flex: 0 0 auto;
-  min-height: 50px;   /* reduced from 180px */
-  max-height: 160px;   /* prevents the textarea from growing too tall */
-  overflow-y: auto;    /* scroll inside the textarea when needed */
-  resize: vertical;    /* allow user to expand if desired */
+  min-height: 50px; /* reduced from 180px */
+  max-height: 160px; /* prevents the textarea from growing too tall */
+  overflow-y: auto; /* scroll inside the textarea when needed */
+  resize: vertical; /* allow user to expand if desired */
 }
 
 /* responsive tweak: smaller textarea on narrow screens */
@@ -282,7 +286,7 @@ body {
 
 .form-buttons button {
   width: 120px;
-  font-family: 'Asap', sans-serif;
+  font-family: "Asap", sans-serif;
   cursor: pointer;
   color: #fff;
   font-size: 14px;
@@ -298,7 +302,7 @@ body {
 }
 
 .form-buttons button[type="submit"]:hover {
-  background-color: rgba(2,128,144,0.85);
+  background-color: rgba(2, 128, 144, 0.85);
 }
 
 .form-buttons button[type="button"] {
@@ -306,7 +310,7 @@ body {
 }
 
 .form-buttons button[type="button"]:hover {
-  background-color: rgba(69,105,144,0.85);
+  background-color: rgba(69, 105, 144, 0.85);
 }
 
 /* Form heading */
@@ -334,8 +338,8 @@ h1 {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;         /* full viewport width */
-  height: 100vh;        /* full viewport height */
+  width: 100vw; /* full viewport width */
+  height: 100vh; /* full viewport height */
   background-color: rgba(0, 0, 0, 0.65);
   display: flex;
   justify-content: center;
@@ -365,7 +369,7 @@ h1 {
 
 .modal-close:hover {
   color: var(--red-fire);
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* Container for the login form within modal */
@@ -394,7 +398,7 @@ h1 {
   font-size: 20px;
   font-weight: bold;
   color: var(--red-fire);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1100;
   cursor: pointer;
 }
@@ -429,7 +433,7 @@ h1 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1100;
   transition: all 0.2s ease;
 }
@@ -452,7 +456,7 @@ h1 {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1000px;            /* widen to fit three columns and gallery */
+  width: 1000px; /* widen to fit three columns and gallery */
   max-width: 95vw;
   transform: translate(-50%, -50%);
   transition: transform 300ms, box-shadow 300ms;
@@ -467,17 +471,17 @@ h1 {
 .image-display {
   display: flex;
   gap: 40px; /* gap between left main image & right thumbnail image gallery */
-  align-items: flex-start;   /* align top edges */
+  align-items: flex-start; /* align top edges */
   justify-content: center;
   padding: 8px 12px;
-  flex: 0 0 50%;  /* top 50% of modal */
+  flex: 0 0 50%; /* top 50% of modal */
   box-sizing: border-box;
   min-height: 220px;
 }
 
 /* LEFT: main image takes exactly 50% of the top area */
 .image-left {
-  flex: 0 0 50%;      /* fixed half of the top area */
+  flex: 0 0 50%; /* fixed half of the top area */
   min-width: 0;
   display: flex;
   align-items: center;
@@ -513,9 +517,9 @@ h1 {
   flex-direction: column;
   gap: 8px;
   box-sizing: border-box;
-  align-items: center;       /* center upload button horizontally */
+  align-items: center; /* center upload button horizontally */
   justify-content: flex-start; /* pin content to top */
-  padding-top: 0;            /* align with top of left image */
+  padding-top: 0; /* align with top of left image */
   height: 100%;
 }
 
@@ -523,7 +527,7 @@ h1 {
 .image-right .cloudinary-button,
 .image-right button#upload_widget {
   margin: 0;
-  align-self: center;    /* center horizontally within right column */
+  align-self: center; /* center horizontally within right column */
   height: 48px;
   display: inline-flex;
   align-items: center;
@@ -586,7 +590,7 @@ h1 {
   cursor: pointer;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .thumb-btn img {
@@ -597,7 +601,7 @@ h1 {
 }
 
 .thumb-btn.active {
-  outline: 3px solid rgba(2,128,144,0.14);
+  outline: 3px solid rgba(2, 128, 144, 0.14);
   transform: scale(1.02);
 }
 
@@ -614,6 +618,7 @@ h1 {
   padding: 8px 10px;
   overflow: hidden; /* prevent outer scrolling */
   display: flex;
+  flex-direction: column;
   align-items: stretch;
   justify-content: center;
   box-sizing: border-box;
@@ -654,14 +659,19 @@ h1 {
   padding: 6px 8px;
   font-size: 14px;
   box-sizing: border-box;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* keep the description compact so it doesn't push the modal taller */
-.form-field.description-field textarea {
+.description-field textarea {
   min-height: 56px;
   max-height: 96px;
   overflow-y: auto;
   resize: vertical;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  background-color: rgba(232, 232, 232, 0.5);
 }
 
 /* make dimensions inputs small and inline */
@@ -705,13 +715,25 @@ h1 {
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: min-content;
   }
-  .image-right { width: 260px; }
-  .image-left .image-card { max-width: 420px; }
+  .image-right {
+    width: 260px;
+  }
+  .image-left .image-card {
+    max-width: 420px;
+  }
 }
 
 /* small height screens: slightly shrink top area to fit controls */
 @media (max-height: 720px) {
-  .image-display { flex: 0 0 44%; min-height: 160px; }
-  .form-area { flex: 0 0 56%; overflow-y: hidden; }
-  .form-field.description-field textarea { max-height: 80px; }
+  .image-display {
+    flex: 0 0 44%;
+    min-height: 160px;
+  }
+  .form-area {
+    flex: 0 0 56%;
+    overflow-y: hidden;
+  }
+  .description-field textarea {
+    max-height: 80px;
+  }
 }
