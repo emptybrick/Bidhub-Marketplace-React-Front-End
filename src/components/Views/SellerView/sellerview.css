@@ -64,6 +64,7 @@
 .star-rating {
   font-size: 20px;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .star {
@@ -125,6 +126,33 @@
   background-color: goldenrod;
 }
 
+.sort-container.reviews {
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 40px;
+  padding-right: 40px;
+  
+}
+
+.filters-container {
+  display: flex;
+}
+
+.create-review {
+  font-size: 24px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  margin-left: 20px;
+}
+
+.create-review:hover {
+  transform: scale(110%);
+  background-color: rgb(183, 183, 183);
+}
+
 .seller-detail-subtitle,
 .reviews-subtitle {
   justify-self: center;
@@ -181,17 +209,24 @@
 }
 
 .review-ratings {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin-bottom: 10px;
 }
 
 .ten-point-ratings ul {
   list-style: none;
   padding: 10px 0;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
 .ten-point-ratings li {
   font-size: 18px;
   margin-bottom: 5px;
+  text-align: center;
 }
 
 .review-text {
@@ -200,8 +235,33 @@
 }
 
 .reviewer {
+  display: flex;
+  justify-content: space-between;
   font-size: 16px;
   font-style: italic;
+  text-align: right;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.reviewer-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-buttons button {
+  margin-right: 10px;
+  font-size: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+}
+
+.review-buttons button:hover {
+  transform: scale(110%);
+  background-color: rgb(183, 183, 183);
 }
 
 .no-reviews {

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { updateShippingAndPayment } from "../../../services/itemService";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
 
 const ShippingAndPaymentForm = () => {
   const [formData, setFormData] = useState(
@@ -112,6 +114,7 @@ const ShippingAndPaymentForm = () => {
           <label htmlFor="phone_number">Phone</label>
         </div>
       </div>
+      <PayPalButtons style={{ layout: "horizontal" }} />
     </>
   );
 };

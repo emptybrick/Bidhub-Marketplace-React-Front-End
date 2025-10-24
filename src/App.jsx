@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router";
 import { UserContext } from "./contexts/UserContext";
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js"
 import About from "./components/Views/About/About.jsx";
 import Account from "./components/Views/Account/Account.jsx";
 import Dashboard from "./components/Views/Dashboard/Dashboard.jsx";
@@ -26,7 +25,6 @@ const App = () => {
       <header>
         <NavBar />
       </header>
-
       <main>
         <Routes>
           <Route
@@ -70,11 +68,6 @@ const App = () => {
           <Route path="*" element={<Page404 />} />
         </Routes>
       </main>
-
-        <PayPalScriptProvider options={{ clientId: "test" }}>
-            <PayPalButtons style={{ layout: "horizontal" }} />
-        </PayPalScriptProvider>
-
       <footer>
         <Footer />
       </footer>

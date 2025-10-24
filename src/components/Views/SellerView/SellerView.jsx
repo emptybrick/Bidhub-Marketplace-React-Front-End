@@ -1,32 +1,61 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getReviews } from "../../../services/reviewService.js";
 import Hero from "../../Component/Hero/Hero.jsx";
 import "./sellerview.css";
 import { Link, useParams } from "react-router-dom";
 import { getSellerProfile } from "../../../services/userService.js";
+import { UserContext } from "../../../contexts/UserContext.jsx";
 
 const SellerView = () => {
   const [reviews, setReviews] = useState([]);
-  const [sortOrder, setSortOrder] = useState("-rating"); // Default to highest first
+  const [ratingSort, setRatingSort] = useState("none");
+  const [dateSort, setDateSort] = useState("newest");
   const [seller, setSeller] = useState(null);
-  const {sellerId} = useParams()
+  const [hasReviewed, setHasReviewed] = useState(false);
+  const { sellerId } = useParams();
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const reviewsData = await getReviews(sellerId, { ordering: sortOrder });
+        const reviewsData = await getReviews(sellerId, dateSort, ratingSort);
         setReviews(reviewsData.results || reviewsData);
         const sellerData = await getSellerProfile(sellerId);
         setSeller(sellerData);
+        const userReviewCheck = reviewsData.filter(
+          (review) => review.author === user.id
+        );
+        if (userReviewCheck) {
+          setHasReviewed(true);
+        } else {
+          setHasReviewed(false);
+        }
       } catch (error) {
         console.error("Error fetching reviews:", error);
       }
     };
-      fetchReviews();
-  }, [sortOrder]);
+    fetchReviews();
+  }, [ratingSort, dateSort]);
 
-  const handleSortChange = (newSortOrder) => {
-    setSortOrder(newSortOrder);
+  const handleRatingSortChange = (evt) => {
+    setRatingSort(evt.target.value);
   };
+
+  const handleDateSortChange = (evt) => {
+    setDateSort(evt.target.value);
+  };
+
+  const handleEditReview = () => {
+    // add logic to edit review
+  };
+
+  const handleDeleteReview = () => {
+    // add logic to delete review
+  };
+
+  const handleCreateReview = () => {
+    // add logic to create review
+  }
 
   // Function to render star rating (0.01 to 5.00 as 5 stars)
   const renderStarRating = (rating) => {
@@ -87,7 +116,11 @@ const SellerView = () => {
         </span>
       );
     }
-    return <div className="bubble-rating">{bubbles}</div>;
+    return (
+      <div className="bubble-rating">
+        {bubbles} {rating}/10
+      </div>
+    );
   };
 
   if (!seller) {
@@ -102,7 +135,7 @@ const SellerView = () => {
           <div className="seller-image">
             <img
               className="seller-profile-image"
-              src="https://i.pinimg.com/originals/ac/7e/6e/ac7e6e502e370c83f333e574b1216922.jpg"
+              src={seller.profile_image}
               alt="Seller Profile"
             />
           </div>
@@ -140,19 +173,42 @@ const SellerView = () => {
         </div>
         <div className="details-bottom">
           <div className="reviews-subtitle">Reviews</div>
-          <div className="sort-controls">
-            <button
-              className={sortOrder === "-rating" ? "active" : ""}
-              onClick={() => handleSortChange("-rating")}
-            >
-              Highest Rating First
-            </button>
-            <button
-              className={sortOrder === "rating" ? "active" : ""}
-              onClick={() => handleSortChange("rating")}
-            >
-              Lowest Rating First
-            </button>
+          <div className="sort-container reviews">
+            <div className="create-review-button">
+              {hasReviewed && (
+                <button className="create-review" onClick={handleCreateReview}>New Review</button>
+              )}
+            </div>
+            <div className="filters-container">
+              <div className="filter-sort">
+                <label htmlFor="sort-by-date">Date</label>
+                <select
+                  id="sort-by-date"
+                  value={dateSort}
+                  name="sort-by-date"
+                  onChange={handleDateSortChange}
+                  required
+                >
+                  <option value="none">None</option>
+                  <option value="desc">Latest</option>
+                  <option value="asc">Oldest</option>
+                </select>
+              </div>
+              <div className="filter-sort">
+                <label htmlFor="sort-by-rating">Rating</label>
+                <select
+                  id="sort-by-rating"
+                  value={ratingSort}
+                  name="sort-by-rating"
+                  onChange={handleRatingSortChange}
+                  required
+                >
+                  <option value="none">None</option>
+                  <option value="desc">Highest</option>
+                  <option value="asc">Lowest</option>
+                </select>
+              </div>
+            </div>
           </div>
           {reviews.length > 0 ? (
             <ul className="reviews-list">
@@ -160,7 +216,7 @@ const SellerView = () => {
                 <li key={review.id} className="review-item">
                   <div className="review-ratings">
                     <div className="star-rating">
-                      Rating: {renderStarRating(review.rating)}
+                      Overall Rating: {renderStarRating(review.rating)}
                     </div>
                     <div className="ten-point-ratings">
                       <ul>
@@ -187,10 +243,24 @@ const SellerView = () => {
                       </ul>
                     </div>
                   </div>
-                  <p className="review-text">{review.text}</p>
+                  <p className="review-text">{review.review}</p>
                   <div className="reviewer">
-                    By{" "}
-                    <span className="span-bold">{review.author.username}</span>
+                    <div className="review-buttons">
+                      {review.author.id === user.id && (
+                        <>
+                          <button onClick={handleEditReview}>Edit</button>
+                          <button onClick={handleDeleteReview}>Delete</button>
+                        </>
+                      )}
+                    </div>
+                    <div className="reviewer-info">
+                      <span className="span-bold">
+                        By {review.author.username}
+                      </span>
+                      <span>
+                        {new Date(review.created_at).toLocaleDateString()}
+                      </span>
+                    </div>
                   </div>
                 </li>
               ))}
