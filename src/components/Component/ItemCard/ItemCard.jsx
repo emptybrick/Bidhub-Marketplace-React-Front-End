@@ -7,16 +7,17 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 
-const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
+const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle, sold = 'false', purchased = 'false' }) => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
   const cld = new Cloudinary({ cloud: { cloudName } });
 
   const [images, setImages] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [ currentIndex, setCurrentIndex ] = useState(0);
+  
   useEffect(() => {
+    console.log(item)
     // Ensure item and item.images exist before setting images
     if (item && Array.isArray(item.images)) {
       setImages(item.images); // item.images is already an array
@@ -45,6 +46,10 @@ const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
     }
   };
 
+  const handleShowShippingModal = () => {
+    // add logic here
+  }
+
   if (isPlaceholder) {
     return <div className="item-card placeholder" />;
   }
@@ -52,7 +57,34 @@ const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
   return (
     <div className="item-card">
       <div className="heading">
-        <span>{item?.item_name || "No Name"}</span>
+        <span>{purchased === "true" || sold === "true"
+                ? '' : item.item_name }</span>
+        {sold === "true" && (
+          <>
+            <span className="shipping-payment-details">
+              {item.shipping_info.street_address
+                ? "Shipping Info Received"
+                : "Shipping Info Pending"}
+            </span>
+            <span className="shipping-payment-details">
+              {item.payment_confirmation
+                ? "Payment Confirmed"
+                : "Payment Pending"}
+            </span>
+          </>
+        )}
+        {purchased === "true" && (
+          <>
+            <span className="shipping-payment-details">
+              {item.shipping_info.street_address
+                ? "Shipping Sent"
+                : "Awaiting Shipping Info"}
+            </span>
+            <span className="shipping-payment-details">
+              {item.payment_confirmation ? "Payment Sent" : "Awaiting Payment"}
+            </span>
+          </>
+        )}
         <span>
           {user ? (
             <FavoriteButton
@@ -101,16 +133,43 @@ const ItemCard = ({ item, isPlaceholder = false, onFavoriteToggle }) => {
         </div>
         <div className="item-card-bottom">
           <div className="item-card-left">
-            <div className="info">{item?.description || "No description"}</div>
-            <div>Current Bid: ${item?.current_bid || "0"}</div>
+            <div className="info">
+              {purchased === "true" || sold === "true"
+                ? item.item_name
+                : item.description}
+            </div>
+            <div>
+              {purchased === "true" || sold === "true"
+                ? "Final Bid: $"
+                : "Current Bid: $"}
+              { item.current_bid }
+            </div>
           </div>
           <div className="item-card-right">
-            {user ? (
-              <button className="view-details" onClick={() => handleLink()}>
-                View Details
-              </button>
-            ) : (
-              ""
+            {user && (
+              <>
+                {item.shipping_info.street_address && sold === "true" && (
+                  <button
+                    className="view-details"
+                    onClick={() => handleShowShippingModal()}
+                  >
+                    View Shipping Info
+                  </button>
+                )}
+                {purchased === "true" && (
+                  <button
+                    className="view-details"
+                    onClick={() => handleShowShippingModal()}
+                  >
+                    {item.payment_confirmation
+                      ? "Update Shipping or Payment Info"
+                      : "Add Shipping and Payment Info"}
+                  </button>
+                )}
+                <button className="view-details" onClick={() => handleLink()}>
+                  View Details
+                </button>
+              </>
             )}
           </div>
         </div>

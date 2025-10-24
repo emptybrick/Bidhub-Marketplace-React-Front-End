@@ -275,7 +275,9 @@ const ItemList = ({
                         <ItemCard
                           item={item}
                           key={idx}
-                          onFavoriteToggle={handleFavoriteToggle}
+                          onFavoriteToggle={ handleFavoriteToggle }
+                          sold={ sold }
+                          purchased={purchased}
                         />
                       ))}
                       {items.length < 4 &&

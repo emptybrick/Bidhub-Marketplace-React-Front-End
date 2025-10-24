@@ -15,13 +15,6 @@ const RegisterForm = ({ onClose }) => {
     first_name: "",
     last_name: "",
     username: "",
-    street_address: "",
-    city: "",
-    state: "",
-    postal_code: "",
-    country: "",
-    phone_number: "",
-    wallet: "",
     user_rating: "",
   });
 
@@ -33,12 +26,6 @@ const RegisterForm = ({ onClose }) => {
     first_name,
     last_name,
     username,
-    street_address,
-    city,
-    state,
-    postal_code,
-    country,
-    phone_number,
   } = formData;
 
   const handleChange = (evt) => {
@@ -64,13 +51,7 @@ const RegisterForm = ({ onClose }) => {
       password &&
       password === password_confirmation &&
       first_name &&
-      last_name &&
-      street_address &&
-      city &&
-      state &&
-      postal_code &&
-      country &&
-      phone_number
+      last_name
     );
   };
 
@@ -157,83 +138,6 @@ const RegisterForm = ({ onClose }) => {
               <label htmlFor="password_confirmation">Confirm Password</label>
             </div>
           </div>
-
-          <h2>Address</h2>
-
-          <div className="form-columns">
-            <div className="form-group">
-              <input
-                type="text"
-                id="street_address"
-                value={street_address}
-                name="street_address"
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="street_address">Street</label>
-            </div>
-
-            <div className="form-group">
-              <input
-                type="text"
-                id="city"
-                value={city}
-                name="city"
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="city">City</label>
-            </div>
-
-            <div className="form-group">
-              <input
-                type="text"
-                id="state"
-                value={state}
-                name="state"
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="state">State</label>
-            </div>
-
-            <div className="form-group">
-              <input
-                type="text"
-                id="postal_code"
-                value={postal_code}
-                name="postal_code"
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="postal_code">Postal Code</label>
-            </div>
-
-            <div className="form-group">
-              <input
-                type="text"
-                id="country"
-                value={country}
-                name="country"
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="country">Country</label>
-            </div>
-
-            <div className="form-group">
-              <input
-                type="text"
-                id="phone_number"
-                value={phone_number}
-                name="phone_number"
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="phone_number">Phone</label>
-            </div>
-          </div>
-
           <div className="form-buttons">
             <button type="submit" disabled={isFormInvalid()}>
               Register

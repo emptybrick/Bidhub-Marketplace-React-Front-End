@@ -166,6 +166,11 @@ header {
   background-color: #ffffff;
 }
 
+.shipping-payment-details {
+  font-size: 12px !important;
+  text-align: center !important;
+}
+
 .view-details {
   background-color: #ffffff;
   padding: 10px;
@@ -243,6 +248,12 @@ header {
 }
 
 .item-card-right {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.item-card-left {
   align-self: center;
 }
 

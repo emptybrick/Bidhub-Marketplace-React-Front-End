@@ -98,6 +98,23 @@ const createItem = async (formData) => {
   }
 };
 
+const updateShippingAndPayment = async (formData, itemId) => {
+  try {
+    const res = await axios.post(`${ BASE_URL }/${ itemId}/shipping-and-payment`, formData);
+    return res.data;
+  } catch (err) {
+    console.error("Create item error:", err.response ? err.response.data : err);
+    let detail = err.response?.data?.detail;
+    if (typeof detail !== "string") {
+      detail = JSON.stringify(detail);
+    }
+    throw new Error(
+      detail || "Failed to update shipping and payment info. Please check all fields and try again."
+    );
+  }
+};
+
+
 export {
   getItems,
   getItemById,
@@ -105,4 +122,5 @@ export {
   deleteItem,
   createItem,
   getFilteredItems,
+  updateShippingAndPayment
 };
