@@ -41,9 +41,9 @@ const deleteReview = async (sellerId, id) => {
     }
 };
 
-const createReview = async (sellerId, Review) => {
+const createReview = async (sellerId, formData) => {
     try {
-        const res = await axios.post(`${ BASE_URL }/${ sellerId }/reviews/`, Review);
+        const res = await axios.post(`${ BASE_URL }/${ sellerId }/reviews/new`, formData);
         const data = await res.data;
         return data;
     } catch (error) {

@@ -82,7 +82,7 @@ const Account = ({ onClose }) => {
       setUser(updatedUser);
       setIsEditing(false);
     } catch (err) {
-      setMessage(err.message || "Failed to update profile");
+      setMessage(err.request.response || "Failed to update profile");
       setMessageType("error");
     }
   };

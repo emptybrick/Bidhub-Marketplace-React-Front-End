@@ -61,7 +61,7 @@ const RegisterForm = ({ onClose }) => {
       setUser(newUser);
       navigate("/bidhub/home");
     } catch (err) {
-      setMessage(err.message);
+      setMessage(err.request.response);
     }
   };
 
@@ -70,7 +70,6 @@ const RegisterForm = ({ onClose }) => {
       email &&
       username &&
       password &&
-      password === password_confirmation &&
       first_name &&
       last_name &&
       profile_image

@@ -17,7 +17,9 @@ const ItemDetail = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
   const [seller, setSeller] = useState(null);
-
+  const [message, setMessage] = useState("");
+  const [ messageType, setMessageType ] = useState(""); // "success" or "error"
+  
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
   const cld = new Cloudinary({ cloud: { cloudName } });
 
@@ -69,7 +71,11 @@ const ItemDetail = () => {
       await createBid(itemId, bidOffered);
       const response = await getItemById(itemId);
       setItem(response);
+      setMessage("Bid accepted, you are the highest bidder!");
+      setMessageType("success");
     } catch (error) {
+      setMessage(error.request.response || "Failed to place bid");
+      setMessageType("error");
       console.log("Error Placing Bid:", error);
     }
   };
@@ -82,6 +88,15 @@ const ItemDetail = () => {
   return (
     <div className="item-detail-container">
       <Hero heroText={item.item_name} seller={seller} />
+      {message && (
+        <div
+          className={`error-message ${
+            messageType === "success" ? "success-message" : ""
+          }`}
+        >
+          {message}
+        </div>
+      )}
       <div className="item-detail-section">
         <div className="details-top two-column-equal">
           {/* LEFT column: main image (50%) and thumbnails */}
@@ -253,31 +268,3 @@ const ItemDetail = () => {
 };
 
 export default ItemDetail;
-
-/* {item.bid_history?.length > 0 ? (
-            <ul>
-              {item.bids.map((bid) => (
-                <li key={bid.id}>
-                  ${bid.amount} by {bid.bidder.username}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No bids yet</p>
-          )} */
-
-/* {user && user.id !== item.seller?.id && (
-            <form onSubmit={handleSubmitBid}>
-              <h3>Place a Bid</h3>
-              <input
-                type="number"
-                step="0.01"
-                value={bidAmount}
-                onChange={(e) => setBidAmount(e.target.value)}
-                placeholder="Bid amount"
-                min={item.price}
-                required
-              />
-              <button type="submit">Place Bid</button>
-            </form>
-          )} */
