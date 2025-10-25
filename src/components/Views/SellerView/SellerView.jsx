@@ -5,6 +5,7 @@ import "./sellerview.css";
 import { Link, useParams } from "react-router-dom";
 import { getSellerProfile } from "../../../services/userService.js";
 import { UserContext } from "../../../contexts/UserContext.jsx";
+import ReviewForm from '../../Forms/ReviewForm/ReviewForm.jsx'
 
 const SellerView = () => {
   const [reviews, setReviews] = useState([]);
@@ -14,6 +15,7 @@ const SellerView = () => {
   const [hasReviewed, setHasReviewed] = useState(false);
   const { sellerId } = useParams();
   const { user } = useContext(UserContext);
+  const [showItem, setShowItem] = useState(false);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -176,7 +178,24 @@ const SellerView = () => {
           <div className="sort-container reviews">
             <div className="create-review-button">
               {!hasReviewed && (
-                <button className="create-review" onClick={handleCreateReview}>New Review</button>
+                <button className="create-review" onClick={ () => setShowItem(true) }>
+                  New Review
+                </button>
+              )}
+            </div>
+            <div className="review-form">
+              {showItem && (
+                <div className="modal">
+                  <div className="modal-content">
+                    <button
+                      className="close-button"
+                      onClick={() => setShowItem(false)}
+                    >
+                      ✕
+                    </button>
+                    <ReviewForm onClose={() => setShowItem(false)} sellerId={sellerId} />
+                  </div>
+                </div>
               )}
             </div>
             <div className="filters-container">

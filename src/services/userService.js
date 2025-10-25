@@ -13,7 +13,7 @@ const getUser = async () => {
   }
 };
 
-const updateUser = async (userId, userData) => {
+const updateUser = async (userData) => {
   try {
     // Use PATCH for partial update
     const res = await axios.patch(`${BASE_URL}/user/`, userData, {

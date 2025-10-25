@@ -1,53 +1,85 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../../contexts/UserContext.jsx";
-import { updateUser } from "../../../services/userService.js";
+import { getUser, updateUser } from "../../../services/userService.js";
 import "./account.css";
 
 const Account = ({ onClose }) => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState(""); // "success" or "error"
   const [formData, setFormData] = useState({
     first_name: user?.first_name || "",
     last_name: user?.last_name || "",
-    street_address: user?.street_address || "",
-    city: user?.city || "",
-    state: user?.state || "",
-    postal_code: user?.postal_code || "",
-    country: user?.country || "",
-    phone_number: user?.phone_number || "",
+    profile_image: user?.profile_image || "", 
   });
+
+  const profileImages = [
+    { src: "/user-icon-1.png", alt: "profile icon" },
+    { src: "/user-icon-2.png", alt: "profile icon" },
+    { src: "/user-icon-3.png", alt: "profile icon" },
+    { src: "/user-icon-4.png", alt: "profile icon" },
+    { src: "/user-icon-5.png", alt: "profile icon" },
+    { src: "/user-icon-6.png", alt: "profile icon" },
+    { src: "/user-icon-7.png", alt: "profile icon" },
+    { src: "/user-icon-8.png", alt: "profile icon" },
+    { src: "/user-icon-9.png", alt: "profile icon" },
+    { src: "/user-icon-10.png", alt: "profile icon" },
+    { src: "/user-icon-11.png", alt: "profile icon" },
+    { src: "/user-icon-12.png", alt: "profile icon" },
+    { src: "/user-icon-13.png", alt: "profile icon" },
+    { src: "/user-icon-14.png", alt: "profile icon" },
+    { src: "/user-icon-15.png", alt: "profile icon" },
+    { src: "/user-icon-16.png", alt: "profile icon" },
+  ];
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getUser();
+        setUser(userData);
+        // Update formData with fetched user data
+        setFormData({
+          first_name: userData?.first_name || "",
+          last_name: userData?.last_name || "",
+          profile_image: userData?.profile_image || "",
+        });
+      } catch (error) {
+        console.error("Error fetching User:", error);
+      }
+    };
+    fetchUser();
+  }, [setUser]);
 
   const handleEditToggle = () => {
     if (isEditing) {
+      // Reset formData to current user data when canceling
       setFormData({
         first_name: user?.first_name || "",
         last_name: user?.last_name || "",
-        street_address: user?.street_address || "",
-        city: user?.city || "",
-        state: user?.state || "",
-        postal_code: user?.postal_code || "",
-        country: user?.country || "",
-        phone_number: user?.phone_number || "",
+        profile_image: user?.profile_image || "",
       });
     }
     setIsEditing(!isEditing);
     setMessage("");
   };
-  console.log(user)
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleImageSelect = (imageSrc) => {
+    setFormData({ ...formData, profile_image: imageSrc });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updatedUser = await updateUser(user.id, formData);
-      // setUser({ ...user, ...updatedUser }); incorrect usage of user.. this is useState, but user is useContext
+      const updatedUser = await updateUser(formData);
       setMessage("Profile updated successfully!");
       setMessageType("success");
+      setUser(updatedUser);
       setIsEditing(false);
     } catch (err) {
       setMessage(err.message || "Failed to update profile");
@@ -66,7 +98,7 @@ const Account = ({ onClose }) => {
 
   return (
     <div className="account-section">
-      <h1></h1>
+      <h1>User Profile</h1>
       {message && (
         <div
           className={`error-message ${
@@ -86,9 +118,6 @@ const Account = ({ onClose }) => {
           </div>
           <div>
             <strong>Email:</strong> {user.email}
-          </div>
-          <div>
-            <strong>Password:</strong> ••••••••
           </div>
         </div>
       </div>
@@ -117,74 +146,21 @@ const Account = ({ onClose }) => {
               />
               <label htmlFor="last_name">Last Name</label>
             </div>
-            <div className="form-group">
-              <input
-                type="text"
-                id="phone_number"
-                name="phone_number"
-                value={formData.phone_number}
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="phone_number">Phone</label>
-            </div>
-          </div>
-          <h2>Address</h2>
-          <div className="form-columns">
-            <div className="form-group">
-              <input
-                type="text"
-                id="street_address"
-                name="street_address"
-                value={formData.street_address}
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="street_address">Street</label>
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                id="city"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="city">City</label>
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                id="state"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="state">State</label>
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                id="postal_code"
-                name="postal_code"
-                value={formData.postal_code}
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="postal_code">Postal Code</label>
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                id="country"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="country">Country</label>
+            <div className="form-group profile-image-picker">
+              <label htmlFor="profile-image">Select Profile Image</label>
+              <div className="image-grid">
+                {profileImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`image-option ${
+                      formData.profile_image === image.src ? "selected" : ""
+                    }`}
+                    onClick={() => handleImageSelect(image.src)}
+                  >
+                    <img src={image.src} alt={`Profile icon ${index + 1}`} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="form-buttons">
@@ -207,43 +183,10 @@ const Account = ({ onClose }) => {
               <input type="text" value={user.last_name} disabled />
               <label>Last Name</label>
             </div>
-            <div className="form-group">
-              <input type="text" value={user.phone_number} disabled />
-              <label>Phone</label>
-            </div>
-          </div>
-          <h2>Address</h2>
-          <div className="form-columns">
-            <div className="form-group">
-              <input type="text" value={user.street_address} disabled />
-              <label>Street</label>
-            </div>
-            <div className="form-group">
-              <input type="text" value={user.city} disabled />
-              <label>City</label>
-            </div>
-            <div className="form-group">
-              <input type="text" value={user.state} disabled />
-              <label>State</label>
-            </div>
-            <div className="form-group">
-              <input type="text" value={user.postal_code} disabled />
-              <label>Postal Code</label>
-            </div>
-            <div className="form-group">
-              <input type="text" value={user.country} disabled />
-              <label>Country</label>
-            </div>
           </div>
         </div>
       )}
       <div className="profile-wallet">
-        <div>
-          <strong>Wallet Balance:</strong>{" "}
-          <span style={{ color: "#1cc88a", fontWeight: 700 }}>
-            ${user.wallet ? parseFloat(user.wallet).toFixed(2) : "0.00"}
-          </span>
-        </div>
         <div>
           <strong>User Rating:</strong>{" "}
           <span style={{ color: "#4e73df", fontWeight: 600 }}>
@@ -259,7 +202,6 @@ const Account = ({ onClose }) => {
         </div>
       </div>
 
-      {/* bottom actions: pinned to bottom of the account panel in non-edit mode */}
       {!isEditing ? (
         <div className="bottom-actions">
           <div className="form-buttons">
