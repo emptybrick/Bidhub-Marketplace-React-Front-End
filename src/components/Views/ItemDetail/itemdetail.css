@@ -7,8 +7,6 @@
 }
 
 .item-detail-section {
-  width: 80vw;
-  height: 80vh;
   background-color: rgba(218, 165, 32, 0.07);
   border-radius: 10px;
   box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
@@ -17,13 +15,16 @@
   line-height: 1.4;
 }
 
-/* Headings: style Current Bid, Item Details and Item Description like h2 */
-.current-bid,
+/* Headings: style Item Details and Item Description like h2 */
 .item-detail-subtitle,
 .item-description-subtitle {
   font-size: 32px;   /* h2-like sizing (adjust if you want larger/smaller) */
   font-weight: 600;
   margin: 0 0 8px 0;
+}
+
+.bid-label {
+  margin-bottom: 10px;
 }
 
 /* ensure other UI text (labels, list items, small bits) remain legible */
@@ -37,6 +38,10 @@
 .bid-offer-button,
 .bid-history-button {
   font-size: 18px; /* keep consistent with base size */
+}
+
+.item-info-left ul, .item-info-right ul {
+  padding-bottom: 0 !important;
 }
 
 /* make top area a two-column layout: left = image + bottom details, right = current bid */
@@ -108,8 +113,9 @@
 /* item info box (left bottom) — keep readable but smaller */
 .item-info-section {
   border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.04);
   padding: 12px;
+display: flex;
+gap: 60px;
 }
 
 /* adjust subtitle sizes */
@@ -227,13 +233,6 @@
   line-height: 1.4;
 }
 
-/* item info box (left bottom) — keep readable but smaller */
-.item-info-section {
-  border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.04);
-  padding: 12px;
-}
-
 /* adjust subtitle sizes */
 .item-detail-subtitle,
 .item-description-subtitle {
@@ -315,8 +314,33 @@
   background: rgba(0,0,0,0.02);
   padding: 12px;
   border-radius: 8px;
-  flex: 1 1 0;              /* <-- equal-height stacked sections */
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.bid-info-section {
+  display: flex;
+}
+
+.bid-form {
+  padding-top: 0 !important;
+}
+
+.bid-form-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.bid-info-right {
+  margin-left: 60px;
+}
+
+.bid-input {
+  max-width: 100px;
+}
+
+.error-message.item-details {
+  margin-bottom: 0 !important;
 }
 
 /* smaller description text — edit to change description font size */
@@ -326,12 +350,6 @@
   height: 100%;
   overflow: auto;
   padding-top: 6px;
-}
-
-/* keep Current Bid compact */
-.current-bid {
-  font-size: 30px;
-  margin-bottom: 6px;
 }
 
 /* reduce subtitle sizes */

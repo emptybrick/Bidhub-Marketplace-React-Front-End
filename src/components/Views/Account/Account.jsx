@@ -11,7 +11,7 @@ const Account = ({ onClose }) => {
   const [formData, setFormData] = useState({
     first_name: user?.first_name || "",
     last_name: user?.last_name || "",
-    profile_image: user?.profile_image || "", 
+    profile_image: user?.profile_image || "",
   });
 
   const profileImages = [
@@ -38,7 +38,6 @@ const Account = ({ onClose }) => {
       try {
         const userData = await getUser();
         setUser(userData);
-        // Update formData with fetched user data
         setFormData({
           first_name: userData?.first_name || "",
           last_name: userData?.last_name || "",
@@ -53,7 +52,6 @@ const Account = ({ onClose }) => {
 
   const handleEditToggle = () => {
     if (isEditing) {
-      // Reset formData to current user data when canceling
       setFormData({
         first_name: user?.first_name || "",
         last_name: user?.last_name || "",
@@ -122,29 +120,31 @@ const Account = ({ onClose }) => {
         </div>
       </div>
       {isEditing ? (
-        <form onSubmit={handleSubmit}>
-          <div className="form-columns">
-            <div className="form-group">
-              <input
-                type="text"
-                id="first_name"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="first_name">First Name</label>
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                value={formData.last_name}
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="last_name">Last Name</label>
+        <form onSubmit={handleSubmit} className="account-update-form">
+          <div className="account-form-columns">
+            <div className="form-group-name">
+              <div className="form-group">
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleChange}
+                  required
+                />
+                <label htmlFor="first_name">First Name</label>
+              </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleChange}
+                  required
+                />
+                <label htmlFor="last_name">Last Name</label>
+              </div>
             </div>
             <div className="form-group profile-image-picker">
               <label htmlFor="profile-image">Select Profile Image</label>
@@ -173,37 +173,34 @@ const Account = ({ onClose }) => {
           </div>
         </form>
       ) : (
-        <div>
-          <div className="form-columns">
-            <div className="form-group">
-              <input type="text" value={user.first_name} disabled />
-              <label>First Name</label>
-            </div>
-            <div className="form-group">
-              <input type="text" value={user.last_name} disabled />
-              <label>Last Name</label>
+        <>
+          <div className="account-form-columns">
+            <div className="form-group-name">
+              <div className="form-group">
+                <input type="text" value={user.first_name} disabled />
+                <label>First Name</label>
+              </div>
+              <div className="form-group">
+                <input type="text" value={user.last_name} disabled />
+                <label>Last Name</label>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      <div className="profile-wallet">
-        <div>
-          <strong>User Rating:</strong>{" "}
-          <span style={{ color: "#4e73df", fontWeight: 600 }}>
-            {user.user_rating ? user.user_rating : "Not rated"}
-            {user.user_rating && <span style={{ marginLeft: 5 }}>★</span>}
-          </span>
-        </div>
-        <div>
-          <strong>Favorite Items:</strong>{" "}
-          <span style={{ color: "#4e73df", fontWeight: 600 }}>
-            {user.favorites ? user.favorites.length : 0}
-          </span>
-        </div>
-      </div>
-
-      {!isEditing ? (
-        <div className="bottom-actions">
+          <div className="profile-wallet">
+            <div>
+              <strong>User Rating:</strong>{" "}
+              <span style={{ color: "#4e73df", fontWeight: 600 }}>
+                {user.user_rating ? user.user_rating : "Not rated"}
+                {user.user_rating && <span style={{ marginLeft: 5 }}>★</span>}
+              </span>
+            </div>
+            <div>
+              <strong>Favorite Items:</strong>{" "}
+              <span style={{ color: "#4e73df", fontWeight: 600 }}>
+                {user.favorites ? user.favorites.length : 0}
+              </span>
+            </div>
+          </div>
           <div className="form-buttons">
             <button
               type="button"
@@ -218,8 +215,8 @@ const Account = ({ onClose }) => {
               </button>
             )}
           </div>
-        </div>
-      ) : null}
+        </>
+      )}
     </div>
   );
 };

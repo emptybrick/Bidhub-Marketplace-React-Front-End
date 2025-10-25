@@ -11,75 +11,38 @@ body {
   font-family: 'Asap', sans-serif;
 }
 
-/* Modal wrapper (matches RegisterForm look) */
-.account-modal-wrapper,
+/* Modal wrapper */
 .account-section {
-  position: relative;
+  flex: 1 0 auto;
   width: 800px;
   max-width: 95%;
   margin: 0 auto;
-}
-
-/* Make the account panel taller so footer is pushed down (adjust as needed) */
-.account-section,
-.account-modal-wrapper {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 40px 20px 60px 20px; /* Increased bottom padding for button space */
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 100px); /* main area taller; tweak offset if you have header/footer height */
+  min-height: 100%; /* Ensure it takes full height of parent (modal or page) */
   box-sizing: border-box;
-  padding-bottom: 20px;
+  position: relative; /* For absolute positioning of buttons if needed */
+    background-color: rgba(218, 165, 32, 0.07);
+      border-radius: 10px;
+  box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
 }
 
-/* Card */
-.account-modal,
-.account-section .account-info-card {
-  overflow: hidden;
-  background-color: #fff;
-  padding: 40px 30px 30px 30px;
-  border-radius: 10px;
-  position: relative;
-  box-shadow: var(--card-shadow);
-  color: #333;
+.account-update-form {
+  padding-top: 0 !important;
 }
 
-/* Decorative waves (same effect as RegisterForm) */
-.account-modal::before,
-.account-modal::after,
-.account-section .account-info-card::before,
-.account-section .account-info-card::after {
-  content: '';
-  position: absolute;
-  width: 1000px;
-  height: 1000px;
-  border-top-left-radius: 40%;
-  border-top-right-radius: 45%;
-  border-bottom-left-radius: 35%;
-  border-bottom-right-radius: 40%;
-  z-index: -1;
+.form-group-name {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  gap: 20px;
+  display: flex;
+  justify-content: center;
 }
 
-.account-modal::before,
-.account-section .account-info-card::before {
-  left: 40%;
-  bottom: -130%;
-  background-color: rgba(69, 105, 144, 0.15);
-  animation: waves 6s infinite linear;
-}
-
-.account-modal::after,
-.account-section .account-info-card::after {
-  left: 35%;
-  bottom: -125%;
-  background-color: rgba(2, 128, 144, 0.2);
-  animation: waves 7s infinite;
-}
-
-@keyframes waves {
-  from { transform: rotate(0); }
-  to { transform: rotate(360deg); }
-}
-
-/* Close button (matching register style) */
+/* Close button */
 .form-close-btn {
   position: absolute;
   top: 12px;
@@ -103,7 +66,6 @@ body {
 .form-close-btn:hover { transform: scale(1.1); background: #f8f8f8; }
 
 /* Headings */
-.account-modal h1,
 .account-section h1 {
   text-align: center;
   margin-bottom: 15px;
@@ -114,7 +76,6 @@ body {
   text-transform: uppercase;
 }
 
-.account-modal h2,
 .account-section h2 {
   font-size: 22px;
   text-transform: uppercase;
@@ -126,10 +87,10 @@ body {
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
-/* Ensure form columns don't overlap the section heading (Address) */
-.account-section h2 + .form-columns {
-  margin-top: 2px;    /* space between the h2 and the grid */
-  padding-top: 40px;    /* small extra padding so absolute labels have room */
+/* Ensure form columns don't overlap the section heading */
+.account-section h2 {
+  margin-top: 2px;
+  padding-top: 40px;
   box-sizing: border-box;
 }
 
@@ -138,16 +99,12 @@ body {
   display: flex;
   align-items: center;
   gap: 30px;
-  margin-bottom: 20px;
-}
-
-.profile-avatar {
-  flex-shrink: 0;
 }
 
 .profile-avatar img {
   width: 120px;
   height: 120px;
+  padding: 0px;
   object-fit: cover;
   border-radius: 50%;
   border: 5px solid #e3e6f0;
@@ -155,12 +112,12 @@ body {
 
 /* Profile details */
 .profile-details {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   text-align: left;
+  gap: 10px;
   font-size: 18px;
 }
 
@@ -178,15 +135,13 @@ body {
   align-items: flex-start;
   text-align: left;
   background: rgba(255,255,255,0.6);
-  flex: 0 0 auto;
 }
 
-/* Form layout (use same 3-column / responsive behavior as RegisterForm) */
+/* Form layout */
 .form-columns {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin-bottom: 10px;
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group {
@@ -194,7 +149,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* Labels positioned above inputs (register style) */
+/* Labels */
 .form-group label {
   position: absolute;
   top: -18px;
@@ -213,7 +168,6 @@ body {
   height: 38px;
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.9);
-  border: 0;
   color: #333;
   font-family: 'Asap', sans-serif;
   font-size: 14px;
@@ -231,14 +185,16 @@ body {
   color: var(--green-seaweed);
 }
 
-/* Buttons - centered like register */
+/* Buttons container */
 .form-buttons {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
   gap: 12px;
+  margin-top: auto; /* Pushes buttons to the bottom of .account-section */
+  padding-top: 20px; /* Ensure spacing above buttons */
 }
 
+/* Button styling */
 .form-buttons button {
   width: 200px;
   font-family: 'Asap', sans-serif;
@@ -287,54 +243,28 @@ body {
   border-radius: 4px;
 }
 
-/* bottom-actions sits at the bottom of the .account-section */
-.bottom-actions {
-  margin-top: auto; /* pushes this block to the bottom of the panel */
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 12px 0 20px;
-  box-sizing: border-box;
-}
-
-/* Keep form-buttons styling for the bottom area */
-.bottom-actions .form-buttons {
-  margin-top: 0;
-}
-
-/* Optionally make edit button slightly larger at bottom */
+/* Remove .bottom-actions and use .form-buttons for all buttons */
 .edit-profile-btn {
   min-width: 220px;
 }
 
-/* Make the Save Changes button wider and keep the label on one line on desktop */
 .save-changes-btn {
-  min-width: 280px;       /* increase width so text stays on one line */
-  white-space: nowrap;    /* prevent the button text from wrapping */
+  min-width: 280px;
+  white-space: nowrap;
   padding: 10px 18px;
   box-sizing: border-box;
 }
 
-/* Keep responsive layout: on small screens allow full-width buttons */
+/* Responsive adjustments */
 @media screen and (max-width: 900px) {
-  .account-modal-wrapper,
   .account-section {
     width: 100%;
-    padding: 0 15px;
-  }
-
-  .account-modal,
-  .account-section .account-info-card {
-    padding: 30px 20px 20px 20px;
+    padding: 30px 15px 60px 15px; /* Adjusted padding for mobile */
   }
 
   .profile-avatar img {
     width: 100px;
     height: 100px;
-  }
-
-  .form-columns {
-    grid-template-columns: 1fr;
   }
 
   .form-buttons {

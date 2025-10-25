@@ -16,26 +16,26 @@ const SellerView = () => {
   const { sellerId } = useParams();
   const { user } = useContext(UserContext);
   const [showItem, setShowItem] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
- const fetchReviews = async () => {
-   try {
-     const reviewsData = await getReviews(sellerId, dateSort, ratingSort);
-     setReviews(reviewsData.results || reviewsData);
-     const sellerData = await getSellerProfile(sellerId);
-     setSeller(sellerData);
-     const userReviewCheck = reviewsData.results.filter(
-       (review) => review.author.id === user.id
-     );
-     setHasReviewed(userReviewCheck.length >= 1);
-   } catch (error) {
-     console.error("Error fetching reviews:", error);
-   }
- };
+  const fetchReviews = async () => {
+    try {
+      const reviewsData = await getReviews(sellerId, dateSort, ratingSort);
+      setReviews(reviewsData.results || reviewsData);
+      const sellerData = await getSellerProfile(sellerId);
+      setSeller(sellerData);
+      const userReviewCheck = reviewsData.results.filter(
+        (review) => review.author.id === user.id
+      );
+      setHasReviewed(userReviewCheck.length >= 1);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
+  };
 
- useEffect(() => {
-   fetchReviews();
- }, [ratingSort, dateSort, sellerId, user.id]);
+  useEffect(() => {
+    fetchReviews();
+  }, [ratingSort, dateSort, sellerId, user.id]);
 
   const handleRatingSortChange = (evt) => {
     setRatingSort(evt.target.value);
@@ -47,11 +47,11 @@ const SellerView = () => {
 
   const handleDeleteReview = async (reviewId) => {
     try {
-      console.log(sellerId, reviewId)
+      console.log(sellerId, reviewId);
       await deleteReview(sellerId, reviewId);
       fetchReviews();
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -110,13 +110,6 @@ const SellerView = () => {
             />
           </div>
           <div className="top-right-section">
-            <Link
-              to={`/bidhub/seller/${sellerId}/marketplace`}
-              className="marketplace-link"
-              state={{ seller: seller }}
-            >
-              View {seller.username}'s Marketplace
-            </Link>
             <div className="seller-info-section">
               <div className="seller-detail-subtitle">Seller Details</div>
               <div className="seller-info">
@@ -138,22 +131,19 @@ const SellerView = () => {
                   <li>User Rating: {renderStarRating(seller.user_rating)}</li>
                 </ul>
               </div>
+              <Link
+                to={`/bidhub/seller/${sellerId}/marketplace`}
+                className="marketplace-link"
+                state={{ seller: seller }}
+              >
+                View {seller.username}'s Marketplace
+              </Link>
             </div>
           </div>
         </div>
         <div className="details-bottom">
           <div className="reviews-subtitle">Reviews</div>
           <div className="sort-container reviews">
-            <div className="create-review-button">
-              {!hasReviewed && (
-                <button
-                  className="create-review"
-                  onClick={() => setShowItem(true)}
-                >
-                  New Review
-                </button>
-              )}
-            </div>
             <div className="review-form">
               {showItem && (
                 <div className="modal">
@@ -204,6 +194,16 @@ const SellerView = () => {
               </div>
             </div>
           </div>
+          <div className="create-review-button">
+            {!hasReviewed && (
+              <button
+                className="create-review"
+                onClick={() => setShowItem(true)}
+              >
+                New Review
+              </button>
+            )}
+          </div>
           {reviews.length > 0 ? (
             <ul className="reviews-list">
               {reviews.map((review) => (
@@ -212,32 +212,34 @@ const SellerView = () => {
                     <div className="star-rating">
                       Overall Rating: {renderStarRating(review.rating)}
                     </div>
-                    <div className="ten-point-ratings">
-                      <ul>
-                        <li>
-                          Customer Service:{" "}
-                          {renderStarRating(review.service_rating)}
-                        </li>
-                        <li>
-                          Product Quality:{" "}
-                          {renderStarRating(review.product_rating)}
-                        </li>
-                        <li>
-                          Shipping Packaging:{" "}
-                          {renderStarRating(review.packaging_rating)}
-                        </li>
-                        <li>
-                          Shipping Speed & Costs:{" "}
-                          {renderStarRating(review.shipping_rating)}
-                        </li>
-                        <li>
-                          Overall Experience:{" "}
-                          {renderStarRating(review.overall_rating)}
-                        </li>
-                      </ul>
+                    <div className="top-section-review">
+                      <p className="review-text">{ review.review }</p>
+                      <div className="ten-point-ratings">
+                        <ul>
+                          <li>
+                            Customer Service:{" "}
+                            {renderStarRating(review.service_rating)}
+                          </li>
+                          <li>
+                            Product Quality:{" "}
+                            {renderStarRating(review.product_rating)}
+                          </li>
+                          <li>
+                            Shipping Packaging:{" "}
+                            {renderStarRating(review.packaging_rating)}
+                          </li>
+                          <li>
+                            Shipping Speed & Costs:{" "}
+                            {renderStarRating(review.shipping_rating)}
+                          </li>
+                          <li>
+                            Overall Experience:{" "}
+                            {renderStarRating(review.overall_rating)}
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                  <p className="review-text">{review.review}</p>
                   <div className="reviewer">
                     <div className="review-buttons">
                       {review.author.id === user.id && (

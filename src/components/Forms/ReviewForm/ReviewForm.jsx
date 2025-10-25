@@ -31,7 +31,7 @@ const ReviewForm = ({ sellerId, reviewData = null, onClose, refreshReviews }) =>
     } catch (err) {
       console.error("Error creating review:", err);
       setErrorMessage(
-        err.message || "Error creating review. Please try again."
+        err.request.response || "Error creating review. Please try again."
       );
     }
   };
