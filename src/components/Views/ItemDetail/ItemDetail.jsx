@@ -10,6 +10,7 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import { getUsername } from "../../../services/userService.js";
+import BidHistoryModal from "../../Component/Modal/BidHistoryModal.jsx";
 
 const ItemDetail = () => {
   const { itemId } = useParams();
@@ -17,7 +18,8 @@ const ItemDetail = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
   const [seller, setSeller] = useState(null);
-  const [message, setMessage] = useState("");
+  const [ message, setMessage ] = useState("");
+    const [showItem, setShowItem] = useState(false);
   const [messageType, setMessageType] = useState(""); // "success" or "error"
 
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
@@ -206,10 +208,29 @@ const ItemDetail = () => {
                         </button>
                       </div>
                     </form>
-                    <button className="bid-offer-button">
+                    <button
+                      className="bid-offer-button"
+                      onClick={() => setShowItem(true)}
+                    >
                       View Bid History
                     </button>
                   </div>
+                  {showItem && (
+                    <div className="modal">
+                      <div className="modal-content">
+                        <button
+                          className="close-button"
+                          onClick={() => setShowItem(false)}
+                        >
+                          ✕
+                        </button>
+                        <BidHistoryModal
+                          onClose={() => setShowItem(false)}
+                          bidHistory={item.bid_history_json}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               {message && (

@@ -38,10 +38,10 @@
   display: inline-block;
   padding: 10px 20px;
   margin-bottom: 20px;
-  border: none;
   border-radius: 5px;
-  background-color: darkkhaki;
-  color: white;
+  border: 1px solid black;
+  background-color: rgb(237, 236, 236);
+  color: rgb(57, 57, 57);
   font-size: 16px;
   font-weight: bold;
   text-decoration: none;

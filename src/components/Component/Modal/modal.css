@@ -1,0 +1,31 @@
+.modal-content {
+      background-color: rgba(211, 206, 193, 0.916);
+}
+
+.bid-history-container {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.bid-history{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ text-align: center;
+ gap: 40px;
+ margin-top: 20px;
+}
+
+.bid-history-modal-subtitle {
+    margin-bottom: -20px;
+    font-weight: bold;
+}
+
+.bid-history-subtitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: -25px;
+    position: absolute;
+    z-index: 1000;
+    margin-left: 225px;
+}
