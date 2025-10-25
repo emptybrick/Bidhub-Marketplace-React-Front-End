@@ -7,12 +7,26 @@ const UploadWidget = ({ uwConfig, setPublicId }) => {
   useEffect(() => {
     // initialize and return cleanup so listeners are removed between effect runs
     if (window.cloudinary && uploadButtonRef.current) {
+      console.log("UW config at runtime:", uwConfig);
+
       uploadWidgetRef.current = window.cloudinary.createUploadWidget(
         uwConfig,
         (error, result) => {
-          if (!error && result && result.event === "success") {
-            console.log("Upload successful:", result.info);
+          if (error) {
+            console.error("Cloudinary widget error:", error);
+            return;
+          }
+          if (result && result.event === "success") {
             setPublicId(result.info.public_id);
+          }
+          if (
+            result &&
+            result.event === "queues-end" &&
+            result.info &&
+            result.info.files
+          ) {
+            // Inspect per-file statuses when something fails
+            console.log("Upload queue finished:", result.info.files);
           }
         }
       );
