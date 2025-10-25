@@ -16,10 +16,10 @@ const ItemForm = ({ onClose }) => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   // Cloudinary config (use Vite env or fallback)
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
-  const uploadPreset =
-    import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "aoh4fpwm";
-  const cld = new Cloudinary({ cloud: { cloudName } });
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dxvxebkhe";
+  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "web_unsigned";
+  const uploadFolder = import.meta.env.VITE_CLOUDINARY_FOLDER || "bidhub/items";
+  const cld = useMemo(() => new Cloudinary({ cloud: { cloudName } }), [cloudName]);
 
   // uploaded images state - store cloudinary public_ids
   const [images, setImages] = useState([]);
@@ -57,8 +57,10 @@ const ItemForm = ({ onClose }) => {
       cloudName,
       uploadPreset,
       multiple: true,
+      folder: uploadFolder,
+      maxImageFileSize: 10_000_000, // 10MB
     }),
-    [cloudName, uploadPreset]
+    [cloudName, uploadPreset, uploadFolder]
   );
 
   const [message, setMessage] = useState("");
