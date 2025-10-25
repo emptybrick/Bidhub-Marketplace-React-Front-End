@@ -1,11 +1,10 @@
 import axios from "./axiosConfig";
-const BASE_URL = `${
-  import.meta.env.VITE_BACK_END_SERVER_URL
-}/bidhub/marketplace`;
+const BASE_URL = `${ import.meta.env.VITE_BACK_END_SERVER_URL
+  }/bidhub/marketplace`;
 
 const getItems = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}/`);
+    const res = await axios.get(`${ BASE_URL }/`);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -28,7 +27,7 @@ const getFilteredItems = async (
   pageSize = 20
 ) => {
   try {
-    const res = await axios.get(`${BASE_URL}/`, {
+    const res = await axios.get(`${ BASE_URL }/`, {
       params: {
         category: categoryFilter,
         condition: conditionFilter,
@@ -54,7 +53,7 @@ const getFilteredItems = async (
 
 const getItemById = async (id) => {
   try {
-    const res = await axios.get(`${BASE_URL}/${id}/`);
+    const res = await axios.get(`${ BASE_URL }/${ id }/`);
     return res.data;
   } catch (e) {
     console.log(e);
@@ -64,7 +63,7 @@ const getItemById = async (id) => {
 
 const updateItem = async (id, Item) => {
   try {
-    const res = await axios.put(`${BASE_URL}/${id}/`, Item);
+    const res = await axios.put(`${ BASE_URL }/${ id }/`, Item);
     const data = await res.data;
     return data;
   } catch (error) {
@@ -75,7 +74,7 @@ const updateItem = async (id, Item) => {
 
 const deleteItem = async (id) => {
   try {
-    await axios.delete(`${BASE_URL}/${id}/`);
+    await axios.delete(`${ BASE_URL }/${ id }/`);
   } catch (error) {
     console.log(error);
     throw error;
@@ -84,8 +83,8 @@ const deleteItem = async (id) => {
 
 const createItem = async (formData) => {
   try {
-    console.log("Payload sent to Django:", formData); 
-    const res = await axios.post(`${BASE_URL}/new/`, formData);
+    console.log("Payload sent to Django:", formData);
+    const res = await axios.post(`${ BASE_URL }/new/`, formData);
     return res.data;
   } catch (err) {
     console.error("Create item error:", err.response ? err.response.data : err);
@@ -101,7 +100,7 @@ const createItem = async (formData) => {
 
 const updateShippingAndPayment = async (formData, itemId) => {
   try {
-    const res = await axios.post(`${ BASE_URL }/${ itemId}/shipping-and-payment`, formData);
+    const res = await axios.post(`${ BASE_URL }/${ itemId }/shipping-and-payment`, formData);
     return res.data;
   } catch (err) {
     console.error("Create item error:", err.response ? err.response.data : err);
