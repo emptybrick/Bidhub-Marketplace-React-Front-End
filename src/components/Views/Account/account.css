@@ -39,6 +39,7 @@ body {
   margin-bottom: 40px;
   gap: 20px;
   display: flex;
+  justify-content: center;
 }
 
 /* Close button */

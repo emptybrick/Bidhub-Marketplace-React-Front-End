@@ -109,12 +109,12 @@ const ItemForm = ({ onClose }) => {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      const formattedFormData = {
-        ...formData,
-        end_time: end_time ? end_time.toISOString() : null,
-        owner: user.id,
-        images: images,
-      };
+       const formattedFormData = {
+         ...formData,
+         end_time: formData.end_time ? formData.end_time.toISOString() : null,
+         owner: user.id,
+         images: images,
+       };
 
       const newItem = await createItem(formattedFormData);
 
@@ -125,7 +125,7 @@ const ItemForm = ({ onClose }) => {
       navigate(`/bidhub/marketplace/${newItem.id}`);
     } catch (err) {
       console.error("Error creating item:", err);
-      setMessage(err.message || "Error creating item. Please try again.");
+      setMessage(err.message|| "Error creating item. Please try again.");
     }
   };
 
@@ -305,6 +305,8 @@ const ItemForm = ({ onClose }) => {
                           name="height"
                           placeholder="H"
                           onChange={handleChange}
+                          min={0.01}
+                          step={0.01}
                           required
                         />
                       </div>
@@ -315,6 +317,8 @@ const ItemForm = ({ onClose }) => {
                           value={width}
                           name="width"
                           placeholder="W"
+                          min={0.01}
+                          step={0.01}
                           onChange={handleChange}
                           required
                         />
@@ -326,6 +330,8 @@ const ItemForm = ({ onClose }) => {
                           value={length}
                           name="length"
                           placeholder="L"
+                          min={0.01}
+                          step={0.01}
                           onChange={handleChange}
                           required
                         />
@@ -339,6 +345,8 @@ const ItemForm = ({ onClose }) => {
                       id="weight"
                       value={weight}
                       name="weight"
+                      min={0.001}
+                      step={0.001}
                       onChange={handleChange}
                       required
                     />
