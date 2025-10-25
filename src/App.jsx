@@ -1,8 +1,7 @@
 // frontend/src/App.jsx
-import { Routes, Route } from "react-router";
+import { Routes, Route, useParams } from "react-router";
 import { UserContext } from "./contexts/UserContext";
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
 import About from "./components/Views/About/About.jsx";
 import Account from "./components/Views/Account/Account.jsx";
 import Dashboard from "./components/Views/Dashboard/Dashboard.jsx";
@@ -16,13 +15,33 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import SellerView from "./components/Views/SellerView/SellerView.jsx";
 import ItemList from "./components/Views/ItemList/ItemList.jsx";
 import PayPalCheckout from "./components/Component/Payments/PayPalCheckout.jsx";
+import React from "react";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+
+// Small wrappers to read route params and pass as props
+const SellerViewRoute = () => {
+  const { sellerId } = useParams();
+  return <SellerView sellerId={sellerId} />;
+};
+
+const SellerMarketRoute = () => {
+  const { sellerId } = useParams();
+  return <ItemList owner={sellerId} />;
+};
 
 const App = () => {
+  // FIX: define user from context
   const { user } = useContext(UserContext);
-  const { sellerId } = useParams();
+
+  const paypalOptions = {
+    "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
+    currency: "USD",
+    intent: "capture",
+    components: "buttons",
+  };
 
   return (
-    <>
+    <PayPalScriptProvider options={paypalOptions}>
       <header>
         <NavBar />
       </header>
@@ -46,7 +65,7 @@ const App = () => {
             path="/bidhub/seller/:sellerId"
             element={
               <ProtectedRoute>
-                <SellerView sellerId={sellerId} />
+                <SellerViewRoute />
               </ProtectedRoute>
             }
           />
@@ -62,7 +81,7 @@ const App = () => {
             path="/bidhub/seller/:sellerId/marketplace"
             element={
               <ProtectedRoute>
-                <ItemList owner={sellerId} />
+                <SellerMarketRoute />
               </ProtectedRoute>
             }
           />
@@ -70,8 +89,7 @@ const App = () => {
             path="/bidhub/checkout"
             element={
               <ProtectedRoute>
-                {/* Pass any metadata needed by backend to build the order */}
-                <PayPalCheckout orderMeta={{ /* itemId, amount, etc. */ }} />
+                <PayPalCheckout orderMeta={{}} />
               </ProtectedRoute>
             }
           />
@@ -81,7 +99,7 @@ const App = () => {
       <footer>
         <Footer />
       </footer>
-    </>
+    </PayPalScriptProvider>
   );
 };
 

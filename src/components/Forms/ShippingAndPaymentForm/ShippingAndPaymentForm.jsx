@@ -1,6 +1,10 @@
 // src/components/Forms/ShippingAndPaymentForm/ShippingAndPaymentForm.jsx
 import { useState } from "react";
-import PayPalCheckout from "../../../components/Payments/PayPalCheckout";
+import { PayPalButtons } from "@paypal/react-paypal-js";
+import {
+  createOrder as apiCreateOrder,
+  captureOrder as apiCaptureOrder,
+} from "../../../services/paymentService";
 import "./shippingandpaymentform.css";
 
 const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
@@ -13,8 +17,7 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
     country: "",
     phone: "",
   });
-
-  const [showPayPal, setShowPayPal] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   if (!item) {
     return (
@@ -35,15 +38,11 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setShippingInfo((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setShippingInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleContinueToPayment = (e) => {
-    e.preventDefault();
-    const requiredFields = [
+  const isShippingValid = () => {
+    const required = [
       "fullName",
       "address",
       "city",
@@ -51,25 +50,9 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
       "zipCode",
       "country",
     ];
-    const isValid = requiredFields.every((field) => shippingInfo[field].trim());
-
-    if (!isValid) {
-      alert("Please fill in all required shipping information");
-      return;
-    }
-
-    setShowPayPal(true);
-  };
-
-  const handlePaymentSuccess = (result) => {
-    console.log("Payment successful:", result);
-    onSuccess?.(result);
-    onClose();
-  };
-
-  const handlePaymentError = (error) => {
-    console.error("Payment error:", error);
-    alert("Payment failed. Please try again.");
+    return required.every(
+      (k) => String(shippingInfo[k] || "").trim().length > 0
+    );
   };
 
   return (
@@ -83,14 +66,13 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
           <h2>Shipping & Payment</h2>
 
           <div className="shipping-content">
-            {/* Left Column: Shipping Information */}
+            {/* Left: Shipping form */}
             <div className="shipping-left">
               <h3>Shipping Information</h3>
-              <form onSubmit={handleContinueToPayment}>
+              <form onSubmit={(e) => e.preventDefault()}>
                 <div className="form-group">
                   <label>Full Name *</label>
                   <input
-                    type="text"
                     name="fullName"
                     value={shippingInfo.fullName}
                     onChange={handleInputChange}
@@ -101,7 +83,6 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                 <div className="form-group">
                   <label>Address *</label>
                   <input
-                    type="text"
                     name="address"
                     value={shippingInfo.address}
                     onChange={handleInputChange}
@@ -113,18 +94,15 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                   <div className="form-group">
                     <label>City *</label>
                     <input
-                      type="text"
                       name="city"
                       value={shippingInfo.city}
                       onChange={handleInputChange}
                       required
                     />
                   </div>
-
                   <div className="form-group">
                     <label>State *</label>
                     <input
-                      type="text"
                       name="state"
                       value={shippingInfo.state}
                       onChange={handleInputChange}
@@ -137,18 +115,15 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                   <div className="form-group">
                     <label>Zip Code *</label>
                     <input
-                      type="text"
                       name="zipCode"
                       value={shippingInfo.zipCode}
                       onChange={handleInputChange}
                       required
                     />
                   </div>
-
                   <div className="form-group">
                     <label>Country *</label>
                     <input
-                      type="text"
                       name="country"
                       value={shippingInfo.country}
                       onChange={handleInputChange}
@@ -160,22 +135,17 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                 <div className="form-group">
                   <label>Phone</label>
                   <input
-                    type="tel"
                     name="phone"
                     value={shippingInfo.phone}
                     onChange={handleInputChange}
                   />
                 </div>
 
-                {!showPayPal && (
-                  <button type="submit" className="btn-continue">
-                    Continue to Payment
-                  </button>
-                )}
+                {/* Removed the "Continue to Payment" button. PayPal buttons handle checkout. */}
               </form>
             </div>
 
-            {/* Right Column: Order Summary & Payment */}
+            {/* Right: Summary + PayPal buttons */}
             <div className="shipping-right">
               <h3>Order Summary</h3>
               <div className="order-summary">
@@ -193,18 +163,70 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                 </div>
               </div>
 
-              {showPayPal && (
-                <div className="payment-section">
-                  <h3>Payment</h3>
-                  <PayPalCheckout
-                    itemId={item.id}
-                    amount={item.current_bid}
-                    shippingAddress={shippingInfo}
-                    onSuccess={handlePaymentSuccess}
-                    onError={handlePaymentError}
-                  />
-                </div>
-              )}
+              <div className="payment-section">
+                <h3>Payment</h3>
+                {isProcessing && (
+                  <div className="loading">Processing payment...</div>
+                )}
+
+                <PayPalButtons
+                  style={{
+                    layout: "vertical",
+                    color: "gold",
+                    shape: "rect",
+                    label: "paypal",
+                    height: 50,
+                  }}
+                  onClick={(_, actions) => {
+                    if (!isShippingValid()) {
+                      alert(
+                        "Please fill in all required shipping information."
+                      );
+                      return actions.reject();
+                    }
+                    return actions.resolve();
+                  }}
+                  createOrder={async () => {
+                    try {
+                      const data = await apiCreateOrder(item.id, shippingInfo); // uses axios with proper baseURL
+                      if (!data?.order_id)
+                        throw new Error("No order_id returned");
+                      return data.order_id;
+                    } catch (err) {
+                      console.error("createOrder failed:", err);
+                      alert(
+                        `Could not initiate PayPal Checkout. ${
+                          err.message || err
+                        }`
+                      );
+                      throw err;
+                    }
+                  }}
+                  onApprove={async (data, actions) => {
+                    try {
+                      const res = await apiCaptureOrder(
+                        data.orderID,
+                        data.payerID
+                      );
+                      onSuccess?.(res);
+                      alert("Payment successful!");
+                      onClose();
+                    } catch (err) {
+                      console.error("captureOrder failed:", err);
+                      alert(
+                        `Sorry, your transaction could not be processed. ${
+                          err.message || err
+                        }`
+                      );
+                      if (actions?.restart) return actions.restart();
+                    }
+                  }}
+                  onError={(err) => {
+                    console.error("PayPal error:", err);
+                    alert("An error occurred with PayPal. Please try again.");
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
