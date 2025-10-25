@@ -18,8 +18,8 @@ const ItemDetail = () => {
   const { user } = useContext(UserContext);
   const [seller, setSeller] = useState(null);
   const [message, setMessage] = useState("");
-  const [ messageType, setMessageType ] = useState(""); // "success" or "error"
-  
+  const [messageType, setMessageType] = useState(""); // "success" or "error"
+
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
   const cld = new Cloudinary({ cloud: { cloudName } });
 
@@ -88,15 +88,6 @@ const ItemDetail = () => {
   return (
     <div className="item-detail-container">
       <Hero heroText={item.item_name} seller={seller} />
-      {message && (
-        <div
-          className={`error-message ${
-            messageType === "success" ? "success-message" : ""
-          }`}
-        >
-          {message}
-        </div>
-      )}
       <div className="item-detail-section">
         <div className="details-top two-column-equal">
           {/* LEFT column: main image (50%) and thumbnails */}
@@ -171,50 +162,71 @@ const ItemDetail = () => {
           <div className="right-50">
             {/* Top: Current Bid */}
             <div className="right-section current-bid-section">
-              <div className="current-bid">
-                Current Bid:{" "}
-                <span className="span-bold">${item.current_bid}</span>
-              </div>
-              <div className="initial-bid">
-                Initial Bid:{" "}
-                <span className="span-bold">${item.initial_bid}</span>
-              </div>
-              <div className="bid-end">
-                Time left:{" "}
-                <span className="span-bold">
-                  {Math.ceil(
-                    (new Date(item.end_time) - new Date()) /
-                      (1000 * 60 * 60 * 24)
-                  )}
-                  day(s) left
-                </span>
-              </div>
-              <div className="bid-form-wrap">
-                <form onSubmit={handleSubmitBid} className="bid-form">
-                  <label htmlFor="bid-offer-amount">Bid Offer ($)</label>
-                  <div className="bid-label">
-                    <input
-                      className="bid-input"
-                      type="number"
-                      id="bid-offer-amount"
-                      min={item.current_bid}
-                      onChange={(e) => {
-                        e.target.value = Number(e.target.value).toFixed(2);
-                      }}
-                      required
-                    />
-                    <button type="submit" className="bid-offer-button">
-                      Submit Bid
+              <div className="bid-info-section">
+                <div className="bid-info-left">
+                  <div className="item-detail-subtitle">Bid Information</div>
+                  <div className="current-bid">
+                    Current Bid:{" "}
+                    <span className="span-bold">${item.current_bid}</span>
+                  </div>
+                  <div className="initial-bid">
+                    Initial Bid:{" "}
+                    <span className="span-bold">${item.initial_bid}</span>
+                  </div>
+                  <div className="bid-end">
+                    Time left:{" "}
+                    <span className="span-bold">
+                      {Math.ceil(
+                        (new Date(item.end_time) - new Date()) /
+                          (1000 * 60 * 60 * 24)
+                      )}
+                      day(s) left
+                    </span>
+                  </div>
+                </div>
+                <div className="bid-info-right">
+                  {" "}
+                  <div className="item-detail-subtitle">Bid Offer ($)</div>
+                  <div className="bid-form-wrap">
+                    <form onSubmit={handleSubmitBid} className="bid-form">
+                      <label htmlFor="bid-offer-amount"></label>
+                      <div className="bid-label">
+                        <input
+                          className="bid-input"
+                          type="number"
+                          id="bid-offer-amount"
+                          min={item.current_bid}
+                          onChange={(e) => {
+                            e.target.value = Number(e.target.value).toFixed(2);
+                          }}
+                          required
+                        />
+                        <button type="submit" className="bid-offer-button">
+                          Submit Bid
+                        </button>
+                      </div>
+                    </form>
+                    <button className="bid-offer-button">
+                      View Bid History
                     </button>
                   </div>
-                </form>
+                </div>
               </div>
+              {message && (
+                <div
+                  className={`error-message item-details ${
+                    messageType === "success" ? "success-message" : ""
+                  }`}
+                >
+                  {message}
+                </div>
+              )}
             </div>
 
             {/* Middle: Item Details */}
             <div className="right-section item-details-section">
               <div className="item-detail-subtitle">Item Details</div>
-              <div className="item-info">
+              <div className="item-info-section">
                 <ul className="item-info-left">
                   <li>
                     Category: <span className="span-bold">{item.category}</span>
