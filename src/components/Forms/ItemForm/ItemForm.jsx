@@ -41,7 +41,13 @@ const ItemForm = ({ onClose, item, handleDeleteItem }) => {
       if (images.length === 0) return 0;
       return Math.min(i, images.length - 1);
     });
-  }, [images]);
+  }, [ images ]);
+  
+  useEffect(() => {
+    if (item?.images && item.images.length > 0) {
+      setImages(item.images); // Initialize images state with item.images
+    }
+  }, [item]);
 
   const prevImage = () => {
     setCurrentIndex((i) => Math.max(0, i - 1));
@@ -77,9 +83,9 @@ const ItemForm = ({ onClose, item, handleDeleteItem }) => {
     description: item?.description || "",
     initial_bid: item?.initial_bid || "",
     end_time: null,
-    images: [],
+    images: item?.images || [],
   });
-
+console.log(item)
   const {
     item_name,
     category,
