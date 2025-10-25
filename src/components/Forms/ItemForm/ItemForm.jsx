@@ -12,7 +12,7 @@ import { fill } from "@cloudinary/url-gen/actions/resize";
 import UploadWidget from "../../Component/UploadWidget/UploadWidget";
 // import { image } from "@cloudinary/url-gen/qualifiers/source";
 
-const ItemForm = ({ onClose }) => {
+const ItemForm = ({ onClose, item, handleDeleteItem }) => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   // Cloudinary config (use Vite env or fallback)
@@ -65,17 +65,17 @@ const ItemForm = ({ onClose }) => {
 
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
-    item_name: "",
-    category: "MISCELLANEOUS",
-    condition: "NEW",
-    manufacture_year: "",
-    country_of_origin: "",
-    height: "",
-    width: "",
-    length: "",
-    weight: "",
-    description: "",
-    initial_bid: "",
+    item_name: item?.item_name || "",
+    category: item?.category || "MISCELLANEOUS",
+    condition: item?.condition || "NEW",
+    manufacture_year: item?.manufacture_year || "",
+    country_of_origin: item?.country_of_origin || "",
+    height: item?.height || "",
+    width: item?.width || "",
+    length: item?.length || "",
+    weight: item?.weight || "",
+    description: item?.description || "",
+    initial_bid: item?.initial_bid || "",
     end_time: null,
     images: [],
   });
@@ -117,7 +117,9 @@ const ItemForm = ({ onClose }) => {
        };
 
       const newItem = await createItem(formattedFormData);
-
+      if (item) {
+         handleDeleteItem(item.id)
+       }
       if (onClose) {
         onClose();
       }

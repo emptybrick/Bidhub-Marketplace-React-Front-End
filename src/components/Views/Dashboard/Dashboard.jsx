@@ -51,6 +51,12 @@ const Dashboard = () => {
           >
             Items Sold
           </button>
+          <button
+            className={activeSection === "auction-ended" ? "active" : ""}
+            onClick={() => setActiveSection("auction-ended")}
+          >
+            Auction Ended
+          </button>
         </div>
 
         <div className="dashboard-content">
@@ -149,6 +155,22 @@ const Dashboard = () => {
                   "You have not sold any items.  Post some items for sale now!"
                 }
                 hideFilters={true}
+              />
+            </div>
+          )}
+
+          {activeSection === "auction-ended" && (
+            <div className="section-container">
+              <div className="section-header">
+                <h2>Auction Ended with no Bids</h2>
+              </div>
+              <ItemList
+                auctionFailed={"true"}
+                heroText={null}
+                messageText={
+                  "You have no auctions that have ended without bids."
+                }
+                hideFilters={ true }
               />
             </div>
           )}

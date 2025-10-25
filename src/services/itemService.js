@@ -23,6 +23,7 @@ const getFilteredItems = async (
   favorites = "false",
   purchased = "false",
   sold = "false",
+  auctionFailed = 'false',
   page = 1,
   pageSize = 20
 ) => {
@@ -39,6 +40,7 @@ const getFilteredItems = async (
         favorites,
         purchased,
         sold,
+        auctionFailed,
         page,
         page_size: pageSize,
       },

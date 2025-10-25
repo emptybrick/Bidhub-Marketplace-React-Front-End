@@ -15,6 +15,7 @@ const ItemList = ({
   favorites = "false",
   purchased = "false",
   sold = "false",
+  auctionFailed = 'false',
   messageText,
   hideFilters = false, // if dashboard render this will hide filter ui as needed
 }) => {
@@ -46,6 +47,7 @@ const ItemList = ({
         favorites,
         purchased,
         sold,
+        auctionFailed,
         page,
         pageSize
       );
@@ -277,7 +279,8 @@ const ItemList = ({
                           key={idx}
                           onFavoriteToggle={ handleFavoriteToggle }
                           sold={ sold }
-                          purchased={purchased}
+                          purchased={ purchased }
+                          auctionFailed = {auctionFailed}
                         />
                       ))}
                       {items.length < 4 &&

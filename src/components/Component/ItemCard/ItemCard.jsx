@@ -7,6 +7,8 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import ShippingAndPaymentForm from "../../Forms/ShippingAndPaymentForm/ShippingAndPaymentForm";
+import ItemForm from "../../Forms/ItemForm/ItemForm";
+import { deleteItem } from "../../../services/itemService";
 
 const ItemCard = ({
   item,
@@ -15,6 +17,7 @@ const ItemCard = ({
   sold = "false",
   purchased = "false",
   onUpdate,
+  auctionFailed,
 }) => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
@@ -25,6 +28,8 @@ const ItemCard = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showShippingAndPayment, setShowShippingAndPayment] = useState(false);
   const [showShippingForm, setShowShippingForm] = useState(false);
+  const [ showItemForm, setShowItemForm ] = useState(false);
+  const [toggleRefresh, setToggleRefresh] = useState(false)
 
   useEffect(() => {
     if (item && Array.isArray(item.images)) {
@@ -38,7 +43,7 @@ const ItemCard = ({
       setImages([]);
       setCurrentIndex(0);
     }
-  }, [item]); // keep dependency minimal
+  }, [item, toggleRefresh]); // keep dependency minimal
 
   const prevImage = () => setCurrentIndex((i) => Math.max(0, i - 1));
   const nextImage = () =>
@@ -56,6 +61,10 @@ const ItemCard = ({
     setShowShippingAndPayment(false);
   };
 
+  const handleShowItemForm = () => {
+    setShowItemForm(true);
+  };
+
   const handleCheckout = () => {
     console.log("Item being passed:", item); // Debug: check if item exists
     setShowShippingForm(true);
@@ -65,6 +74,15 @@ const ItemCard = ({
     console.log("Payment completed:", result);
     setShowShippingForm(false);
     onUpdate?.(); // Refresh item list
+  };
+
+  const handleDeleteItem = async (itemId) => {
+    try {
+      await deleteItem(itemId)
+      setToggleRefresh(!toggleRefresh)
+    } catch (err) {
+      console.log("Error deleting item.", err)
+    }
   };
 
   if (isPlaceholder) return <div className="item-card placeholder" />;
@@ -184,19 +202,28 @@ const ItemCard = ({
                   )}
 
                   {purchased === "true" && (
-                    <button
-                      className="view-details"
-                      onClick={handleCheckout}
-                    >
+                    <button className="view-details" onClick={handleCheckout}>
                       {item.payment_confirmation
                         ? "Update Shipping or Payment Info"
                         : "Add Shipping and Payment Info"}
                     </button>
                   )}
 
-                  <button className="view-details" onClick={handleLink}>
-                    View Details
-                  </button>
+                  {auctionFailed === "true" && (
+                    <button className="view-details" onClick={() => handleDeleteItem(item.id)}>
+                      Delete Item
+                    </button>
+                  )}
+
+                  {auctionFailed === "true" ? (
+                    <button className="view-details" onClick={handleShowItemForm}>
+                      Repost Item
+                    </button>
+                  ) : (
+                    <button className="view-details" onClick={handleLink}>
+                      View Details
+                    </button>
+                  )}
                 </>
               )}
             </div>
@@ -235,6 +262,9 @@ const ItemCard = ({
           onClose={() => setShowShippingForm(false)}
           onSuccess={handlePaymentSuccess}
         />
+      )}
+      {showItemForm && item && (
+        <ItemForm item={item} handleDeleteItem={handleDeleteItem} />
       )}
     </>
   );
