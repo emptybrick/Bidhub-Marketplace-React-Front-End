@@ -13,7 +13,7 @@ const getReviews = async (sellerId, dateSort, ratingSort) => {
 
 const getReviewById = async (sellerId, id) => {
     try {
-        const res = await axios.get(`${ BASE_URL }/${ sellerId }/reviews/${id}`);
+        const res = await axios.get(`${ BASE_URL }/${ sellerId }/reviews/${id}/`);
         return res.data;
     } catch (e) {
         console.log(e);
@@ -23,7 +23,7 @@ const getReviewById = async (sellerId, id) => {
 
 const updateReview = async (sellerId, id, Review) => {
     try {
-        const res = await axios.put(`${ BASE_URL }/${ sellerId }/reviews/${ id }`, Review);
+        const res = await axios.put(`${ BASE_URL }/${ sellerId }/reviews/${ id }/`, Review);
         const data = await res.data;
         return data;
     } catch (error) {
@@ -32,9 +32,10 @@ const updateReview = async (sellerId, id, Review) => {
     }
 };
 
-const deleteReview = async (sellerId, id) => {
+const deleteReview = async (sellerId, reviewId) => {
     try {
-        await axios.delete(`${ BASE_URL }/${ sellerId }/reviews/${ id }`);
+        console.log(sellerId, reviewId)
+        await axios.delete(`${ BASE_URL }/${ sellerId }/reviews/${ reviewId }/`);
     } catch (error) {
         console.log(error);
         throw error;
@@ -43,7 +44,8 @@ const deleteReview = async (sellerId, id) => {
 
 const createReview = async (sellerId, formData) => {
     try {
-        const res = await axios.post(`${ BASE_URL }/${ sellerId }/reviews/new`, formData);
+        
+        const res = await axios.post(`${ BASE_URL }/${ sellerId }/reviews/new/`, formData);
         const data = await res.data;
         return data;
     } catch (error) {

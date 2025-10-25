@@ -1,24 +1,22 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import navigate
 import { UserContext } from "../../../contexts/UserContext";
-import { createReview } from "../../../services/reviewService";
+import { createReview, updateReview } from "../../../services/reviewService";
 
-const ReviewForm = ({ sellerId, reviewData = null, onClose }) => {
+const ReviewForm = ({ sellerId, reviewData = null, onClose, refreshReviews }) => {
   const { user } = useContext(UserContext);
-  const navigate = useNavigate(); // Define navigate
   const [formData, setFormData] = useState({
     seller_id: sellerId,
     author: user.id,
     review: reviewData?.review || "",
     service_rating: reviewData?.service_rating || "",
     product_rating: reviewData?.product_rating || "",
-    package_rating: reviewData?.package_rating || "",
+    packaging_rating: reviewData?.packaging_rating || "",
     shipping_rating: reviewData?.shipping_rating || "",
     overall_rating: reviewData?.overall_rating || "",
   });
   const [errorMessage, setErrorMessage] = useState(""); // Define errorMessage state
 
-  const tenPointRating = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const tenPointRating = [1, 2, 3, 4, 5];
 
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
@@ -27,12 +25,28 @@ const ReviewForm = ({ sellerId, reviewData = null, onClose }) => {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      await createReview(sellerId, formData);
-      navigate(`/bidhub/seller/${sellerId}`);
+        await createReview(sellerId, formData);
+        refreshReviews();
+        onClose()
     } catch (err) {
       console.error("Error creating review:", err);
       setErrorMessage(
         err.message || "Error creating review. Please try again."
+      );
+    }
+  };
+
+  const handleUpdate = async (evt) => {
+    evt.preventDefault();
+      try {
+        console.log(formData)
+          await updateReview(sellerId, reviewData.id, formData);
+          refreshReviews();
+      onClose()
+    } catch (err) {
+      console.error("Error updating review:", err);
+      setErrorMessage(
+        err.message || "Error updating review. Please try again."
       );
     }
   };
@@ -42,7 +56,7 @@ const ReviewForm = ({ sellerId, reviewData = null, onClose }) => {
       formData.review &&
       formData.service_rating &&
       formData.product_rating &&
-      formData.package_rating &&
+      formData.packaging_rating &&
       formData.shipping_rating &&
       formData.overall_rating
     );
@@ -102,11 +116,11 @@ const ReviewForm = ({ sellerId, reviewData = null, onClose }) => {
             </select>
           </div>
           <div className="rating-inputs">
-            <label htmlFor="package_rating">Shipping Packaging: </label>
+            <label htmlFor="packaging_rating">Shipping Packaging: </label>
             <select
-              name="package_rating"
-              id="package_rating"
-              value={formData.package_rating}
+              name="packaging_rating"
+              id="packaging_rating"
+              value={formData.packaging_rating}
               onChange={handleChange}
               required
             >
@@ -160,9 +174,15 @@ const ReviewForm = ({ sellerId, reviewData = null, onClose }) => {
           </div>
         </div>
         <div className="form-buttons">
-          <button type="submit" disabled={isFormInvalid()}>
-            Create
-          </button>
+          {reviewData ? (
+            <button type="button" onClick={handleUpdate}>
+              Update
+            </button>
+          ) : (
+            <button type="submit" disabled={isFormInvalid()}>
+              Create
+            </button>
+          )}
           <button type="button" onClick={onClose}>
             Cancel
           </button>

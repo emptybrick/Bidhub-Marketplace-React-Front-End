@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from "react";
-import { getReviews } from "../../../services/reviewService.js";
+import { deleteReview, getReviews } from "../../../services/reviewService.js";
 import Hero from "../../Component/Hero/Hero.jsx";
 import "./sellerview.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getSellerProfile } from "../../../services/userService.js";
 import { UserContext } from "../../../contexts/UserContext.jsx";
-import ReviewForm from '../../Forms/ReviewForm/ReviewForm.jsx'
+import ReviewForm from "../../Forms/ReviewForm/ReviewForm.jsx";
 
 const SellerView = () => {
   const [reviews, setReviews] = useState([]);
@@ -16,28 +16,26 @@ const SellerView = () => {
   const { sellerId } = useParams();
   const { user } = useContext(UserContext);
   const [showItem, setShowItem] = useState(false);
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const reviewsData = await getReviews(sellerId, dateSort, ratingSort);
-        setReviews(reviewsData.results || reviewsData);
-        const sellerData = await getSellerProfile(sellerId);
-        setSeller(sellerData);
-        const userReviewCheck = reviewsData.results.filter(
-          (review) => review.author.id === user.id
-        );
-        if (userReviewCheck.length >= 1) {
-          setHasReviewed(true);
-        } else {
-          setHasReviewed(false);
-        }
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-      }
-    };
-    fetchReviews();
-  }, [ratingSort, dateSort]);
+ const fetchReviews = async () => {
+   try {
+     const reviewsData = await getReviews(sellerId, dateSort, ratingSort);
+     setReviews(reviewsData.results || reviewsData);
+     const sellerData = await getSellerProfile(sellerId);
+     setSeller(sellerData);
+     const userReviewCheck = reviewsData.results.filter(
+       (review) => review.author.id === user.id
+     );
+     setHasReviewed(userReviewCheck.length >= 1);
+   } catch (error) {
+     console.error("Error fetching reviews:", error);
+   }
+ };
+
+ useEffect(() => {
+   fetchReviews();
+ }, [ratingSort, dateSort, sellerId, user.id]);
 
   const handleRatingSortChange = (evt) => {
     setRatingSort(evt.target.value);
@@ -47,24 +45,22 @@ const SellerView = () => {
     setDateSort(evt.target.value);
   };
 
-  const handleEditReview = () => {
-    // add logic to edit review
+  const handleDeleteReview = async (reviewId) => {
+    try {
+      console.log(sellerId, reviewId)
+      await deleteReview(sellerId, reviewId);
+      fetchReviews();
+    } catch (err) {
+      console.log(err)
+    }
   };
-
-  const handleDeleteReview = () => {
-    // add logic to delete review
-  };
-
-  const handleCreateReview = () => {
-    // add logic to create review
-  }
 
   // Function to render star rating (0.01 to 5.00 as 5 stars)
   const renderStarRating = (rating) => {
     if (rating == null || isNaN(rating)) {
       return <span>No rating available</span>;
     }
-    const normalizedRating = Math.min(Math.max(Number(rating), 0), 5); // Ensure rating is a number and between 0 and 5
+    const normalizedRating = Math.min(Math.max(Number(rating), 1), 5); // Ensure rating is a number and between 0 and 5
     const fullStars = Math.floor(normalizedRating);
     const partialStar = normalizedRating - fullStars;
     const stars = [];
@@ -78,11 +74,7 @@ const SellerView = () => {
         );
       } else if (i === fullStars && partialStar > 0) {
         stars.push(
-          <span
-            key={i}
-            className="star partial"
-            style={{ width: `${partialStar * 100}%` }}
-          >
+          <span key={i} className="star partial">
             ★
           </span>
         );
@@ -98,30 +90,6 @@ const SellerView = () => {
       <span>
         {stars} ({normalizedRating.toFixed(2)})
       </span>
-    );
-  };
-
-  // Function to render 1-10 bubble ratings
-  const renderBubbleRating = (rating) => {
-    if (rating == null || isNaN(rating)) {
-      return <span>No rating available</span>;
-    }
-    const bubbles = [];
-    for (let i = 1; i <= 10; i++) {
-      bubbles.push(
-        <span
-          key={i}
-          className={`bubble ${i <= rating ? "filled" : ""}`}
-          title={`${i}/10`}
-        >
-          ●
-        </span>
-      );
-    }
-    return (
-      <div className="bubble-rating">
-        {bubbles} {rating}/10
-      </div>
     );
   };
 
@@ -178,7 +146,10 @@ const SellerView = () => {
           <div className="sort-container reviews">
             <div className="create-review-button">
               {!hasReviewed && (
-                <button className="create-review" onClick={ () => setShowItem(true) }>
+                <button
+                  className="create-review"
+                  onClick={() => setShowItem(true)}
+                >
                   New Review
                 </button>
               )}
@@ -193,7 +164,11 @@ const SellerView = () => {
                     >
                       ✕
                     </button>
-                    <ReviewForm onClose={() => setShowItem(false)} sellerId={sellerId} />
+                    <ReviewForm
+                      onClose={() => setShowItem(false)}
+                      sellerId={sellerId}
+                      refreshReviews={fetchReviews}
+                    />
                   </div>
                 </div>
               )}
@@ -241,23 +216,23 @@ const SellerView = () => {
                       <ul>
                         <li>
                           Customer Service:{" "}
-                          {renderBubbleRating(review.service_rating)}
+                          {renderStarRating(review.service_rating)}
                         </li>
                         <li>
                           Product Quality:{" "}
-                          {renderBubbleRating(review.product_rating)}
+                          {renderStarRating(review.product_rating)}
                         </li>
                         <li>
                           Shipping Packaging:{" "}
-                          {renderBubbleRating(review.packaging_rating)}
+                          {renderStarRating(review.packaging_rating)}
                         </li>
                         <li>
                           Shipping Speed & Costs:{" "}
-                          {renderBubbleRating(review.shipping_rating)}
+                          {renderStarRating(review.shipping_rating)}
                         </li>
                         <li>
                           Overall Experience:{" "}
-                          {renderBubbleRating(review.overall_rating)}
+                          {renderStarRating(review.overall_rating)}
                         </li>
                       </ul>
                     </div>
@@ -267,9 +242,33 @@ const SellerView = () => {
                     <div className="review-buttons">
                       {review.author.id === user.id && (
                         <>
-                          <button onClick={handleEditReview}>Edit</button>
-                          <button onClick={handleDeleteReview}>Delete</button>
+                          <button onClick={() => setShowItem(true)}>
+                            Edit
+                          </button>
+                          <button onClick={() => handleDeleteReview(review.id)}>
+                            Delete
+                          </button>
                         </>
+                      )}
+                    </div>
+                    <div className="review-form">
+                      {showItem && (
+                        <div className="modal">
+                          <div className="modal-content">
+                            <button
+                              className="close-button"
+                              onClick={() => setShowItem(false)}
+                            >
+                              ✕
+                            </button>
+                            <ReviewForm
+                              onClose={() => setShowItem(false)}
+                              sellerId={sellerId}
+                              reviewData={review}
+                              refreshReviews={fetchReviews}
+                            />
+                          </div>
+                        </div>
                       )}
                     </div>
                     <div className="reviewer-info">
