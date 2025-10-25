@@ -9,6 +9,7 @@ import { fill } from "@cloudinary/url-gen/actions/resize";
 import ShippingAndPaymentForm from "../../Forms/ShippingAndPaymentForm/ShippingAndPaymentForm";
 import ItemForm from "../../Forms/ItemForm/ItemForm";
 import { deleteItem } from "../../../services/itemService";
+import { getPaymentByItemId } from "../../../services/paymentService";
 
 const ItemCard = ({
   item,
@@ -28,8 +29,16 @@ const ItemCard = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showShippingAndPayment, setShowShippingAndPayment] = useState(false);
   const [showShippingForm, setShowShippingForm] = useState(false);
-  const [ showItemForm, setShowItemForm ] = useState(false);
-  const [toggleRefresh, setToggleRefresh] = useState(false)
+  const [showItemForm, setShowItemForm] = useState(false);
+  const [toggleRefresh, setToggleRefresh] = useState(false);
+  const [payment, setPayment] = useState(null);
+
+  const fetchPayment = async (itemId) => {
+    const paymentData = await getPaymentByItemId(itemId);
+    if (paymentData) {
+      setPayment(payment);
+    }
+  };
 
   useEffect(() => {
     if (item && Array.isArray(item.images)) {
@@ -38,6 +47,9 @@ const ItemCard = ({
         setCurrentIndex(0);
       } else if (currentIndex > item.images.length - 1) {
         setCurrentIndex(item.images.length - 1);
+      }
+      if (sold === "true" || purchased === "true") {
+        fetchPayment(item.id);
       }
     } else {
       setImages([]);
@@ -78,10 +90,10 @@ const ItemCard = ({
 
   const handleDeleteItem = async (itemId) => {
     try {
-      await deleteItem(itemId)
-      setToggleRefresh(!toggleRefresh)
+      await deleteItem(itemId);
+      setToggleRefresh(!toggleRefresh);
     } catch (err) {
-      console.log("Error deleting item.", err)
+      console.log("Error deleting item.", err);
     }
   };
 
@@ -98,13 +110,13 @@ const ItemCard = ({
           {sold === "true" && (
             <>
               <span className="shipping-payment-details">
-                {item.shipping_info?.street_address
+                {payment
                   ? "Shipping Info Received"
                   : "Shipping Info Pending"}
               </span>
               <span className="shipping-payment-details">
-                {item.payment_confirmation
-                  ? "Payment Confirmed"
+                {payment
+                  ? `${payment.status}`
                   : "Payment Pending"}
               </span>
             </>
@@ -113,14 +125,10 @@ const ItemCard = ({
           {purchased === "true" && (
             <>
               <span className="shipping-payment-details">
-                {item.shipping_info?.street_address
-                  ? "Shipping Sent"
-                  : "Awaiting Shipping Info"}
+                {payment ? "Shipping Sent" : "Awaiting Shipping Info"}
               </span>
               <span className="shipping-payment-details">
-                {item.payment_confirmation
-                  ? "Payment Sent"
-                  : "Awaiting Payment"}
+                {payment ? `${payment.status}` : "Awaiting Payment"}
               </span>
             </>
           )}
@@ -210,13 +218,19 @@ const ItemCard = ({
                   )}
 
                   {auctionFailed === "true" && (
-                    <button className="view-details" onClick={() => handleDeleteItem(item.id)}>
+                    <button
+                      className="view-details"
+                      onClick={() => handleDeleteItem(item.id)}
+                    >
                       Delete Item
                     </button>
                   )}
 
                   {auctionFailed === "true" ? (
-                    <button className="view-details" onClick={handleShowItemForm}>
+                    <button
+                      className="view-details"
+                      onClick={handleShowItemForm}
+                    >
                       Repost Item
                     </button>
                   ) : (

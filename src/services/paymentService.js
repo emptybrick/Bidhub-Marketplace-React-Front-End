@@ -17,3 +17,8 @@ export const captureOrder = async (orderId, payerId) => {
   });
   return data;
 };
+
+export const getPaymentByItemId = async (itemId) => {
+  const { data } = await axios.post(`${ BASE_URL }/get-payment/${ itemId }/`)
+  return data;
+}

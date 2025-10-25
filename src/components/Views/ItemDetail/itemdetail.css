@@ -44,24 +44,30 @@
   padding-bottom: 0 !important;
 }
 
+.carousel-btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(198, 174, 87, 0.999);
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  font-size: 24px;
+  font-weight: bolder;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+
+
+
 /* make top area a two-column layout: left = image + bottom details, right = current bid */
 .details-top {
   display: grid;
   grid-template-columns: 1fr 360px; /* left fluid, right fixed for current bid */
   gap: 24px;
   align-items: start;
-}
-
-/* reduce main image size */
-.item-detail-image {
-  width: 480px;       /* change this to control main image width */
-  max-width: 100%;
-  max-height: 480px;  /* change this to control main image height */
-  background-color: rgba(0, 0, 0, 0.052);
-  padding: 20px;      /* reduce padding so image occupies less space */
-  border-radius: 10px;
-  margin-bottom: 12px;
-  display: contents;
 }
 
 /* left column container */
@@ -158,31 +164,31 @@ gap: 60px;
 
 /* Main image: reduce size so it can't overflow the top */
 .item-detail-image {
-  width: 100%;
-  max-width: 100%;
-  flex: 0 0 auto; 
-  /* use viewport-relative max-height so image fits inside the 80vh modal */
-  max-height: 45vh;        /* <-- reduce this to make image smaller (eg 40-45vh) */
-  min-height: 120px;
-  background-color: rgba(0, 0, 0, 0.04);
-  padding: 8px;
+  /* width: 100%; */
+  /* min-height: 120px;
+  max-height: 480px; */
   border-radius: 8px;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
-  margin-top: 12px;
-  box-sizing: border-box;
 }
+
 
 /* Main image rendered */
 .item-detail-image img,
-.item-detail-image .cld-responsive,
-.item-detail-image > * {
+.item-detail-image .cld-responsive > * {
   width: 70%;
   height: 70%;
   max-height: 90%;
   object-fit: contain;
   display: block;
+}
+
+.image-left-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 /* Thumbnail gallery: center thumbnails in the left column and keep them compact */
@@ -269,24 +275,6 @@ gap: 60px;
   justify-content: space-between;
   padding-top: 32px;   /* increased so main image is pushed down from the very top */
   padding-bottom: 16px;
-}
-
-/* Main image: don't let it overflow the top; limit height so thumbnails remain visible */
-.item-detail-image {
-  width: 100%;
-  max-width: 100%;
-  flex: 0 0 auto;               /* do not stretch to fill whole column */
-  /* reduce the main image max height so it can't overflow the top */
-  max-height: 10%;              /* <-- reduce this value to make image smaller */
-  min-height: 100px;
-  background-color: rgba(0, 0, 0, 0.04);
-  padding: 6px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 18px;             /* push image further down from the top */
-  box-sizing: border-box;
 }
 
 /* Thumbnail gallery stays compact and sits at the bottom due to justify-content: space-between */

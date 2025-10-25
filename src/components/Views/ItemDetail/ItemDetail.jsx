@@ -94,7 +94,7 @@ const ItemDetail = () => {
         <div className="details-top two-column-equal">
           {/* LEFT column: main image (50%) and thumbnails */}
           <div className="left-50">
-            <div className="image-left">
+            <div className="image-left-details">
               <div className="image-controls">
                 <button
                   type="button"
