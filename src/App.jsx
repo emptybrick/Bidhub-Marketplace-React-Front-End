@@ -15,6 +15,7 @@ import Page404 from "./components/Views/Page404/Page404.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import SellerView from "./components/Views/SellerView/SellerView.jsx";
 import ItemList from "./components/Views/ItemList/ItemList.jsx";
+import PayPalCheckout from "./components/Component/Payments/PayPalCheckout.jsx";
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -62,6 +63,15 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <ItemList owner={sellerId} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bidhub/checkout"
+            element={
+              <ProtectedRoute>
+                {/* Pass any metadata needed by backend to build the order */}
+                <PayPalCheckout orderMeta={{ /* itemId, amount, etc. */ }} />
               </ProtectedRoute>
             }
           />

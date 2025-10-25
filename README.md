@@ -12,5 +12,9 @@ Install the required packages using the NPM package manager:
 
 npm i @cloudinary/url-gen @cloudinary/react
 
+PayPal React SDK
+
+npm i @paypal/react-paypal-js axios
+
 PROFILE ICONS ATTRIBUTION:
 <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Uniconlabs - Flaticon</a>
