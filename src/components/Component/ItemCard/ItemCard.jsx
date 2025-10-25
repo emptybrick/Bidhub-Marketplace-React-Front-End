@@ -186,7 +186,7 @@ const ItemCard = ({
                   {purchased === "true" && (
                     <button
                       className="view-details"
-                      onClick={handleShowShippingModal}
+                      onClick={handleCheckout}
                     >
                       {item.payment_confirmation
                         ? "Update Shipping or Payment Info"
@@ -224,14 +224,8 @@ const ItemCard = ({
                 </div>
               )}
             </div>
-            {/* /Modal */}
           </div>
         </div>
-
-        {/* Add checkout button for winning bidder */}
-        <button className="btn-checkout" onClick={handleCheckout}>
-          Proceed to Checkout
-        </button>
       </div>
 
       {/* Render modal only when showShippingForm is true AND item exists */}
