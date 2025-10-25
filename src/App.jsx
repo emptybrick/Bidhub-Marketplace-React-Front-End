@@ -15,23 +15,11 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import SellerView from "./components/Views/SellerView/SellerView.jsx";
 import ItemList from "./components/Views/ItemList/ItemList.jsx";
 import PayPalCheckout from "./components/Component/Payments/PayPalCheckout.jsx";
-import React from "react";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
-// Small wrappers to read route params and pass as props
-const SellerViewRoute = () => {
-  const { sellerId } = useParams();
-  return <SellerView sellerId={sellerId} />;
-};
-
-const SellerMarketRoute = () => {
-  const { sellerId } = useParams();
-  return <ItemList owner={sellerId} />;
-};
-
 const App = () => {
-  // FIX: define user from context
   const { user } = useContext(UserContext);
+  const { sellerId } = useParams();
 
   const paypalOptions = {
     "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
@@ -52,7 +40,7 @@ const App = () => {
             element={user ? <Dashboard /> : <Landing />}
           />
           <Route path="/bidhub/about" element={<About />} />
-          <Route path="/bidhub/marketplace" element={<ItemListPage />} />
+          <Route path="/bidhub/marketplace" element={<ItemList />} />
           <Route
             path="/bidhub/marketplace/:itemId"
             element={
@@ -65,7 +53,7 @@ const App = () => {
             path="/bidhub/seller/:sellerId"
             element={
               <ProtectedRoute>
-                <SellerViewRoute />
+                <SellerView sellerId={sellerId} />
               </ProtectedRoute>
             }
           />
@@ -81,7 +69,7 @@ const App = () => {
             path="/bidhub/seller/:sellerId/marketplace"
             element={
               <ProtectedRoute>
-                <SellerMarketRoute />
+                <ItemList owner={sellerId} />
               </ProtectedRoute>
             }
           />
