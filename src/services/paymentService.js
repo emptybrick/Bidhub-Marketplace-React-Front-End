@@ -19,6 +19,6 @@ export const captureOrder = async (orderId, payerId) => {
 };
 
 export const getPaymentByItemId = async (itemId) => {
-  const { data } = await axios.post(`${ BASE_URL }/get-payment/${ itemId }/`)
+  const { data } = await axios.get(`${ BASE_URL }/get-payment/${ itemId }/`)
   return data;
 }
