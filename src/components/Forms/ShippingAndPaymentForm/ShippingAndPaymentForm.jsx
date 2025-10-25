@@ -1,178 +1,215 @@
+// src/components/Forms/ShippingAndPaymentForm/ShippingAndPaymentForm.jsx
 import { useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-// import { PayPalButtons } from "@paypal/react-paypal-js"; // Only for inline checkout here (see Option B)
-import { updateShippingAndPayment } from "../../../services/itemService";
+import PayPalCheckout from "../../../components/Payments/PayPalCheckout";
+import "./shippingandpaymentform.css";
 
-const ShippingAndPaymentForm = ({ amount: amountProp }) => {
-  const navigate = useNavigate();
-  const { itemId } = useParams(); // if this form sits under a route with :itemId
-  const [message, setMessage] = useState("");
-
-  // Form initial state
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    street_address: "",
+const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
+  const [shippingInfo, setShippingInfo] = useState({
+    fullName: "",
+    address: "",
     city: "",
     state: "",
-    postal_code: "",
+    zipCode: "",
     country: "",
-    phone_number: "",
-    payment_confirmation: "" // set this after capture
+    phone: "",
   });
 
-  const handleChange = (evt) => {
-    setMessage("");
-    setFormData((prev) => ({ ...prev, [evt.target.name]: evt.target.value }));
+  const [showPayPal, setShowPayPal] = useState(false);
+
+  if (!item) {
+    return (
+      <div className="modal">
+        <div className="shipping-wrapper">
+          <div className="shipping">
+            <button className="form-close-btn" onClick={onClose}>
+              ×
+            </button>
+            <div className="error-message">
+              Item information is not available. Please try again.
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setShippingInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-    try {
-      await updateShippingAndPayment(formData); // include itemId?
-      navigate("/bidhub/home");
-    } catch (err) {
-      setMessage(err.message || "Failed to save address");
+  const handleContinueToPayment = (e) => {
+    e.preventDefault();
+    const requiredFields = [
+      "fullName",
+      "address",
+      "city",
+      "state",
+      "zipCode",
+      "country",
+    ];
+    const isValid = requiredFields.every((field) => shippingInfo[field].trim());
+
+    if (!isValid) {
+      alert("Please fill in all required shipping information");
+      return;
     }
+
+    setShowPayPal(true);
   };
 
-  // --- Trigger checkout (navigate) ---
-  // Prefer getting price from props/context/selected item; fallback to a safe default:
-  const amount = amountProp ?? 1.0;
-  const quantity = 1;
+  const handlePaymentSuccess = (result) => {
+    console.log("Payment successful:", result);
+    onSuccess?.(result);
+    onClose();
+  };
 
-  const requiredFilled = [
-    "street_address",
-    "city",
-    "state",
-    "postal_code",
-    "country",
-    "phone_number",
-  ].every((k) => String(formData[k] || "").trim().length > 0);
-
-  const handleBuyNow = () => {
-    // Pass everything checkout page needs
-    navigate("/bidhub/checkout", {
-      state: {
-        itemId,
-        amount,
-        quantity,
-        shipping: formData
-      }
-    });
+  const handlePaymentError = (error) => {
+    console.error("Payment error:", error);
+    alert("Payment failed. Please try again.");
   };
 
   return (
-    <>
-      <h2>Address</h2>
+    <div className="modal">
+      <div className="shipping-wrapper">
+        <div className="shipping">
+          <button className="form-close-btn" onClick={onClose}>
+            ×
+          </button>
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-columns">
-          <div className="form-group">
-            <input
-              type="text"
-              id="street_address"
-              value={formData.street_address}
-              name="street_address"
-              onChange={handleChange}
-              required
-            />
-            <label htmlFor="street_address">Street</label>
-          </div>
+          <h2>Shipping & Payment</h2>
 
-          <div className="form-group">
-            <input
-              type="text"
-              id="city"
-              value={formData.city}
-              name="city"
-              onChange={handleChange}
-              required
-            />
-            <label htmlFor="city">City</label>
-          </div>
+          <div className="shipping-content">
+            {/* Left Column: Shipping Information */}
+            <div className="shipping-left">
+              <h3>Shipping Information</h3>
+              <form onSubmit={handleContinueToPayment}>
+                <div className="form-group">
+                  <label>Full Name *</label>
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={shippingInfo.fullName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
 
-          <div className="form-group">
-            <input
-              type="text"
-              id="state"
-              value={formData.state}
-              name="state"
-              onChange={handleChange}
-              required
-            />
-            <label htmlFor="state">State</label>
-          </div>
+                <div className="form-group">
+                  <label>Address *</label>
+                  <input
+                    type="text"
+                    name="address"
+                    value={shippingInfo.address}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
 
-          <div className="form-group">
-            <input
-              type="text"
-              id="postal_code"
-              value={formData.postal_code}
-              name="postal_code"
-              onChange={handleChange}
-              required
-            />
-            <label htmlFor="postal_code">Postal Code</label>
-          </div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>City *</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={shippingInfo.city}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
 
-          <div className="form-group">
-            <input
-              type="text"
-              id="country"
-              value={formData.country}
-              name="country"
-              onChange={handleChange}
-              required
-            />
-            <label htmlFor="country">Country</label>
-          </div>
+                  <div className="form-group">
+                    <label>State *</label>
+                    <input
+                      type="text"
+                      name="state"
+                      value={shippingInfo.state}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                </div>
 
-          <div className="form-group">
-            <input
-              type="text"
-              id="phone_number"
-              value={formData.phone_number}
-              name="phone_number"
-              onChange={handleChange}
-              required
-            />
-            <label htmlFor="phone_number">Phone</label>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Zip Code *</label>
+                    <input
+                      type="text"
+                      name="zipCode"
+                      value={shippingInfo.zipCode}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Country *</label>
+                    <input
+                      type="text"
+                      name="country"
+                      value={shippingInfo.country}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Phone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={shippingInfo.phone}
+                    onChange={handleInputChange}
+                  />
+                </div>
+
+                {!showPayPal && (
+                  <button type="submit" className="btn-continue">
+                    Continue to Payment
+                  </button>
+                )}
+              </form>
+            </div>
+
+            {/* Right Column: Order Summary & Payment */}
+            <div className="shipping-right">
+              <h3>Order Summary</h3>
+              <div className="order-summary">
+                <div className="summary-item">
+                  <span>Item:</span>
+                  <span>{item.item_name}</span>
+                </div>
+                <div className="summary-item">
+                  <span>Price:</span>
+                  <span>${item.current_bid}</span>
+                </div>
+                <div className="summary-item total">
+                  <span>Total:</span>
+                  <span>${item.current_bid}</span>
+                </div>
+              </div>
+
+              {showPayPal && (
+                <div className="payment-section">
+                  <h3>Payment</h3>
+                  <PayPalCheckout
+                    itemId={item.id}
+                    amount={item.current_bid}
+                    shippingAddress={shippingInfo}
+                    onSuccess={handlePaymentSuccess}
+                    onError={handlePaymentError}
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-
-        {/* Save address (optional workflow) */}
-        <button type="submit">Save Address</button>
-
-        {/* 🔹 Trigger checkout from here */}
-        <button
-          type="button"
-          onClick={handleBuyNow}
-          disabled={!requiredFilled}
-          className="paypal-buy-now"
-          style={{ marginLeft: 12 }}
-        >
-          Buy with PayPal
-        </button>
-
-        {message && <p className="error">{message}</p>}
-      </form>
-
-      {/*
-        OPTION B (Inline checkout here instead of navigating):
-        <PayPalButtons
-          style={{ layout: "horizontal" }}
-          createOrder={...}   // call backend
-          onApprove={async (data) => {
-            await api.capture(...);
-            await updateShippingAndPayment({ ...formData, payment_confirmation: "Payment Confirmed" });
-            navigate("/bidhub/home");
-          }}
-          onError={(err) => setMessage("Payment error")}
-        />
-        (Ensure a PayPalScriptProvider wraps this component or a parent)
-      */}
-    </>
+      </div>
+    </div>
   );
 };
 

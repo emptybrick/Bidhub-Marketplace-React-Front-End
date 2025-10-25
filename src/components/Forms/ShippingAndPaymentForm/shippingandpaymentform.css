@@ -1,0 +1,348 @@
+/* shippingandpaymentform.css — ItemDetail-style wide modal */
+/* Uses same visual language as itemdetail.css (80vw/80vh panel, gold tint, shadow) */
+@import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap');
+
+:root {
+  --green-seaweed: rgba(2, 128, 144, 1);
+  --blue-queen: rgba(69, 105, 144, 1);
+  --red-fire: rgba(244, 91, 105, 1);
+  --panel-bg: rgba(218, 165, 32, 0.07); /* same soft gold tint as itemdetail */
+  --teal-dark: #00796b;
+  --teal-darker: #004d40;
+}
+
+body {
+  font-family: 'Asap', sans-serif;
+}
+
+/* =========================
+   Modal Backdrop (full page)
+   ========================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  overflow: auto;
+}
+
+/* =========================
+   Main Panel (like itemdetail)
+   ========================= */
+.shipping-wrapper {
+  width: 85vw;
+  max-width: 1400px;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Shipping panel */
+.shipping {
+  width: 100%;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  padding: 32px;
+  position: relative;
+}
+
+.shipping h1 {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.shipping h2 {
+  font-size: 28px;
+  margin-bottom: 24px;
+  color: var(--teal-dark);
+}
+
+.shipping h3 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: var(--teal-dark);
+}
+
+/* Close button (top-right) */
+.form-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid var(--red-fire);
+  color: var(--red-fire);
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.form-close-btn:hover {
+  background-color: var(--red-fire);
+  color: white;
+  transform: scale(1.1);
+}
+
+/* =========================
+   Layout inside panel
+   ========================= */
+
+/* Like itemdetail’s two-column top section (left/right halves) */
+.shipping-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* LEFT 50% / RIGHT 50% (mirrors itemdetail) */
+  gap: 32px;
+  align-items: start;
+  flex: 1 1 auto;
+  min-height: 0; /* allow children to size without forcing overflow */
+}
+
+/* Left column holds the address form; right column holds PayPal block or summary */
+.shipping-left,
+.shipping-right {
+  background: rgba(0,0,0,0.02);   /* subtle panel like itemdetail sub-sections */
+  border-radius: 8px;
+  padding: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* =========================
+   Address form (compact, 3 cols to avoid vertical scroll)
+   ========================= */
+.shipping form { margin-top: 4px; }
+
+.form-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns to keep height low */
+  gap: 14px 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-row-full { grid-column: 1 / -1; }
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  height: 40px;
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 0 3px rgba(0,0,0,0.18);
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: 0;
+  border-color: var(--teal-dark);
+}
+
+/* Messages */
+.error-message {
+  color: var(--red-fire);
+  background: rgba(244, 91, 105, 0.12);
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* =========================
+   PayPal / Right column
+   ========================= */
+.paypal-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.paypal-container {
+  width: 100%;
+  max-width: 460px; /* roomy but not giant */
+}
+
+.paypal-note {
+  font-size: 14px;
+  opacity: 0.9;
+  text-align: center;
+}
+
+/* =========================
+   Footer buttons
+   ========================= */
+.form-buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.btn-primary,
+.btn-secondary {
+  min-width: 160px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 0;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary { background: var(--red-fire); }
+.btn-primary:hover { background: #e8394e; }
+
+.btn-secondary { background: var(--blue-queen); }
+.btn-secondary:hover { background: rgba(69,105,144,0.88); }
+
+/* Continue to Payment Button */
+.btn-continue {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--teal-dark);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-continue:hover {
+  background-color: var(--teal-darker);
+}
+
+.btn-continue:active {
+  transform: scale(0.98);
+}
+
+/* Order Summary */
+.order-summary {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item.total {
+  font-weight: bold;
+  font-size: 18px;
+  color: var(--teal-dark);
+  padding-top: 16px;
+  margin-top: 8px;
+  border-top: 2px solid var(--teal-dark);
+}
+
+/* Payment Section */
+.payment-section {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+}
+
+.payment-section h3 {
+  margin-bottom: 16px;
+  color: var(--teal-dark);
+}
+
+.paypal-checkout-container {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--teal-dark);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* =========================
+   Responsive (keep large look; collapse columns only when needed)
+   ========================= */
+@media (max-width: 1200px) {
+  .shipping-wrapper { width: 86vw; height: 82vh; }
+}
+
+@media (max-width: 980px) {
+  .shipping-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .shipping-wrapper {
+    width: 95vw;
+  }
+}
+
+@media (max-width: 640px) {
+  .shipping-wrapper { width: 96vw; height: 96vh; }
+  .shipping { padding: 20px; }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
