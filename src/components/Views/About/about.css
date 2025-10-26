@@ -2,7 +2,7 @@
 :root {
   --main-font: 'Montserrat', sans-serif;
   --content-font: 'Roboto', sans-serif;
-  --h3-font: 'Kaushan Script', cursive;
+  --h3-font: 'Roboto';
   --main-color: #fff;
   --icon-color: #95e1d3;
 }
@@ -126,7 +126,6 @@
 .banner-logo {
   max-width: 150px;
   margin-bottom: 2rem;
-  filter: brightness(0) invert(1);
 }
 
 .banner-inner-wrapper h2 {
@@ -150,49 +149,49 @@
   background: var(--main-color);
 }
 
-.learn-more-button {
+.marketplace-button {
   padding-bottom: 5em;
   z-index: 15 !important;
 }
 
-.learn-more-button a {
+.marketplace-button a {
   padding: 0.5em 2em;
   text-align: center;
   font-family: var(--main-font);
-  font-size: 0.875em;
+  font-size: 1.5em;
   color: var(--main-color);
   text-transform: uppercase;
   border: 0.1875em solid var(--main-color);
   transition: all 0.3s;
 }
 
-.learn-more-button a:hover {
+.marketplace-button a:hover {
   color: #e88382;
   border-color: #e88382;
 }
 
 /* Banner backgrounds */
 #top-banner-1 {
-  background: linear-gradient(rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9)),
-    url('https://checkboxes-demo.webdevs.co.ua/images/mogo/banner-1.png') no-repeat center center;
+  background: linear-gradient(rgba(243,129,129,.9), rgba(252,227,138,.9)),
+    url('/banners/banner-1.png') no-repeat center center;
   background-size: cover;
 }
 
 #top-banner-2 {
-  background: linear-gradient(rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9)),
-    url('https://checkboxes-demo.webdevs.co.ua/images/mogo/banner-2.png') no-repeat center center;
+  background: linear-gradient(rgba(243,129,129,.9), rgba(252,227,138,.9)),
+    url('/banners/banner-2.png') no-repeat center center;
   background-size: cover;
 }
 
 #top-banner-3 {
-  background: linear-gradient(rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9)),
-    url('https://checkboxes-demo.webdevs.co.ua/images/mogo/banner-3.png') no-repeat center center;
+  background: linear-gradient(rgba(243,129,129,.9), rgba(252,227,138,.9)),
+    url('/banners/banner-3.png') no-repeat center center;
   background-size: cover;
 }
 
 #top-banner-4 {
-  background: linear-gradient(rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9)),
-    url('https://checkboxes-demo.webdevs.co.ua/images/mogo/banner-4.png') no-repeat center center;
+  background: linear-gradient(rgba(243,129,129,.9), rgba(252,227,138,.9)),
+    url('/banners/banner-4.png') no-repeat center center;
   background-size: cover;
 }
 

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "./about.css";
-import bidhubLogo from "../../../assets/Bidhub_Marketplace_Logo.png";
 
 const About = () => {
   const [activeBanner, setActiveBanner] = useState("banner1");
@@ -65,19 +64,19 @@ const About = () => {
             <div id="top-banner-1" className="banner">
               <div className="banner-inner-wrapper">
                 <img
-                  src={bidhubLogo}
+                  src="/bidhub_logo.png"
                   alt="BidHub Logo"
                   className="banner-logo"
                 />
-                <h2>Creative Marketplace</h2>
+                <h2>Auction Marketplace</h2>
                 <h1>
                   Welcome
                   <br />
                   to BidHub
                 </h1>
                 <div className="line"></div>
-                <div className="learn-more-button">
-                  <a href="#section-2">Learn More</a>
+                <div className="marketplace-button">
+                  <a href="#section-2">Marketplace</a>
                 </div>
               </div>
             </div>
@@ -91,38 +90,38 @@ const About = () => {
                   Amazing Items
                 </h1>
                 <div className="line"></div>
-                <div className="learn-more-button">
-                  <a href="/bidhub/marketplace">Learn More</a>
+                <div className="marketplace-button">
+                  <a href="/bidhub/marketplace">Marketplace</a>
                 </div>
               </div>
             </div>
 
             <div id="top-banner-3" className="banner">
               <div className="banner-inner-wrapper">
-                <h2>Here We Are</h2>
+                <h2>We Are</h2>
                 <h1>
                   Your Trusted
                   <br />
                   Auction Platform
                 </h1>
                 <div className="line"></div>
-                <div className="learn-more-button">
-                  <a href="#section-6">Learn More</a>
+                <div className="marketplace-button">
+                  <a href="#section-6">Marketplace</a>
                 </div>
               </div>
             </div>
 
             <div id="top-banner-4" className="banner">
               <div className="banner-inner-wrapper">
-                <h2>Get In Touch</h2>
+                <h2>Register Now</h2>
                 <h1>
-                  Contact
+                  BUY & SELL
                   <br />
-                  BidHub
+                  ON BIDHUB
                 </h1>
                 <div className="line"></div>
-                <div className="learn-more-button">
-                  <a href="#main-footer">Learn More</a>
+                <div className="marketplace-button">
+                  <a href="#main-footer">Marketplace</a>
                 </div>
               </div>
             </div>
@@ -164,7 +163,7 @@ const About = () => {
                 <span className="progressbar">
                   <span className="progressbar-fill"></span>
                 </span>
-                <span>04</span> Contact
+                <span>04</span> REGISTER
               </label>
             </div>
           </nav>
