@@ -35,7 +35,7 @@ const LoginForm = ({ onClose }) => {
 
   return (
     <div className="form-wrapper">
-      <form className="form-container" onSubmit={handleSubmit}>
+      <form className="form-container login-form" onSubmit={handleSubmit}>
         <h1 className="form-title">Login</h1>
         <button className="form-close-btn" type="button" onClick={onClose}>
           ×

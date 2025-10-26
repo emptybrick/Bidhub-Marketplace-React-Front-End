@@ -24,12 +24,17 @@ const ReviewForm = ({
   });
   const [errorMessage, setErrorMessage] = useState(""); // Define errorMessage state
 
-  const tenPointRating = [1, 2, 3, 4, 5];
+  const fivePointRating = [1, 2, 3, 4, 5];
 
-  const handleChange = (evt) => {
-    console.log(evt)
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  };
+const handleChange = (evt) => {
+  const { name, value } = evt.target;
+  console.log("handleChange:", { name, value, formDataBefore: formData });
+  setFormData((prev) => {
+    const newFormData = { ...prev, [name]: value };
+    console.log("formData after:", newFormData);
+    return newFormData;
+  });
+};
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -96,88 +101,53 @@ const ReviewForm = ({
            <div className="rating-inputs">
              <div className="form-group rating-input">
                <label htmlFor="service_rating">Customer Service: </label>
-               <select
+               <StarRating
                  name="service_rating"
-                 id="service_rating"
-                 value={formData.service_rating}
+                 value={formData.service_rating || ""}
                  onChange={handleChange}
                  required
-               >
-                 <option value="" disabled>
-                   Select a rating
-                 </option>
-                 {tenPointRating.map((rating) => (
-                   <option key={rating} value={rating}>
-                     {rating}
-                   </option>
-                 ))}
-               </select>
+                 fivePointRating={fivePointRating} // Pass as prop
+               />
              </div>
              <div className="form-group rating-input">
                <label htmlFor="product_rating">Product Quality: </label>
-               <select
+               <StarRating
                  name="product_rating"
-                 id="product_rating"
-                 value={formData.product_rating}
+                 value={formData.product_rating || ""}
                  onChange={handleChange}
                  required
-               >
-                 <option value="" disabled>
-                   Select a rating
-                 </option>
-                 {tenPointRating.map((rating) => (
-                   <option key={rating} value={rating}>
-                     {rating}
-                   </option>
-                 ))}
-               </select>
+                 fivePointRating={fivePointRating} // Pass as prop
+               />
              </div>
              <div className="form-group rating-input">
                <label htmlFor="packaging_rating">Shipping Packaging: </label>
-               <select
+               <StarRating
                  name="packaging_rating"
-                 id="packaging_rating"
-                 value={formData.packaging_rating}
+                 value={formData.packaging_rating || ""}
                  onChange={handleChange}
                  required
-               >
-                 <option value="" disabled>
-                   Select a rating
-                 </option>
-                 {tenPointRating.map((rating) => (
-                   <option key={rating} value={rating}>
-                     {rating}
-                   </option>
-                 ))}
-               </select>
+                 fivePointRating={fivePointRating} // Pass as prop
+               />
              </div>
              <div className="form-group rating-input">
                <label htmlFor="shipping_rating">Shipping Speed & Costs: </label>
                <StarRating
                  name="shipping_rating"
-                 value={formData.shipping_rating}
+                 value={formData.shipping_rating || ""}
                  onChange={handleChange}
                  required
+                 fivePointRating={fivePointRating} // Pass as prop
                />
              </div>
              <div className="form-group rating-input">
                <label htmlFor="overall_rating">Overall Experience: </label>
-               <select
+               <StarRating
                  name="overall_rating"
-                 id="overall_rating"
-                 value={formData.overall_rating}
+                 value={formData.overall_rating || ""}
                  onChange={handleChange}
                  required
-               >
-                 <option value="" disabled>
-                   Select a rating
-                 </option>
-                 {tenPointRating.map((rating) => (
-                   <option key={rating} value={rating}>
-                     {rating}
-                   </option>
-                 ))}
-               </select>
+                 fivePointRating={fivePointRating} // Pass as prop
+               />
              </div>
            </div>
          </div>

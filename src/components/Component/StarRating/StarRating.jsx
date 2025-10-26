@@ -1,33 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import "./StarRating.css";
 
-const StarRating = ({ name, value, onChange, required }) => {
-  const handleRatingChange = (rating) => {
+const StarRating = ({ name, value, onChange, required, fivePointRating }) => {
+  const [hoveredRating, setHoveredRating] = useState(null);
 
+  const handleRatingChange = (rating) => {
     const event = {
       target: {
         name,
         value: rating,
       },
     };
+    console.log("handleRatingChange:", { name, value: rating });
     onChange(event);
   };
 
   return (
     <div className="star-rating">
-      {[...Array(5)].map((_, index) => {
-        const ratingValue = index + 1; 
+      {[...fivePointRating].reverse().map((ratingValue) => {
+        const inputId = `${name}-${ratingValue}`;
+        const isFilled = Number(value) >= ratingValue; // For selection
+        const isHovered = hoveredRating && Number(hoveredRating) >= ratingValue; // For hover
         return (
-          <label key={ratingValue}>
+          <label
+            key={ratingValue}
+            htmlFor={inputId}
+            onMouseEnter={() => setHoveredRating(ratingValue)}
+            onMouseLeave={() => setHoveredRating(null)}
+          >
             <input
               type="radio"
+              id={inputId}
               name={name}
               value={ratingValue}
               checked={Number(value) === ratingValue}
               onChange={() => handleRatingChange(ratingValue)}
               required={required}
             />
-            <span className="star">&#9733;</span>
+            <span className={`star ${isFilled || isHovered ? "filled" : ""}`}>
+              &#9733;
+            </span>
           </label>
         );
       })}
