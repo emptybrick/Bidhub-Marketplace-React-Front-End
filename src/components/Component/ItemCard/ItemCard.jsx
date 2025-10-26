@@ -10,6 +10,7 @@ import ShippingAndPaymentForm from "../../Forms/ShippingAndPaymentForm/ShippingA
 import ItemForm from "../../Forms/ItemForm/ItemForm";
 import { deleteItem } from "../../../services/itemService";
 import { getPaymentByItemId } from "../../../services/paymentService";
+import ShippingDetailsModal from "../Modal/ShippingDetailsModal";
 
 const ItemCard = ({
   item,
@@ -254,7 +255,7 @@ const ItemCard = ({
       )}
 
       {payment && showShippingModal && (
-        <ShippingAndPaymentForm
+        <ShippingDetailsModal
           onClose={handleCloseShippingModal}
           shipping={payment.shipping_address}
           // amount / quantity can be added here if your form needs them
