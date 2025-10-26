@@ -196,7 +196,7 @@ const ItemCard = ({
             <div className="item-card-right">
               {user && (
                 <>
-                  {item.shipping_info?.street_address && sold === "true" && (
+                  {payment && sold === "true" && (
                     <button
                       className="view-details"
                       onClick={handleShowShippingModal}
