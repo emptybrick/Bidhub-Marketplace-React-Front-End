@@ -255,11 +255,17 @@ const ItemCard = ({
       )}
 
       {payment && showShippingModal && (
-        <ShippingDetailsModal
-          onClose={handleCloseShippingModal}
-          shipping={payment.shipping_address}
-          // amount / quantity can be added here if your form needs them
-        />
+        <div className="modal">
+          <div className="modal-content">
+            <button className="close-button" onClick={() => setShowItem(false)}>
+              ✕
+            </button>
+            <ShippingDetailsModal
+              onClose={handleCloseShippingModal}
+              shipping={payment.shipping_address}
+            />
+          </div>
+        </div>
       )}
     </>
   );
