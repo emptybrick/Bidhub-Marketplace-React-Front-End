@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { createReview, updateReview } from "../../../services/reviewService";
-import "./reviewform.css";
+import "../form.css";
+
 
 const ReviewForm = ({
   sellerId,
@@ -68,138 +69,144 @@ const ReviewForm = ({
     );
   };
 
-  return (
-    <div className="review-form-container">
-      <div className="subtitle">Review Form</div>
-      <form onSubmit={handleSubmit} className="review-form">
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
-        <div className="form-inputs">
-          <div className="review-input">
-            <label htmlFor="review"></label>
-            <textarea
-              name="review"
-              id="review"
-              value={formData.review}
-              onChange={handleChange}
-              placeholder="Describe your experience here..."
-              required
-            />
-          </div>
-          <div className="rating-inputs">
-            <div className="rating-input">
-              <label htmlFor="service_rating">Customer Service: </label>
-              <select
-                name="service_rating"
-                id="service_rating"
-                value={formData.service_rating}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>
-                  Select a rating
-                </option>
-                {tenPointRating.map((rating) => (
-                  <option key={rating} value={rating}>
-                    {rating}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="rating-input">
-              <label htmlFor="product_rating">Product Quality: </label>
-              <select
-                name="product_rating"
-                id="product_rating"
-                value={formData.product_rating}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>
-                  Select a rating
-                </option>
-                {tenPointRating.map((rating) => (
-                  <option key={rating} value={rating}>
-                    {rating}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="rating-input">
-              <label htmlFor="packaging_rating">Shipping Packaging: </label>
-              <select
-                name="packaging_rating"
-                id="packaging_rating"
-                value={formData.packaging_rating}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>
-                  Select a rating
-                </option>
-                {tenPointRating.map((rating) => (
-                  <option key={rating} value={rating}>
-                    {rating}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="rating-input">
-              <label htmlFor="shipping_rating">Shipping Speed & Costs: </label>
-              <select
-                name="shipping_rating"
-                id="shipping_rating"
-                value={formData.shipping_rating}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>
-                  Select a rating
-                </option>
-                {tenPointRating.map((rating) => (
-                  <option key={rating} value={rating}>
-                    {rating}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="rating-input">
-              <label htmlFor="overall_rating">Overall Experience: </label>
-              <select
-                name="overall_rating"
-                id="overall_rating"
-                value={formData.overall_rating}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>
-                  Select a rating
-                </option>
-                {tenPointRating.map((rating) => (
-                  <option key={rating} value={rating}>
-                    {rating}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-        <div className="form-buttons">
-          {reviewData ? (
-            <button type="button" onClick={handleUpdate}>
-              Update
-            </button>
-          ) : (
-            <button type="submit" disabled={isFormInvalid()}>
-              Create
-            </button>
-          )}
-          <button type="button" onClick={onClose}>
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
-  );
+ return (
+   <div className="form-wrapper">
+     <div className="form-container">
+       <button className="form-close-btn" type="button" onClick={onClose}>
+         ×
+       </button>
+       <div className="form-title">Review Form</div>
+       <form onSubmit={handleSubmit}>
+         {errorMessage && <div className="error-message">{errorMessage}</div>}
+         <div className="form-inputs">
+           <div className="form-group review-input">
+             <label htmlFor="review">Review</label>{" "}
+             {/* Added text for accessibility */}
+             <textarea
+               name="review"
+               id="review"
+               value={formData.review}
+               onChange={handleChange}
+               placeholder="Describe your experience here..."
+               required
+             />
+           </div>
+           <div className="rating-inputs">
+             <div className="form-group rating-input">
+               <label htmlFor="service_rating">Customer Service: </label>
+               <select
+                 name="service_rating"
+                 id="service_rating"
+                 value={formData.service_rating}
+                 onChange={handleChange}
+                 required
+               >
+                 <option value="" disabled>
+                   Select a rating
+                 </option>
+                 {tenPointRating.map((rating) => (
+                   <option key={rating} value={rating}>
+                     {rating}
+                   </option>
+                 ))}
+               </select>
+             </div>
+             <div className="form-group rating-input">
+               <label htmlFor="product_rating">Product Quality: </label>
+               <select
+                 name="product_rating"
+                 id="product_rating"
+                 value={formData.product_rating}
+                 onChange={handleChange}
+                 required
+               >
+                 <option value="" disabled>
+                   Select a rating
+                 </option>
+                 {tenPointRating.map((rating) => (
+                   <option key={rating} value={rating}>
+                     {rating}
+                   </option>
+                 ))}
+               </select>
+             </div>
+             <div className="form-group rating-input">
+               <label htmlFor="packaging_rating">Shipping Packaging: </label>
+               <select
+                 name="packaging_rating"
+                 id="packaging_rating"
+                 value={formData.packaging_rating}
+                 onChange={handleChange}
+                 required
+               >
+                 <option value="" disabled>
+                   Select a rating
+                 </option>
+                 {tenPointRating.map((rating) => (
+                   <option key={rating} value={rating}>
+                     {rating}
+                   </option>
+                 ))}
+               </select>
+             </div>
+             <div className="form-group rating-input">
+               <label htmlFor="shipping_rating">Shipping Speed & Costs: </label>
+               <select
+                 name="shipping_rating"
+                 id="shipping_rating"
+                 value={formData.shipping_rating}
+                 onChange={handleChange}
+                 required
+               >
+                 <option value="" disabled>
+                   Select a rating
+                 </option>
+                 {tenPointRating.map((rating) => (
+                   <option key={rating} value={rating}>
+                     {rating}
+                   </option>
+                 ))}
+               </select>
+             </div>
+             <div className="form-group rating-input">
+               <label htmlFor="overall_rating">Overall Experience: </label>
+               <select
+                 name="overall_rating"
+                 id="overall_rating"
+                 value={formData.overall_rating}
+                 onChange={handleChange}
+                 required
+               >
+                 <option value="" disabled>
+                   Select a rating
+                 </option>
+                 {tenPointRating.map((rating) => (
+                   <option key={rating} value={rating}>
+                     {rating}
+                   </option>
+                 ))}
+               </select>
+             </div>
+           </div>
+         </div>
+         <div className="form-buttons">
+           {reviewData ? (
+             <button type="button" onClick={handleUpdate}>
+               Update
+             </button>
+           ) : (
+             <button type="submit" disabled={isFormInvalid()}>
+               Create
+             </button>
+           )}
+           <button type="button" onClick={onClose}>
+             Cancel
+           </button>
+         </div>
+       </form>
+     </div>
+   </div>
+ );
 };
 
 export default ReviewForm;

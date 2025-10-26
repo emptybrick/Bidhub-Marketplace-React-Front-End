@@ -157,7 +157,7 @@ header {
   margin: 0 auto;
   padding: 15px 20px;
   border: 1px solid var(--gold);
-  border-radius: 5px;
+  border-radius: 20px;
   transition: all ease-in-out 300ms;
   min-height: 200px;
   display: flex;

@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../../contexts/UserContext.jsx";
-import "./registerform.css";
 import { register } from "../../../services/authService.js";
+import "../form.css";
 
 const RegisterForm = ({ onClose }) => {
   const navigate = useNavigate();
@@ -77,12 +77,12 @@ const RegisterForm = ({ onClose }) => {
   };
 
   return (
-    <div className="register-wrapper">
-      <div className="register">
+    <div className="form-wrapper">
+      <div className="form-container">
         <button className="form-close-btn" type="button" onClick={onClose}>
           ×
         </button>
-        <h1>Register</h1>
+        <h1 className="form-title">Register</h1>
         {message && <p className="error-message">{message}</p>}
 
         <form onSubmit={handleSubmit}>
@@ -94,6 +94,7 @@ const RegisterForm = ({ onClose }) => {
                 value={email}
                 name="email"
                 onChange={handleChange}
+                className="short-input"
                 required
               />
               <label htmlFor="email">Email</label>
@@ -130,6 +131,7 @@ const RegisterForm = ({ onClose }) => {
                 value={first_name}
                 name="first_name"
                 onChange={handleChange}
+                className="short-input"
                 required
               />
               <label htmlFor="first_name">First Name</label>

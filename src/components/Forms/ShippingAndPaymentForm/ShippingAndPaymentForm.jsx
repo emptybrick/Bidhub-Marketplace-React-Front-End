@@ -5,7 +5,7 @@ import {
   createOrder as apiCreateOrder,
   captureOrder as apiCaptureOrder,
 } from "../../../services/paymentService";
-import "./shippingandpaymentform.css";
+import "../form.css";
 
 const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
   const [shippingInfo, setShippingInfo] = useState({
@@ -57,18 +57,15 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
 
   return (
     <div className="modal">
-      <div className="shipping-wrapper">
-        <div className="shipping">
+      <div className="form-wrapper">
+        <div className="form-container">
           <button className="form-close-btn" onClick={onClose}>
             ×
           </button>
-
-          <h2>Shipping & Payment</h2>
-
-          <div className="shipping-content">
-            {/* Left: Shipping form */}
-            <div className="shipping-left">
-              <h3>Shipping Information</h3>
+          <h2 className="form-title">Shipping & Payment</h2>
+          <div className="form-content">
+            <div className="form-left">
+              <h3 className="form-subtitle">Shipping Information</h3>
               <form onSubmit={(e) => e.preventDefault()}>
                 <div className="form-group">
                   <label>Full Name *</label>
@@ -79,7 +76,6 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                     required
                   />
                 </div>
-
                 <div className="form-group">
                   <label>Address *</label>
                   <input
@@ -89,7 +85,6 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                     required
                   />
                 </div>
-
                 <div className="form-row">
                   <div className="form-group">
                     <label>City *</label>
@@ -110,7 +105,6 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                     />
                   </div>
                 </div>
-
                 <div className="form-row">
                   <div className="form-group">
                     <label>Zip Code *</label>
@@ -131,7 +125,6 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                     />
                   </div>
                 </div>
-
                 <div className="form-group">
                   <label>Phone</label>
                   <input
@@ -140,14 +133,10 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                     onChange={handleInputChange}
                   />
                 </div>
-
-                {/* Removed the "Continue to Payment" button. PayPal buttons handle checkout. */}
               </form>
             </div>
-
-            {/* Right: Summary + PayPal buttons */}
-            <div className="shipping-right">
-              <h3>Order Summary</h3>
+            <div className="form-right">
+              <h3 className="form-subtitle">Order Summary</h3>
               <div className="order-summary">
                 <div className="summary-item">
                   <span>Item:</span>
@@ -162,13 +151,11 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                   <span>${item.current_bid}</span>
                 </div>
               </div>
-
               <div className="payment-section">
-                <h3>Payment</h3>
+                <h3 className="form-subtitle">Payment</h3>
                 {isProcessing && (
                   <div className="loading">Processing payment...</div>
                 )}
-
                 <PayPalButtons
                   style={{
                     layout: "vertical",
@@ -188,7 +175,7 @@ const ShippingAndPaymentForm = ({ item, onClose, onSuccess }) => {
                   }}
                   createOrder={async () => {
                     try {
-                      const data = await apiCreateOrder(item.id, shippingInfo); // uses axios with proper baseURL
+                      const data = await apiCreateOrder(item.id, shippingInfo);
                       if (!data?.order_id)
                         throw new Error("No order_id returned");
                       return data.order_id;

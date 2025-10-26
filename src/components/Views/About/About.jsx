@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "./about.css";
 
 const About = () => {
   const [activeBanner, setActiveBanner] = useState("banner1");

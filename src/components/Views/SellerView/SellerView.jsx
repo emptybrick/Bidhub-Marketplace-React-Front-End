@@ -147,20 +147,14 @@ const SellerView = () => {
             <div className="review-form">
               {showItem && (
                 <div className="modal">
-                  <div className="modal-content">
-                    <button
-                      className="close-button"
-                      onClick={() => setShowItem(false)}
-                    >
-                      ✕
-                    </button>
+
                     <ReviewForm
                       onClose={() => setShowItem(false)}
                       sellerId={sellerId}
                       refreshReviews={fetchReviews}
                     />
                   </div>
-                </div>
+
               )}
             </div>
             <div className="filters-container">
@@ -256,20 +250,12 @@ const SellerView = () => {
                     <div className="review-form">
                       {showItem && (
                         <div className="modal">
-                          <div className="modal-content">
-                            <button
-                              className="close-button"
-                              onClick={() => setShowItem(false)}
-                            >
-                              ✕
-                            </button>
                             <ReviewForm
                               onClose={() => setShowItem(false)}
                               sellerId={sellerId}
                               reviewData={review}
                               refreshReviews={fetchReviews}
                             />
-                          </div>
                         </div>
                       )}
                     </div>

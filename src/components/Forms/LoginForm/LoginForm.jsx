@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../../contexts/UserContext.jsx";
 import { login } from "../../../services/authService.js";
-import "./loginform.css";
+import "../form.css";
 
 const LoginForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -34,28 +34,35 @@ const LoginForm = ({ onClose }) => {
   };
 
   return (
-    <div className="login-wrapper">
-      <form className="login" onSubmit={handleSubmit}>
+    <div className="form-wrapper">
+      <form className="form-container" onSubmit={handleSubmit}>
+        <h1 className="form-title">Login</h1>
         <button className="form-close-btn" type="button" onClick={onClose}>
           ×
         </button>
         {error && <div className="error-message">{error}</div>}
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="email">Email</label>
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="password">Password</label>
+        </div>
 
         <div className="form-buttons">
           <button type="submit">Login</button>
