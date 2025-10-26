@@ -27,7 +27,7 @@ const ItemCard = ({
 
   const [images, setImages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showShippingAndPayment, setShowShippingAndPayment] = useState(false);
+  const [showShippingModal, setShowShippingModal] = useState(false);
   const [showShippingForm, setShowShippingForm] = useState(false);
   const [showItemForm, setShowItemForm] = useState(false);
   const [toggleRefresh, setToggleRefresh] = useState(false);
@@ -67,11 +67,11 @@ const ItemCard = ({
   };
 
   const handleShowShippingModal = () => {
-    setShowShippingAndPayment(true);
+    setShowShippingModal(true);
   };
 
   const handleCloseShippingModal = () => {
-    setShowShippingAndPayment(false);
+    setShowShippingModal(false);
   };
 
   const handleShowItemForm = () => {
@@ -111,14 +111,10 @@ const ItemCard = ({
           {sold === "true" && (
             <>
               <span className="shipping-payment-details">
-                {payment
-                  ? "Shipping Info Received"
-                  : "Shipping Info Pending"}
+                {payment ? "Shipping Info Received" : "Shipping Info Pending"}
               </span>
               <span className="shipping-payment-details">
-                {payment
-                  ? `${payment.status}`
-                  : "Payment Pending"}
+                {payment ? `Payment Confirmed` : "Payment Pending"}
               </span>
             </>
           )}
@@ -129,7 +125,7 @@ const ItemCard = ({
                 {payment ? "Shipping Sent" : "Awaiting Shipping Info"}
               </span>
               <span className="shipping-payment-details">
-                {payment ? `${payment.status}` : "Awaiting Payment"}
+                {payment ? `Payment Sent` : "Awaiting Payment"}
               </span>
             </>
           )}
@@ -201,7 +197,7 @@ const ItemCard = ({
             <div className="item-card-right">
               {user && (
                 <>
-                  {item.shipping_info?.street_address && sold === "true" && (
+                  {payment && sold === "true" && (
                     <button
                       className="view-details"
                       onClick={handleShowShippingModal}
@@ -242,30 +238,6 @@ const ItemCard = ({
                 </>
               )}
             </div>
-
-            {/* Modal */}
-            <div className="review-form">
-              {showShippingAndPayment && (
-                <div className="modal" role="dialog" aria-modal="true">
-                  <div className="modal-content">
-                    <button
-                      className="close-button"
-                      onClick={handleCloseShippingModal}
-                      aria-label="Close"
-                    >
-                      ✕
-                    </button>
-
-                    {/* Pass only what the form actually needs; remove undefined props */}
-                    <ShippingAndPaymentForm
-                      onClose={handleCloseShippingModal}
-                      itemId={item?.id}
-                      // amount / quantity can be added here if your form needs them
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         </div>
       </div>
@@ -280,6 +252,14 @@ const ItemCard = ({
       )}
       {showItemForm && item && (
         <ItemForm item={item} handleDeleteItem={handleDeleteItem} />
+      )}
+
+      {payment && showShippingModal && (
+        <ShippingAndPaymentForm
+          onClose={handleCloseShippingModal}
+          shipping={payment.shipping_address}
+          // amount / quantity can be added here if your form needs them
+        />
       )}
     </>
   );
