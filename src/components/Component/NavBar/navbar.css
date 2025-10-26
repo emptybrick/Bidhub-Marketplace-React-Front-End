@@ -67,6 +67,7 @@ body {
 .nav div.main_list ul li button:hover {
     color: #FFD700;
     background-color: rgba(255, 255, 255, 0.1);
+
 }/* Ensure the logo stays within bounds */
 .nav div.logo {
     float: left;
@@ -303,7 +304,9 @@ body {
     100% {
         transform: translateY(-9px) rotate(135deg);
     }
-}/* Modal styling */
+}
+
+/* Modal styling */
 .modal {
   position: fixed;
   top: 0;
@@ -335,7 +338,7 @@ body {
   cursor: pointer;
   color: #333;
 }.modal-close:hover {
-  color: #FFD700; /* Gold highlight */
+  color: #FFD700;
 }
 
 .nav-bar-link:hover {

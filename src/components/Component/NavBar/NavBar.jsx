@@ -51,7 +51,7 @@ const NavBar = () => {
             alt="BidHub Icon" 
             className="logo-icon"
           />
-          BidHub
+          Bidhub
         </Link>
       </div>
 
