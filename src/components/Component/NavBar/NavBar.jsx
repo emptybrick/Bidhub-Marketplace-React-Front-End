@@ -43,9 +43,16 @@ const NavBar = () => {
   };
 
   return (
-    <nav className={`nav ${scrolled ? "affix" : ""}`}>
+<nav className={`nav ${scrolled ? "affix" : ""}`}>
       <div className="logo">
-        <Link to="/bidhub/home">BidHub</Link>
+        <Link to="/bidhub/home">
+          <img 
+            src="/bidhub-favicon2.jpg" 
+            alt="BidHub Icon" 
+            className="logo-icon"
+          />
+          BidHub
+        </Link>
       </div>
 
       <div className={`main_list ${menuOpen ? "show_list" : ""}`}>

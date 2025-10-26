@@ -82,12 +82,24 @@ body {
     transition: color 0.3s, background-color 0.3s;
     padding: 5px 10px;
     border-radius: 4px;
-}.nav div.logo a:hover {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+}
+.nav div.logo a:hover {
     color: #FFD700; /* Gold highlight */
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     padding: 5px 10px;
 }
+
+/* Bidhub logo icon*/
+.logo-icon {
+  height: 2.2em;
+  width: auto;
+  object-fit: contain;
+}
+
 .navTrigger {
     display: none;
 }/* Media query section */
@@ -176,6 +188,7 @@ body {
 }.navTrigger.active i:nth-child(3) {
     -webkit-animation: inBtm 0.8s forwards;
     animation: inBtm 0.8s forwards;
+    
 }@-webkit-keyframes inM {
     50% {
         -webkit-transform: rotate(0deg);

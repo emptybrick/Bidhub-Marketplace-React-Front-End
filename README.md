@@ -20,3 +20,6 @@ npm i @paypal/react-paypal-js
 
 PROFILE ICONS ATTRIBUTION:
 <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Uniconlabs - Flaticon</a>
+
+https://codepen.io/albizan
+
