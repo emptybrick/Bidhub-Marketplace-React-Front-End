@@ -115,10 +115,10 @@
   background-size: cover;
   transition: all 0.5s ease;
 }
-
+/* Banner Height */
 .banner-inner-wrapper {
   height: 100%;
-  padding-top: 6em;
+  padding-top: 1em;
   background-image: linear-gradient(rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9));
   box-sizing: border-box;
 }
@@ -150,7 +150,7 @@
 }
 
 .marketplace-button {
-  padding-bottom: 5em;
+  padding-bottom: 2em; /* optional: less bottom space */
   z-index: 15 !important;
 }
 
@@ -312,7 +312,7 @@
     height: 46em;
   }
   .banner-inner-wrapper {
-    padding-top: 12em;
+    padding-top: 8em; /* was 12em */
   }
 }
 
@@ -324,113 +324,8 @@
     height: 43em;
   }
   .banner-inner-wrapper {
-    padding-top: 11em;
+    padding-top: 7em; /* was 11em */
   }
 }
 
-@media only screen and (max-width: 1680px) {
-  .about-page {
-    font-size: 18px;
-  }
-  #section-1 {
-    height: 40em;
-  }
-  .banner-inner-wrapper {
-    padding-top: 9em;
-  }
-}
-
-@media only screen and (max-width: 1366px) {
-  .about-page {
-    font-size: 16px;
-  }
-}
-
-@media only screen and (max-width: 1120px) {
-  #section-1 {
-    height: 35em;
-  }
-  .content-slider nav {
-    bottom: -0.2em;
-  }
-  .banner-inner-wrapper {
-    padding-top: 7em;
-  }
-  .banner-inner-wrapper .line {
-    margin: 2em auto;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .about-page {
-    font-size: 14px;
-  }
-  .content-slider nav {
-    bottom: 0;
-  }
-  .controls {
-    width: 80%;
-  }
-}
-
-@media only screen and (max-width: 860px) {
-  #section-1 {
-    height: 29em;
-  }
-  .content-slider nav {
-    bottom: -1em;
-  }
-  .controls {
-    width: 90%;
-  }
-  .banner-inner-wrapper h2 {
-    font-size: 2em;
-  }
-  .banner-inner-wrapper h1 {
-    font-size: 4.5em;
-  }
-  .banner-inner-wrapper {
-    padding-top: 5em;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  #section-1 {
-    height: 27em;
-  }
-  .controls {
-    width: 100%;
-  }
-  .controls label {
-    width: 19%;
-    font-size: 0.8em;
-  }
-  .banner-inner-wrapper .line {
-    margin: 1.7em auto;
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  #section-1 {
-    height: 26em;
-  }
-  .content-slider nav {
-    bottom: -0.5em;
-  }
-  .controls label {
-    width: 40%;
-    font-size: 0.7em;
-  }
-  .banner-inner-wrapper h2 {
-    font-size: 1.5em;
-  }
-  .banner-inner-wrapper h1 {
-    font-size: 3em;
-  }
-  .banner-inner-wrapper .line {
-    margin: 1.7em auto;
-  }
-  .banner-logo {
-    max-width: 100px;
-  }
-}
+@media only screen and

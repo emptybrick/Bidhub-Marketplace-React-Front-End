@@ -64,7 +64,7 @@ const About = () => {
             <div id="top-banner-1" className="banner">
               <div className="banner-inner-wrapper">
                 <img
-                  src="/bidhub_logo.png"
+                  src="/Bidhub_Marketplace_logo.png"
                   alt="BidHub Logo"
                   className="banner-logo"
                 />

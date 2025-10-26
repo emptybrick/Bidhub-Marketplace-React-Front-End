@@ -47,7 +47,7 @@ const NavBar = () => {
       <div className="logo">
         <Link to="/bidhub/home">
           <img 
-            src="/bidhub-favicon2.jpg" 
+            src="/Bidhub_Favicon_Logo.jpg" 
             alt="BidHub Icon" 
             className="logo-icon"
           />
