@@ -35,8 +35,9 @@ const ItemCard = ({
 
   const fetchPayment = async (itemId) => {
     const paymentData = await getPaymentByItemId(itemId);
+    console.log("Fetched payment data:", paymentData);
     if (paymentData) {
-      setPayment(payment);
+      setPayment(paymentData);
     }
   };
 
