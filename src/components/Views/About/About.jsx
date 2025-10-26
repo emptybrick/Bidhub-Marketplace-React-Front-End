@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import "./About.css";
 
-/* JS class from the sample, adapted for React */
 class MzaCarousel {
   constructor(root, opts = {}) {
     this.root = root;
@@ -348,40 +347,30 @@ class MzaCarousel {
 const slides = [
   {
     bg: "https://picsum.photos/id/1015/1600/1000",
-    title: "Edge Visuals",
-    kicker: "Design systems that breathe",
-    text: "Build adaptive UI foundations with tokens, motion, and accessible color ramps. Ship faster without sameness.",
-    cta: "See case study",
+    title: "Welcome to Bidhub, a little something about us.",
+    kicker:
+      "Bidhub — the simple way to buy & sell new and second-hand items online",
+    text: "Fast listings, fair bidding, secure PayPal checkout.",
+    // cta: "See case study",
   },
   {
     bg: "https://picsum.photos/id/1011/1600/1000",
-    title: "Realtime Dashboards",
-    kicker: "Signal over noise",
-    text: "Stream metrics, smooth spikes, and highlight deltas. Clarity first, chrome last.",
-    cta: "View live demo",
-  },
-  {
-    bg: "https://picsum.photos/id/1018/1600/1000",
-    title: "Brand Motion",
-    kicker: "Identity in motion",
-    text: "Translate marks into kinetic systems. Timing, easing, and restraint create memory.",
-    cta: "Explore reels",
+    title: "How's it built?",
+    kicker: "Project development stack",
+    text: "	•	Front end: React (Vite), protected routes, responsive UI,	Back end: Django REST Framework, PostgreSQL, JWT auth, Infra & tooling: Cloudinary images, PayPal Checkout, CORS/Helmet, linting & tests.Quality: Accessible, performant, and designed for maintainability.",
+    // cta: "View live demo",
   },
   {
     bg: "https://picsum.photos/id/1021/1600/1000",
-    title: "E-commerce UX",
-    kicker: "Frictionless paths",
-    text: "Model intent, compress choice, and keep the dopamine loop honest. Checkout in one breath.",
-    cta: "See patterns",
-  },
-  {
-    bg: "https://picsum.photos/id/1005/1600/1000",
-    title: "Content Engines",
-    kicker: "Scale without sludge",
-    text: "Structured content, image policy, and smart defaults. Publish daily, stay sharp.",
-    cta: "Read playbook",
+    title: "Who we are",
+    kicker: "The folks behind the scenes",
+    text: "A pair of aspiring software engineers—product-minded and customer-obsessed. Open to opportunities—let’s talk: GitHub / LinkedIn / Email",
+    //cta: "See patterns",
   },
 ];
+
+const slidesToShow = 3;
+const slidesData = slides.slice(0, slidesToShow);
 
 export default function About() {
   const rootRef = useRef(null);
@@ -391,6 +380,8 @@ export default function About() {
     if (rootRef.current && !instanceRef.current) {
       instanceRef.current = new MzaCarousel(rootRef.current, {
         transitionMs: 900,
+        activeLeftBias: 0, // center active slide (no left bias)
+        peek: 0.0, // no side “peek” pushing layout visually
       });
     }
     return () => {
@@ -415,7 +406,7 @@ export default function About() {
     >
       <div className="mzaCarousel-viewport" tabIndex={0}>
         <div className="mzaCarousel-track">
-          {slides.map((s, i) => (
+          {slidesData.map((s, i) => (
             <article
               key={i}
               className="mzaCarousel-slide"
@@ -427,11 +418,13 @@ export default function About() {
                 className="mzaCard"
                 style={{ "--mzaCard-bg": `url('${s.bg}')` }}
               >
-                <header className="mzaCard-head mzaPar-1">
-                  <h2 className="mzaCard-title">{s.title}</h2>
-                  <p className="mzaCard-kicker">{s.kicker}</p>
-                </header>
-                <p className="mzaCard-text mzaPar-2">{s.text}</p>
+                <div className="mzaCard-copy">
+                  <header className="mzaCard-head mzaPar-1">
+                    <h2 className="mzaCard-title">{s.title}</h2>
+                    <p className="mzaCard-kicker">{s.kicker}</p>
+                  </header>
+                  <p className="mzaCard-text mzaPar-2">{s.text}</p>
+                </div>
                 <footer className="mzaCard-actions mzaPar-3">
                   <button className="mzaBtn" type="button">
                     {s.cta}
