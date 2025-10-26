@@ -95,6 +95,7 @@ const RegisterForm = ({ onClose }) => {
                 name="email"
                 onChange={handleChange}
                 className="short-input"
+                placeholder="Email"
                 required
               />
               <label htmlFor="email">Email</label>
@@ -107,6 +108,7 @@ const RegisterForm = ({ onClose }) => {
                 value={username}
                 name="username"
                 onChange={handleChange}
+                placeholder="Username"
                 required
               />
               <label htmlFor="username">Username</label>
@@ -119,6 +121,7 @@ const RegisterForm = ({ onClose }) => {
                 value={password}
                 name="password"
                 onChange={handleChange}
+                placeholder="Password"
                 required
               />
               <label htmlFor="password">Password</label>
@@ -132,6 +135,7 @@ const RegisterForm = ({ onClose }) => {
                 name="first_name"
                 onChange={handleChange}
                 className="short-input"
+                placeholder="First Name"
                 required
               />
               <label htmlFor="first_name">First Name</label>
@@ -144,6 +148,7 @@ const RegisterForm = ({ onClose }) => {
                 value={last_name}
                 name="last_name"
                 onChange={handleChange}
+                placeholder="Last Name"
                 required
               />
               <label htmlFor="last_name">Last Name</label>
@@ -156,29 +161,31 @@ const RegisterForm = ({ onClose }) => {
                 value={password_confirmation}
                 name="password_confirmation"
                 onChange={handleChange}
+                placeholder="Confirm Password"
                 required
               />
               <label htmlFor="password_confirmation">Confirm Password</label>
             </div>
-            <div className="form-group profile-image-picker">
-              <label htmlFor="profile-image">Select Profile Image</label>
-              <div className="image-grid">
-                {profileImages.map((image, index) => (
-                  <div
-                    key={index}
-                    className={`image-option ${
-                      formData.profile_image === image.src ? "selected" : ""
-                    }`}
-                    onClick={() =>
-                      setFormData({ ...formData, profile_image: image.src })
-                    }
-                  >
-                    <img src={image.src} alt={`Profile icon ${index + 1}`} />
-                  </div>
-                ))}
-              </div>
+          </div>
+          <div className="form-group profile-image-picker">
+            <label htmlFor="profile-image">Select Profile Image</label>
+            <div className="image-grid">
+              {profileImages.map((image, index) => (
+                <div
+                  key={index}
+                  className={`image-option ${
+                    formData.profile_image === image.src ? "selected" : ""
+                  }`}
+                  onClick={() =>
+                    setFormData({ ...formData, profile_image: image.src })
+                  }
+                >
+                  <img src={image.src} alt={`Profile icon ${index + 1}`} />
+                </div>
+              ))}
             </div>
           </div>
+
           <div className="form-buttons">
             <button type="submit" disabled={isFormInvalid()}>
               Register

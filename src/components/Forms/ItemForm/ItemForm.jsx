@@ -237,14 +237,15 @@ console.log(item)
              <div className="form-grid three-column">
                <div className="form-column">
                  <div className="form-group">
-                   <label htmlFor="item_name">Item Name</label>
+                   <label htmlFor="item_name">Item Title</label>
                    <input
                      type="text"
                      id="item_name"
                      value={item_name}
                      name="item_name"
                      onChange={handleChange}
-                     maxLength={24}
+                     maxLength={ 24 }
+                     placeholder="Title (24 Characters Max)"
                      required
                    />
                  </div>
@@ -255,7 +256,7 @@ console.log(item)
                      id="manufacture_year"
                      value={manufacture_year}
                      name="manufacture_year"
-                     placeholder="e.g. 2024"
+                     placeholder="Year Made (e.g. 2024)"
                      onChange={handleChange}
                    />
                  </div>
@@ -337,7 +338,8 @@ console.log(item)
                      value={weight}
                      name="weight"
                      min={0.001}
-                     step={0.001}
+                     step={ 0.001 }
+                     placeholder="Weight (kg)"
                      onChange={handleChange}
                      required
                    />
@@ -366,6 +368,7 @@ console.log(item)
                      id="initial_bid"
                      value={initial_bid}
                      name="initial_bid"
+                     placeholder="Starting Bid ($)"
                      onChange={handleChange}
                      required
                    />
@@ -390,6 +393,7 @@ console.log(item)
                  id="description"
                  value={description}
                  name="description"
+                 placeholder="Add details and description of item here..."
                  onChange={handleChange}
                  required
                />

@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { createReview, updateReview } from "../../../services/reviewService";
 import "../form.css";
+import StarRating from "../../Component/StarRating/StarRating";
 
 
 const ReviewForm = ({
@@ -26,6 +27,7 @@ const ReviewForm = ({
   const tenPointRating = [1, 2, 3, 4, 5];
 
   const handleChange = (evt) => {
+    console.log(evt)
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
@@ -151,22 +153,12 @@ const ReviewForm = ({
              </div>
              <div className="form-group rating-input">
                <label htmlFor="shipping_rating">Shipping Speed & Costs: </label>
-               <select
+               <StarRating
                  name="shipping_rating"
-                 id="shipping_rating"
                  value={formData.shipping_rating}
                  onChange={handleChange}
                  required
-               >
-                 <option value="" disabled>
-                   Select a rating
-                 </option>
-                 {tenPointRating.map((rating) => (
-                   <option key={rating} value={rating}>
-                     {rating}
-                   </option>
-                 ))}
-               </select>
+               />
              </div>
              <div className="form-group rating-input">
                <label htmlFor="overall_rating">Overall Experience: </label>
