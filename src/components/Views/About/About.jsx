@@ -347,21 +347,28 @@ class MzaCarousel {
 
 const slides = [
   {
-    bg: "https://picsum.photos/id/1015/1600/1000",
+    bg: "/about_welcome.jpg",
     title: "Welcome to Bidhub",
     kicker: "A trusted place to buy & sell new and second-hand items",
-    text: "Build adaptive UI foundations with tokens, motion, and accessible color ramps. Ship faster without sameness.",
+    text: [
+      "List in minutes, bid live, and pay securely with PayPal.",
+      "Explore diverse categories: electronics, fashion, collectibles, and more.",
+    ],
   },
   {
-    bg: "https://picsum.photos/id/1011/1600/1000",
+    bg: "/about_who.jpg",
     title: "Who we are",
     kicker:
       "A pair of aspiring software engineers—product-minded and customer-obsessed.",
-    text: "Open to opportunities—let’s talk: GitHub / LinkedIn / Email",
+    text: "Open to opportunities—let's talk: GitHub / LinkedIn / Email",
+    portraits: [
+      { img: "/Portrait_Quan.png", name: "Quan" },
+      { img: "/Portrait_David.jpg", name: "David" },
+    ],
   },
   {
-    bg: "https://picsum.photos/id/1018/1600/1000",
-    title: "How it was built",
+    bg: "/about_how.jpg",
+    title: "How Bidhub was built",
     kicker: "The tech stack at a glance",
     text: [
       "Front end: React (Vite), protected routes, responsive UI.",
@@ -437,6 +444,24 @@ export default function About() {
                     <p className="mzaCard-text mzaPar-2">{s.text}</p>
                   )}
                 </div>
+
+                {/* optional portraits overlay (renders when slide has portraits[]) */}
+                {Array.isArray(s.portraits) && (
+                  <div className="mzaCard-portraits" aria-hidden="false">
+                    {s.portraits.map((p, idx) => (
+                      <figure key={idx} className="portrait">
+                        <img
+                          src={p.img}
+                          alt={p.name}
+                          className="portrait-img"
+                        />
+                        <figcaption className="portrait-name">
+                          {p.name}
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                )}
                 {/* CTA removed */}
               </div>
             </article>
