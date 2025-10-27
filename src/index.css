@@ -36,11 +36,11 @@ body {
 body {
   background: radial-gradient(
       1200px 600px at 10% -10%,
-      #676767 0%,
+      #000000 0%,
       transparent 40%
     ),
-    radial-gradient(900px 600px at 110% 10%, #909090 0%, transparent 40%),
-    linear-gradient(180deg, #6d6d6d 0%, #e0e0e0 100%);
+    radial-gradient(900px 600px at 110% 10%, #ffffff 0%, transparent 40%),
+    linear-gradient(180deg, #aeaeae71 0%, #6c6c6c 100%);
   color: var(--mzaC-fg);
   /* use the same fonts as Landing */
   font-size: 16px;
@@ -49,6 +49,12 @@ body {
     "Helvetica Neue", Arial;
  height: 100vh !important;
 }
+
  main {
     min-height: 100vh;
+ }
+
+ h1 {
+      color: #f6eac5 !important;
+  text-shadow: 7px 7px 5px rgb(0, 0, 0) !important;
  }
