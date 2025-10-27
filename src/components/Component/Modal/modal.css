@@ -1,0 +1,49 @@
+.modal-content {
+  background: radial-gradient(
+      1200px 600px at 10% -10%,
+      #7b7b7b 0%,
+      transparent 40%
+    ),
+    radial-gradient(900px 600px at 110% 10%, #ffffffb1 0%, transparent 60%),
+    linear-gradient(180deg, #c6c6c600 0%, #666666 100%) !important;
+}
+
+.bid-history-container {
+  max-height: 400px;
+  overflow-y: auto;
+  min-height: 80px;
+}
+
+.bid-history {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.bid-history-modal-subtitle {
+  font-weight: bold;
+}
+
+.bid-history-subtitle {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.shipping-address-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.shipping-address-container li {
+  margin-bottom: 10px;
+}
+
+.shipping-address-container ul {
+  margin-top: 20px;
+}

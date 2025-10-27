@@ -3,7 +3,7 @@ const BASE_URL = `${ import.meta.env.VITE_BACK_END_SERVER_URL }/bidhub/marketpla
 
 const createBid = async (itemId, Bid) => {
     try {
-        const res = await axios.post(`${ BASE_URL }/${ itemId }/bids/new/`, Bid);
+        const res = await axios.post(`${ BASE_URL }/${ itemId }/bids/new/`, {bid: Bid});
         const data = await res.data;
         return data;
     } catch (error) {

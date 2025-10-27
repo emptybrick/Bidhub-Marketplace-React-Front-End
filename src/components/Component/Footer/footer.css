@@ -1,7 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700');
 
-/* Footer section */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures body takes at least full viewport height */
+}
+
+main {
+    flex: 1 0 auto; /* Main content takes remaining space */
+}
+
 .footer {
+    flex-shrink: 0; /* Prevents footer from shrinking */
     background-color: #111;
     color: #fff;
     padding: 4rem 0;
@@ -70,7 +85,7 @@
 }
 
 .footer-links ul li a:hover {
-    color: #00E676;
+    color: #7c7200;
     padding-left: 5px;
 }
 

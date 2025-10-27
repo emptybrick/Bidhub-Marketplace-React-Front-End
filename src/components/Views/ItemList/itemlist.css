@@ -1,0 +1,474 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+
+:root {
+  --gold: #c8ad78;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #c8ad78;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.message-text {
+  font-size: 20px;
+}
+
+.logo {
+  text-transform: uppercase;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.logo span {
+  font-weight: 700;
+}
+
+.logo .sub-info {
+  font-size: 12px;
+  letter-spacing: 4px;
+}
+
+.navigation a {
+  color: black;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-left: 20px;
+  font-weight: 700;
+}
+
+.navigation a.active {
+  color: var(--gold);
+}
+
+.more {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.more .figure {
+  position: absolute;
+  bottom: 80%;
+  right: 0;
+  color: white;
+  font-size: 14px;
+  font-weight: 900;
+  background: var(--gold);
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 50%;
+}
+
+.more .menu {
+  font-size: 30px;
+  color: black;
+}
+
+.market-container {
+  min-width: fit-content;
+  width: 80%;
+  margin: 0 auto 0 auto;
+}
+
+.sub-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.sub-header .close-btn {
+  font-size: 30px;
+  color: var(--gold);
+  cursor: pointer;
+}
+
+.sub-header .title {
+  line-height: 1;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.sub-header .title span {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: lowercase;
+  color: var(--gold);
+}
+
+.item-card-container {
+  display: contents;
+}
+
+.item-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, 350px);
+  gap: 15px;
+  padding: 20px;
+  height: auto; /* Let the grid height adjust to content */
+  min-height: 0; /* Prevent the grid from stretching unnecessarily */
+}
+
+.no-items-message {
+  min-width: 1485px;
+}
+
+.item-list-section {
+  display: flex;
+}
+
+.item-card.placeholder {
+  visibility: hidden;
+}
+
+.item-card {
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px 20px;
+  border-radius: 20px;
+  transition: all ease-in-out 300ms;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  max-height: fit-content;
+  background: radial-gradient(
+      1200px 600px at 10% -10%,
+      #7b7b7b 0%,
+      transparent 40%
+    ),
+    radial-gradient(900px 600px at 110% 10%, #ffffffb1 0%, transparent 60%),
+    linear-gradient(180deg, #c6c6c600 0%, #666666 100%);
+}
+
+.shipping-payment-details {
+  font-size: 12px !important;
+  text-align: center !important;
+}
+
+.view-details {
+  background-color: #ffffff70;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.view-details:hover {
+  background-color: #1611481b;
+  color: #ffffff;
+  transform: scale(110%);
+}
+
+.item-card.is-active {
+  border: none;
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(1.1);
+  z-index: 1000;
+  background: rgb(255, 255, 255);
+  animation: animateCard ease-in-out 1000ms forwards;
+}
+
+.item-card.stop-animation {
+  animation-play-state: paused;
+}
+
+.item-card:hover {
+  border: none;
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(1.1);
+  z-index: 1000;
+  background: rgba(171, 171, 171, 0);
+}
+
+.item-card .heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-card .heading span {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.item-card .box {
+  margin: 10px 0;
+  transition: all ease-in-out 300ms;
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-card .box::before {
+  display: flex;
+}
+
+.item-card .info {
+  display: flex;
+  justify-content: space-between;
+  line-height: 1.2;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.item-card .info .icon {
+  font-size: 20px;
+  color: var(--gold);
+}
+
+.item-card-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-card-right {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.item-card-left {
+  align-self: center;
+}
+
+.item-card-image {
+  width: 300px;
+  max-height: 400px;
+  object-fit: cover;
+  aspect-ratio: 3 / 4;
+  justify-self: center;
+  align-self: center;
+  padding-bottom: 20px;
+}
+
+.image-buttons {
+  align-self: center;
+  justify-self: center;
+}
+
+.item-card-image-button-left,
+.item-card-image-button-right {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  font-size: 24px;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.item-card-image-button-left:hover,
+.item-card-image-button-right:hover {
+  background: rgba(245, 211, 86, 0.9);
+}
+
+.item-card-image-button-left {
+  margin-right: 20px;
+}
+
+.item-card-image-button-right {
+  margin-left: 20px;
+}
+
+.view-details {
+  cursor: pointer;
+}
+
+.section {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  min-width: 77vw;
+}
+
+.filter-container {
+  margin-top: 20px;
+  margin-left: 20px;
+  padding-bottom: 40px;
+}
+
+.sort-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: end;
+  padding: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-sort {
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  margin-left: 3rem;
+  margin-right: 4rem;
+}
+
+.filter-sort label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.no-items-message {
+  padding-top: 40px;
+  font-size: 24px;
+  text-align: center;
+  width: 100%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  /* padding-bottom: 20px; */
+}
+
+.item-li {
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background-color: #5b5b5b93;
+}
+
+.item-li:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
+}
+
+.item-li.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 16px auto 32px; /* space below the cards */
+  box-sizing: border-box;
+}
+
+/* new wrapper ensures grid and pagination stack vertically and center */
+.cards-and-pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center pagination and grid */
+  width: 100%;
+}
+
+/* ensure the grid itself centers its content when container is wider */
+.cards-and-pagination .item-grid {
+  justify-content: center; /* centers the grid columns */
+}
+
+/* keep pagination visually separated from grid */
+.cards-and-pagination .pagination-controls {
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+/* optional: make the select a bit tighter */
+.pagination-controls select {
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
+@media (max-width: 1750px) {
+  .item-grid {
+    grid-template-columns: repeat(3, 350px);
+  }
+  .no-items-message {
+    min-width: 1120px;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .item-grid {
+    grid-template-columns: repeat(2, 350px);
+  }
+  .no-items-message {
+    min-width: 755px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .item-grid {
+    grid-template-columns: 350px;
+  }
+  .no-items-message {
+    width: 390px;
+    min-width: 390px;
+  }
+}
+
+@media (max-width: 800px) {
+  .no-items-message {
+    min-width: 405px;
+  }
+}
+
+@keyframes animateCard {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+  10%,
+  20% {
+    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+  }
+  40%,
+  60%,
+  80% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}

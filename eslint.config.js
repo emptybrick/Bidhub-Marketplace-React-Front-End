@@ -33,15 +33,11 @@ export default [
         "warn",
         { allowConstantExport: true },
       ],
-      "react/prop-types": "off", // add this line
+      "react/prop-types": "off", 
       "react/no-unescaped-entities": "off",
-      // unused variables only warn
       "no-unused-vars": "warn",
-      // no-console only warn
       "no-console": "warn",
-      // no-unused-expressions only warn
       "no-unused-expressions": "warn",
-      // no-unused-labels only warn
       "no-unused-labels": "warn",
     },
   },

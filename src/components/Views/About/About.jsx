@@ -1,0 +1,563 @@
+import { useEffect, useRef } from "react";
+import "./about.css";
+import React from "react";
+
+function throttle(func, limit) {
+  let inThrottle;
+  return function () {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+}
+
+class MzaCarousel {
+  constructor(root, opts = {}) {
+    this.root = root;
+    this.viewport = root.querySelector(".mzaCarousel-viewport");
+    this.track = root.querySelector(".mzaCarousel-track");
+    this.slides = Array.from(root.querySelectorAll(".mzaCarousel-slide"));
+    this.prevBtn = root.querySelector(".mzaCarousel-prev");
+    this.nextBtn = root.querySelector(".mzaCarousel-next");
+    this.pagination = root.querySelector(".mzaCarousel-pagination");
+    this.progressBar = root.querySelector(".mzaCarousel-progressBar");
+    // this._onDragMove = throttle(this._onDragMove.bind(this), 32);
+    this._onTilt = throttle(this._onTilt.bind(this), 32);
+    this.isFF = typeof InstallTrigger !== "undefined";
+    this.n = this.slides.length;
+    this.state = {
+      index: 0,
+      pos: 0,
+      width: 0,
+      height: 0,
+      gap: 28,
+      dragging: false,
+      pointerId: null,
+      x0: 0,
+      v: 0,
+      t0: 0,
+      animating: false,
+      hovering: false,
+      startTime: 0,
+      pausedAt: 0,
+      rafId: 0,
+    };
+    this.opts = Object.assign(
+      {
+        gap: 28,
+        peek: 0.15,
+        rotateY: 34,
+        zDepth: 150,
+        scaleDrop: 0.09,
+        blurMax: 2.0,
+        activeLeftBias: 0.12,
+        interval: 4500,
+        transitionMs: 900,
+        keyboard: true,
+        breakpoints: [
+          {
+            mq: "(max-width: 1200px)",
+            gap: 24,
+            peek: 0.12,
+            rotateY: 28,
+            zDepth: 120,
+            scaleDrop: 0.08,
+            activeLeftBias: 0.1,
+          },
+          {
+            mq: "(max-width: 1000px)",
+            gap: 18,
+            peek: 0.09,
+            rotateY: 22,
+            zDepth: 90,
+            scaleDrop: 0.07,
+            activeLeftBias: 0.09,
+          },
+          {
+            mq: "(max-width: 768px)",
+            gap: 14,
+            peek: 0.06,
+            rotateY: 16,
+            zDepth: 70,
+            scaleDrop: 0.06,
+            activeLeftBias: 0.08,
+          },
+          {
+            mq: "(max-width: 560px)",
+            gap: 12,
+            peek: 0.05,
+            rotateY: 12,
+            zDepth: 60,
+            scaleDrop: 0.05,
+            activeLeftBias: 0.07,
+          },
+        ],
+      },
+      opts
+    );
+    if (this.isFF) {
+      this.opts.rotateY = 10;
+      this.opts.zDepth = 0;
+      this.opts.blurMax = 0;
+    }
+    this.isLowPower = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (this.isLowPower || this.isFF) {
+      this.opts.rotateY = 0;
+      this.opts.zDepth = 0;
+      this.opts.blurMax = 0;
+    }
+    this._init();
+  }
+  _init() {
+    this._setupDots();
+    this._bind();
+    this._preloadImages();
+    this._measure();
+    this.goTo(0, false);
+    this._startCycle();
+    this._loop();
+  }
+  _preloadImages() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const slide = entry.target;
+          const card = slide.querySelector(".mzaCard");
+          const bg = getComputedStyle(card).getPropertyValue("--mzaCard-bg");
+          const m = /url\((?:'|")?([^'")]+)(?:'|")?\)/.exec(bg);
+          if (m && m[1]) {
+            card.style.backgroundImage = `url('${m[1]}?w=800&h=600&q=80&f=webp')`;
+            observer.unobserve(slide);
+          }
+        }
+      });
+    });
+    this.slides.forEach((sl, i) => {
+      if (i !== 0) observer.observe(sl); 
+    });
+    const firstCard = this.slides[0].querySelector(".mzaCard");
+    const bg = getComputedStyle(firstCard).getPropertyValue("--mzaCard-bg");
+    const m = /url\((?:'|")?([^'")]+)(?:'|")?\)/.exec(bg);
+    if (m && m[1]) {
+      firstCard.style.backgroundImage = `url('${m[1]}?w=800&h=600&q=80&f=webp')`;
+    }
+  }
+  _setupDots() {
+    this.pagination.innerHTML = "";
+    this.dots = this.slides.map((_, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "mzaCarousel-dot";
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-label", `Go to slide ${i + 1}`);
+      b.addEventListener("click", () => this.goTo(i));
+      this.pagination.appendChild(b);
+      return b;
+    });
+  }
+ _bind() {
+    this._onPrev = () => this.prev();
+    this._onNext = () => this.next();
+    this._onKeyDown = (e) => {
+      if (e.key === "ArrowLeft") this.prev();
+      if (e.key === "ArrowRight") this.next();
+    };
+    this._onMouseEnter = () => {
+      this.state.hovering = true;
+      this.state.pausedAt = performance.now();
+    };
+    this._onMouseLeave = () => {
+      if (this.state.pausedAt) {
+        this.state.startTime += performance.now() - this.state.pausedAt;
+        this.state.pausedAt = 0;
+      }
+      this.state.hovering = false;
+    };
+
+    this.prevBtn.addEventListener("click", this._onPrev);
+    this.nextBtn.addEventListener("click", this._onNext);
+    if (this.opts.keyboard) {
+      this.root.addEventListener("keydown", this._onKeyDown);
+    }
+
+    this.ro = new ResizeObserver(() => this._measure());
+    this.ro.observe(this.viewport);
+    this.opts.breakpoints.forEach((bp) => {
+      const m = window.matchMedia(bp.mq);
+      const apply = () => {
+        Object.keys(bp).forEach((k) => {
+          if (k !== "mq") this.opts[k] = bp[k];
+        });
+        this._measure();
+        this._render();
+      };
+      m.addEventListener("change", apply);
+      if (m.matches) apply();
+    });
+  }
+
+  destroy() {
+    cancelAnimationFrame(this.state.rafId);
+    this.ro.disconnect();
+    this.prevBtn.removeEventListener("click", this._onPrev);
+    this.nextBtn.removeEventListener("click", this._onNext);
+    this.root.removeEventListener("keydown", this._onKeyDown);
+    this.viewport.removeEventListener("pointerdown", this._onDragStart);
+    this.viewport.removeEventListener("pointermove", this._onDragMove);
+    this.viewport.removeEventListener("pointerup", this._onDragEnd);
+    this.viewport.removeEventListener("pointercancel", this._onDragEnd);
+    this.root.removeEventListener("mouseenter", this._onMouseEnter);
+    this.root.removeEventListener("mouseleave", this._onMouseLeave);
+    this.viewport.removeEventListener("pointermove", this._onTilt);
+    this.dots.forEach((dot) => dot.removeEventListener("click", this.goTo));
+  }
+
+  _measure() {
+    const viewRect = this.viewport.getBoundingClientRect();
+    const rootRect = this.root.getBoundingClientRect();
+    const pagRect = this.pagination.getBoundingClientRect();
+    const bottomGap = Math.max(
+      12,
+      Math.round(rootRect.bottom - pagRect.bottom)
+    );
+    const pagSpace = pagRect.height + bottomGap;
+    const availH = viewRect.height - pagSpace;
+    const cardH = Math.max(320, Math.min(640, Math.round(availH)));
+    this.state.width = viewRect.width;
+    this.state.height = viewRect.height;
+    this.state.gap = this.opts.gap;
+    this.slideW = Math.min(880, this.state.width * (1 - this.opts.peek * 2));
+    this.root.style.setProperty("--mzaPagH", `${pagSpace}px`);
+    this.root.style.setProperty("--mzaCardH", `${cardH}px`);
+  }
+  _onTilt(e) {
+    const r = this.viewport.getBoundingClientRect();
+    const mx = (e.clientX - r.left) / r.width - 0.5;
+    const my = (e.clientY - r.top) / r.height - 0.5;
+    this.root.style.setProperty("--mzaTiltX", (my * -6).toFixed(3));
+    this.root.style.setProperty("--mzaTiltY", (mx * 6).toFixed(3));
+  }
+  _onDragStart(e) {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    e.preventDefault();
+    this.state.dragging = true;
+    this.state.pointerId = e.pointerId;
+    this.viewport.setPointerCapture(e.pointerId);
+    this.state.x0 = e.clientX;
+    this.state.t0 = performance.now();
+    this.state.v = 0;
+    this.state.pausedAt = performance.now();
+  }
+  _onDragEnd(e) {
+    if ((e && e.pointerId !== this.state.pointerId))
+      return;
+    this.state.dragging = false;
+    try {
+      if (this.state.pointerId != null)
+        this.viewport.releasePointerCapture(this.state.pointerId);
+    } catch {}
+    this.state.pointerId = null;
+    if (this.state.pausedAt) {
+      this.state.startTime += performance.now() - this.state.pausedAt;
+      this.state.pausedAt = 0;
+    }
+    const v = this.state.v;
+    const threshold = 0.18;
+    let target = Math.round(
+      this.state.pos - Math.sign(v) * (Math.abs(v) > threshold ? 0.5 : 0)
+    );
+    this.goTo(this._mod(target, this.n));
+  }
+  _startCycle() {
+    this.state.startTime = performance.now();
+    this.progressBar.style.animation = "none";
+    void this.progressBar.offsetWidth; 
+    this.progressBar.style.animation = "progress 4500ms linear forwards";
+    this._renderProgress(0);
+  }
+  _loop() {
+    const step = (t) => {
+      if (
+        !this.state.dragging &&
+        !this.state.hovering &&
+        !this.state.animating
+      ) {
+        const elapsed = t - this.state.startTime;
+        const p = Math.min(1, elapsed / this.opts.interval);
+        this._renderProgress(p);
+        if (elapsed >= this.opts.interval) {
+          this.next();
+          return;
+        }
+      }
+      this.state.rafId = requestAnimationFrame(step);
+    };
+    this.state.rafId = requestAnimationFrame(step);
+  }
+  _renderProgress(p) {
+    this.progressBar.style.animationPlayState = this.state.hovering
+      ? "paused"
+      : "running";
+  }
+  prev() {
+    this.goTo(this._mod(this.state.index - 1, this.n));
+  }
+  next() {
+    this.goTo(this._mod(this.state.index + 1, this.n));
+  }
+  goTo(i, animate = true) {
+    const start = this.state.pos || this.state.index;
+    const end = this._nearest(start, i);
+    const dur = animate ? this.opts.transitionMs : 0;
+    const t0 = performance.now();
+    const ease = (x) => 1 - Math.pow(1 - x, 4);
+    this.state.animating = true;
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / dur);
+      const p = dur ? ease(t) : 1;
+      this.state.pos = start + (end - start) * p;
+      this._render();
+      if (t < 1) requestAnimationFrame(step);
+      else this._afterSnap(i);
+    };
+    requestAnimationFrame(step);
+  }
+  _afterSnap(i) {
+    this.state.index = this._mod(Math.round(this.state.pos), this.n);
+    this.state.pos = this.state.index;
+    this.state.animating = false;
+    this._render(true);
+    this._startCycle();
+  }
+  _nearest(from, target) {
+    let d = target - Math.round(from);
+    if (d > this.n / 2) d -= this.n;
+    if (d < -this.n / 2) d += this.n;
+    return Math.round(from) + d;
+  }
+  _mod(i, n) {
+    return ((i % n) + n) % n;
+  }
+  _render(markActive = false) {
+    const span = this.slideW + this.state.gap;
+    const tiltX = parseFloat(
+      this.root.style.getPropertyValue("--mzaTiltX") || 0
+    );
+    const tiltY = parseFloat(
+      this.root.style.getPropertyValue("--mzaTiltY") || 0
+    );
+
+    this.slides.forEach((s, i) => {
+      let d = i - this.state.pos;
+      if (d > this.n / 2) d -= this.n;
+      if (d < -this.n / 2) d += this.n;
+      const weight = Math.max(0, 1 - Math.abs(d) * 2);
+      const biasActive = -this.slideW * this.opts.activeLeftBias * weight;
+      const tx = d * span + biasActive;
+      const depth = -Math.abs(d) * this.opts.zDepth;
+      const rot = -d * this.opts.rotateY;
+      const scale = 1 - Math.min(Math.abs(d) * this.opts.scaleDrop, 0.42);
+      const blur = Math.min(Math.abs(d) * this.opts.blurMax, this.opts.blurMax);
+      const z = Math.round(1000 - Math.abs(d) * 10);
+
+      const transform = this.isFF
+        ? `translate(${tx}px, -50%) scale(${scale})`
+        : `translate3d(${tx}px, -50%, ${depth}px) rotateY(${rot}deg) scale(${scale})`;
+      if (s.style.transform !== transform) {
+        s.style.transform = transform;
+        s.style.filter = this.isFF ? "none" : `blur(${blur}px)`;
+        s.style.zIndex = z;
+      }
+
+      if (markActive) {
+        s.dataset.state =
+          Math.round(this.state.index) === i ? "active" : "rest";
+      }
+
+      const card = s.querySelector(".mzaCard");
+      const parBase = Math.max(-1, Math.min(1, -d));
+      const parX = parBase * 48 + tiltY * 2.0;
+      const parY = tiltX * -1.5;
+      const bgX = parBase * -64 + tiltY * -2.4;
+      const newStyles = {
+        "--mzaParX": `${parX.toFixed(2)}px`,
+        "--mzaParY": `${parY.toFixed(2)}px`,
+        "--mzaParBgX": `${bgX.toFixed(2)}px`,
+        "--mzaParBgY": `${(parY * 0.35).toFixed(2)}px`,
+      };
+      Object.entries(newStyles).forEach(([key, value]) => {
+        if (card.style.getPropertyValue(key) !== value) {
+          card.style.setProperty(key, value);
+        }
+      });
+    });
+
+    const active = this._mod(Math.round(this.state.pos), this.n);
+    this.dots.forEach((d, i) => {
+      const selected = i === active ? "true" : "false";
+      if (d.getAttribute("aria-selected") !== selected) {
+        d.setAttribute("aria-selected", selected);
+      }
+    });
+  }
+}
+
+const slides = [
+  {
+    bg: "/about_welcome.jpg",
+    title: "Welcome to Bidhub",
+    kicker: "Your trusted marketplace for new and pre-loved treasures",
+    text: [
+      "List items in minutes with our intuitive upload system.",
+      "Place real-time bids and track your favorites instantly.",
+      "Pay securely with PayPal.",
+      "Browse curated categories from electronics to vintage collectibles.",
+    ],
+  },
+  {
+    bg: "/about_who.jpg",
+    title: "About the team",
+    kicker: "Two aspiring software engineers",
+    text: "Passionate about solving real problems with code. Open to new opportunities—let's connect!",
+    portraits: [
+      { img: "/Portrait_Quan_Bball.png" },
+      { img: "/Portrait_Quan.png", name: "Quan" },
+      { img: "/Portrait_David.jpg", name: "David" },
+      { img: "/Portrait_David_Fishing.jpg" },
+    ],
+  },
+  {
+    bg: "/about_how.jpg",
+    title: "Bidhub Features",
+    kicker: "Everything you need in one platform",
+    text: [
+      "🛒 For Buyers: Browse categories, track favorites, place bids in real-time, and checkout securely with PayPal.",
+      "📦 For Sellers: Upload multiple images to build item profiles, manage listings, and build your seller rating.",
+      "🔒 Security: Optional two-factor authentication, secure JWT login, and encrypted PayPal payments.",
+      "⚡ Performance: Fast-loading React interface, reliable backend, and optimized image delivery via Cloudinary.",
+    ],
+  },
+];
+
+const About = () => {
+  const rootRef = useRef(null);
+  const instanceRef = useRef(null);
+
+useEffect(() => {
+  if (rootRef.current && !instanceRef.current) {
+    instanceRef.current = new MzaCarousel(rootRef.current, {
+      transitionMs: 900,
+      peek: 0.04,
+      gap: 20,
+      activeLeftBias: 0,
+    });
+  }
+  return () => {
+    if (instanceRef.current) {
+      instanceRef.current.destroy();
+      instanceRef.current = null;
+    }
+  };
+}, []);
+
+  return (
+    <div
+      className="mzaCarousel"
+      id="mzaCarousel"
+      aria-roledescription="carousel"
+      aria-label="Featured cards"
+      ref={rootRef}
+    >
+      <div className="mzaCarousel-viewport" tabIndex={0}>
+        <div className="mzaCarousel-track">
+          {slides.map((s, i) => (
+            <article
+              key={i}
+              className="mzaCarousel-slide"
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${i + 1} of ${slides.length}`}
+            >
+              <div
+                className="mzaCard"
+                style={{
+                  "--mzaCard-bg": `url('${s.bg}?w=800&h=600&q=80&f=webp')`,
+                }}
+              >
+                <div className="mzaCard-copy">
+                  <header className="mzaCard-head mzaPar-1">
+                    <h1 className="mzaCard-title">{s.title}</h1>
+                    <p className="mzaCard-kicker">{s.kicker}</p>
+                  </header>
+
+                  {Array.isArray(s.text) ? (
+                    <div className="mzaCard-text mzaPar-2">
+                      <ul>
+                        {s.text.map((line, idx) => (
+                          <li key={idx}>{line}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p className="mzaCard-text mzaPar-2">{s.text}</p>
+                  )}
+                </div>
+                {Array.isArray(s.portraits) && (
+                  <div className="mzaCard-portraits" aria-hidden="false">
+                    {s.portraits.map((p, idx) => (
+                      <figure key={idx} className="portrait">
+                        <img
+                          src={`${p.img}?w=160&h=200&q=80&f=webp`}
+                          alt={p.name}
+                          className="portrait-img"
+                          loading="lazy"
+                        />
+                        <figcaption className="portrait-name">
+                          {p.name}
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div className="mzaCarousel-controls" aria-label="Controls">
+        <button
+          className="mzaCarousel-prev"
+          aria-label="Previous slide"
+          type="button"
+        >
+          ‹
+        </button>
+        <button
+          className="mzaCarousel-next"
+          aria-label="Next slide"
+          type="button"
+        >
+          ›
+        </button>
+      </div>
+
+      <div
+        className="mzaCarousel-pagination"
+        role="tablist"
+        aria-label="Slide navigation"
+      ></div>
+      <div className="mzaCarousel-progress" aria-hidden="true">
+        <span className="mzaCarousel-progressBar"></span>
+      </div>
+    </div>
+  );
+}
+
+export default React.memo(About);

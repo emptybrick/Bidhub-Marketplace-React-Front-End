@@ -1,0 +1,271 @@
+.seller-view-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.seller-view-section {
+  height: 100%;
+    background: radial-gradient(
+      1200px 600px at 10% -10%,
+      #7b7b7b 0%,
+      transparent 40%
+    ),
+    radial-gradient(900px 600px at 110% 10%, #ffffffb1 0%, transparent 60%),
+    linear-gradient(180deg, #c6c6c600 0%, #666666 100%);
+  border-radius: 10px;
+  box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+  padding: 30px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.details-top {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.seller-profile-image {
+  padding: 20px;
+  width: 200px;
+  max-height: 200px;
+  border-radius: 10px;
+}
+
+.top-right-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.marketplace-link {
+  width: fit-content;
+  display: inline-block;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: rgb(237, 236, 236);
+  color: rgb(57, 57, 57);
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.marketplace-link:hover {
+  background-color: goldenrod;
+  transform: translateY(-2px);
+}
+
+.marketplace-link:active {
+  transform: translateY(0);
+}
+
+.star-rating {
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.star {
+  font-size: 24px;
+  color: #ccc; /* Empty star color */
+}
+
+.star.filled {
+  color: rgb(255, 255, 0); /* Filled star color */
+}
+
+.star.partial {
+  position: relative;
+  overflow: hidden;
+}
+
+.star.partial::before {
+  content: "★";
+  position: absolute;
+  color: rgb(255, 255, 0);
+  width: 100%;
+}
+
+.sort-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.sort-controls button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: darkkhaki;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.sort-controls button.active {
+  background-color: goldenrod;
+}
+
+.sort-container.reviews {
+  align-items: center;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.filters-container {
+  display: flex;
+}
+
+.create-review {
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+}
+
+.create-review:hover {
+  transform: scale(110%);
+  background-color: rgb(183, 183, 183);
+}
+
+.create-review-button {
+  justify-self: center;
+}
+
+.seller-detail-subtitle,
+.reviews-subtitle {
+  justify-self: center;
+  align-self: center;
+  font-size: 32px;
+}
+
+.seller-info-section {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.052);
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 10px;
+  align-self: center;
+  min-width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seller-info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.seller-info-left {
+  font-size: 24px;
+  padding: 20px;
+}
+
+.seller-info-left li {
+  padding-bottom: 10px;
+}
+
+.span-bold {
+  font-weight: bold;
+}
+
+.details-bottom {
+  height: fit-content;
+  min-height: 200px;
+  padding-top: 20px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.052);
+}
+
+.reviews-list {
+  list-style: none;
+  padding: 20px 40px;
+}
+
+.review-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.review-ratings {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.top-section-review {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ten-point-ratings ul {
+  list-style: none;
+  padding: 10px 0;
+  width: 100%;
+  justify-items: right;
+}
+
+.ten-point-ratings li {
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.review-text {
+  font-size: 20px;
+  padding: 20px;
+  margin-right: 100px;
+  max-width: 400px;
+}
+
+.reviewer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-style: italic;
+  text-align: right;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.reviewer-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-buttons button {
+  margin-right: 10px;
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+}
+
+.review-buttons button:hover {
+  transform: scale(110%);
+  background-color: rgb(183, 183, 183);
+}
+
+.no-reviews {
+  font-size: 20px;
+  padding: 20px 40px;
+}

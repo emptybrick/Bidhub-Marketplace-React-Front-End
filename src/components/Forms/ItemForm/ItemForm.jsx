@@ -1,27 +1,93 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router";
+import { UserContext } from "../../../contexts/UserContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createItem } from "../../../services/itemService";
+import { categories } from "../../../common/utils";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import { fill } from "@cloudinary/url-gen/actions/resize";
+import UploadWidget from "../../Component/UploadWidget/UploadWidget";
+import "../form.css";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
 
-const ItemForm = () => {
+const ItemForm = ({ onClose, item, handleDeleteItem }) => {
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dxvxebkhe";
+  const uploadPreset =
+    import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "web_unsigned";
+  const uploadFolder = import.meta.env.VITE_CLOUDINARY_FOLDER || "bidhub/items";
+  const cld = useMemo(
+    () => new Cloudinary({ cloud: { cloudName } }),
+    [cloudName]
+  );
+
+  // uploaded images state - store cloudinary public_ids
+  const [images, setImages] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleUploadSuccess = useCallback((publicId) => {
+    if (!publicId) return;
+    setImages((prev) => {
+      const next = [...prev, publicId];
+      // set to newly uploaded image so user sees it immediately
+      setCurrentIndex(next.length - 1);
+      return next;
+    });
+  }, []);
+
+  useEffect(() => {
+    // keep index in range when images change (depend only on images)
+    setCurrentIndex((i) => {
+      if (images.length === 0) return 0;
+      return Math.min(i, images.length - 1);
+    });
+  }, [images]);
+
+  useEffect(() => {
+    if (item?.images && item.images.length > 0) {
+      setImages(item.images); // Initialize images state with item.images
+    }
+  }, [item]);
+
+  const prevImage = () => {
+    setCurrentIndex((i) => Math.max(0, i - 1));
+  };
+  const nextImage = () => {
+    setCurrentIndex((i) => Math.min(images.length - 1, i + 1));
+  };
+
+  // widget config passed to UploadWidget
+  // memoize uwConfig so its reference doesn't change every render
+  const uwConfig = useMemo(
+    () => ({
+      cloudName,
+      uploadPreset,
+      multiple: true,
+      folder: uploadFolder,
+      maxImageFileSize: 10_000_000, // 10MB
+    }),
+    [cloudName, uploadPreset, uploadFolder]
+  );
+
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
-    item_name: "",
-    category: "MISCELLANEOUS",
-    condition: "NEW",
-    manufacture_year: "",
-    country_of_origin: "",
-    height: "",
-    width: "",
-    length: "",
-    weight: "",
-    description: "",
-    initial_bid: "",
+    item_name: item?.item_name || "",
+    category: item?.category || "MISCELLANEOUS",
+    condition: item?.condition || "NEW",
+    manufacture_year: item?.manufacture_year || "",
+    country_of_origin: item?.country_of_origin || "",
+    height: item?.height || "",
+    width: item?.width || "",
+    length: item?.length || "",
+    weight: item?.weight || "",
+    description: item?.description || "",
+    initial_bid: item?.initial_bid || "",
     end_time: null,
+    images: item?.images || [],
   });
-
   const {
     item_name,
     category,
@@ -37,41 +103,15 @@ const ItemForm = () => {
     end_time,
   } = formData;
 
-  const categories = [
-    { value: "ELECTRONICS", label: "Electronics" },
-    { value: "COMPUTERS", label: "Computers & Accessories" },
-    { value: "CLOTHING", label: "Clothing, Shoes & Jewelry" },
-    { value: "HOME", label: "Home & Kitchen" },
-    { value: "BOOKS", label: "Books" },
-    { value: "TOYS", label: "Toys & Games" },
-    { value: "BEAUTY", label: "Beauty & Personal Care" },
-    { value: "SPORTS", label: "Sports & Outdoors" },
-    { value: "AUTOMOTIVE", label: "Automotive" },
-    { value: "TOOLS", label: "Tools & Home Improvement" },
-    { value: "HEALTH", label: "Health & Household" },
-    { value: "CELLPHONES", label: "Cell Phones & Accessories" },
-    { value: "PETS", label: "Pet Supplies" },
-    { value: "VIDEO_GAMES", label: "Video Games" },
-    { value: "OFFICE", label: "Office Products" },
-    { value: "GARDEN", label: "Patio, Lawn & Garden" },
-    { value: "MUSIC", label: "Musical Instruments" },
-    { value: "COLLECTIBLES", label: "Collectibles & Fine Art" },
-    { value: "MISCELLANEOUS", label: "Miscellaneous" },
-  ];
-
-  //   const [selectedCategory, setSelectedCategory] = useState("MISCELLANEOUS");
-
-  //   const handleCategoryChange = (event) => {
-  //     setSelectedCategory(event.target.value);
-  //   };
-
   const handleChange = (evt) => {
     setMessage("");
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+    const { name, value } = evt.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // use functional update to avoid clobbering state
   const handleDateChange = (date) => {
-    setFormData({ ...formData, end_time: date });
+    setFormData((prev) => ({ ...prev, end_time: date }));
   };
 
   const handleSubmit = async (evt) => {
@@ -79,12 +119,23 @@ const ItemForm = () => {
     try {
       const formattedFormData = {
         ...formData,
-        end_time: end_time ? end_time.toISOString() : null, // Convert to ISO string
+        end_time: formData.end_time ? formData.end_time.toISOString() : null,
+        owner: user.id,
+        images: images,
       };
+
       const newItem = await createItem(formattedFormData);
-      navigate(`bidhub/marketplace/${newItem.id}`);
+      if (item) {
+        handleDeleteItem(item.id);
+      }
+      if (onClose) {
+        onClose();
+      }
+
+      navigate(`/bidhub/marketplace/${newItem.id}`);
     } catch (err) {
-      setMessage(err.message);
+      console.error("Error creating item:", err);
+      setMessage(err.message || "Error creating item. Please try again.");
     }
   };
 
@@ -99,159 +150,280 @@ const ItemForm = () => {
       weight &&
       description &&
       initial_bid &&
-      end_time
+      end_time &&
+      images.length > 0
     );
   };
 
   return (
-    <main>
-      <h1>Register</h1>
-      <p>{message}</p>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="item_name">Item Name:</label>
-          <input
-            type="text"
-            id="item_name"
-            value={item_name}
-            name="item_name"
-            onChange={handleChange}
-            required
-          />
+    <div className="modal item-form">
+      <div className="form-wrapper">
+        <div className="form-container">
+          <button className="form-close-btn" type="button" onClick={onClose}>
+            ×
+          </button>
+          <h1 className="form-title">Create Auction Item</h1>
+          {message && <div className="error-message">{message}</div>}
+          <form onSubmit={handleSubmit}>
+            <div className="image-display">
+              <div className="image-left">
+                <button
+                  type="button"
+                  className="carousel-btn left"
+                  onClick={prevImage}
+                  disabled={images.length <= 1}
+                  aria-label="Previous image"
+                >
+                  ‹
+                </button>
+                <div className="image-card">
+                  {images.length === 0 ? (
+                    <div className="gallery-placeholder">
+                      No images uploaded
+                    </div>
+                  ) : (
+                    <AdvancedImage
+                      cldImg={cld
+                        .image(images[currentIndex])
+                        .resize(fill().width(1200).height(1600))}
+                      plugins={[responsive(), placeholder()]}
+                    />
+                  )}
+                </div>
+                <button
+                  type="button"
+                  className="carousel-btn right"
+                  onClick={nextImage}
+                  disabled={images.length <= 1}
+                  aria-label="Next image"
+                >
+                  ›
+                </button>
+              </div>
+              <div className="image-right">
+                <UploadWidget
+                  uwConfig={uwConfig}
+                  setPublicId={handleUploadSuccess}
+                />
+                <div className="upload-guidance">
+                  <small>
+                    Min 640×640px. Recommended 1600×1600px. Display ratio 3:4.
+                  </small>
+                </div>
+                {images.length === 0 && (
+                  <div className="gallery-placeholder">No images</div>
+                )}
+
+                <div className="image-gallery">
+                  {images.map((pid, idx) => (
+                    <button
+                      key={pid}
+                      type="button"
+                      className={`thumb-btn ${
+                        idx === currentIndex ? "active" : ""
+                      }`}
+                      onClick={() => setCurrentIndex(idx)}
+                      aria-label={`Show image ${idx + 1}`}
+                    >
+                      <img
+                        src={cld
+                          .image(pid)
+                          .resize(fill().width(300).height(400))
+                          .toURL()}
+                        alt={`upload-${idx}`}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="form-area">
+              <div className="form-grid three-column">
+                <div className="form-column">
+                  <div className="form-group">
+                    <label htmlFor="item_name">Item Title</label>
+                    <input
+                      type="text"
+                      id="item_name"
+                      value={item_name}
+                      name="item_name"
+                      onChange={handleChange}
+                      maxLength={24}
+                      placeholder="Title (24 Characters Max)"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="manufacture_year">Year Made</label>
+                    <input
+                      type="text"
+                      id="manufacture_year"
+                      value={manufacture_year}
+                      name="manufacture_year"
+                      placeholder="Year Made (e.g. 2024)"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="country_of_origin">Country</label>
+                    <input
+                      type="text"
+                      id="country_of_origin"
+                      value={country_of_origin}
+                      name="country_of_origin"
+                      placeholder="Country of origin"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="form-column">
+                  <div className="form-group">
+                    <label htmlFor="condition">Condition</label>
+                    <select
+                      id="condition"
+                      value={condition}
+                      name="condition"
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="NEW">New</option>
+                      <option value="USED">Used</option>
+                    </select>
+                  </div>
+                  <div className="form-group dimensions-container">
+                    <label>Dimensions (cm)</label>
+                    <div className="dimensions-row">
+                      <div className="form-group dimension">
+                        <input
+                          type="number"
+                          id="height"
+                          value={height}
+                          name="height"
+                          placeholder="H"
+                          onChange={handleChange}
+                          min={0.01}
+                          step={0.01}
+                          required
+                        />
+                      </div>
+                      <div className="form-group dimension">
+                        <input
+                          type="number"
+                          id="width"
+                          value={width}
+                          name="width"
+                          placeholder="W"
+                          min={0.01}
+                          step={0.01}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                      <div className="form-group dimension">
+                        <input
+                          type="number"
+                          id="length"
+                          value={length}
+                          name="length"
+                          placeholder="L"
+                          min={0.01}
+                          step={0.01}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="weight">Weight (kg)</label>
+                    <input
+                      type="number"
+                      id="weight"
+                      value={weight}
+                      name="weight"
+                      min={0.001}
+                      step={0.001}
+                      placeholder="Weight (kg)"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="form-column">
+                  <div className="form-group">
+                    <label htmlFor="category">Category</label>
+                    <select
+                      id="category"
+                      name="category"
+                      value={category}
+                      onChange={handleChange}
+                    >
+                      {categories.map(({ value, label }) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="initial_bid">Starting Bid ($)</label>
+                    <input
+                      type="number"
+                      id="initial_bid"
+                      value={initial_bid}
+                      name="initial_bid"
+                      placeholder="Starting Bid ($)"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="end_time">End Date & Time</label>
+                    <DatePicker
+                      selected={end_time}
+                      onChange={handleDateChange}
+                      showTimeSelect
+                      dateFormat="MM/dd/yy h:mm aa"
+                      placeholderText="Select date and time"
+                      required
+                      className="date-picker-input"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-group description-field">
+                <label htmlFor="description">Description</label>
+                <textarea
+                  id="description"
+                  value={description}
+                  name="description"
+                  placeholder="Add details and description of item here..."
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="form-buttons">
+              <button type="submit" disabled={isFormInvalid()}>
+                Create
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (onClose) {
+                    onClose();
+                  } else {
+                    navigate("/bidhub/dashboard");
+                  }
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
-        <div>
-          <label htmlFor="category">Category:</label>
-          <select
-            id="category"
-            name="category"
-            value={category}
-            onChange={handleChange}
-          >
-            {categories.map(({ value, label }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="condition">Condition:</label>
-          <select
-            id="condition"
-            value={condition}
-            name="condition"
-            onChange={handleChange}
-            required
-          >
-            <option value="NEW">New</option>
-            <option value="USED">Used</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="manufacture_year">Manufacture Year:</label>
-          <input
-            type="text"
-            id="manufacture_year"
-            value={manufacture_year}
-            name="manufacture_year"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="country_of_origin">Country of Origin:</label>
-          <input
-            type="text"
-            id="country_of_origin"
-            value={country_of_origin}
-            name="country_of_origin"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="height">Height (cm):</label>
-          <input
-            type="text"
-            id="height"
-            value={height}
-            name="height"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="width">Width (cm):</label>
-          <input
-            type="text"
-            id="width"
-            value={width}
-            name="width"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="length">Length (cm):</label>
-          <input
-            type="text"
-            id="length"
-            value={length}
-            name="length"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="weight">Weight (kg):</label>
-          <input
-            type="text"
-            id="weight"
-            value={weight}
-            name="weight"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <input
-            type="text"
-            id="description"
-            value={description}
-            name="description"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="initial_bid">Starting Bid:</label>
-          <input
-            type="text"
-            id="initial_bid"
-            value={initial_bid}
-            name="initial_bid"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="end_time">Auction End Time:</label>
-          <DatePicker
-            selected={end_time}
-            onChange={handleDateChange}
-            showTimeSelect
-            dateFormat="Pp"
-            placeholderText="Select Date and Time"
-            required
-          />
-        </div>
-        <div>
-          <button disabled={isFormInvalid()}>Create</button>
-          <button onClick={() => navigate("/")}>Cancel</button>
-        </div>
-      </form>
-    </main>
+      </div>
+    </div>
   );
 };
 

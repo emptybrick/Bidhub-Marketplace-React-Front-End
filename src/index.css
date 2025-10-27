@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+:root {
+  /* shared font variables (same as Landing) */
+  --main-font: "Montserrat", sans-serif;
+  --content-font: "Roboto", sans-serif;
+  --h3-font: "Roboto";
+  --main-color: #ffffff;
+  --icon-color: #95e1d3;
+
+  /* existing carousel variables */
+  --mzaC-fg: #ffffff;
+  --mzaC-accent: #9ef7d2;
+  --mzaC-accent2: #82a0ff;
+  --mzaC-glass: rgba(255, 255, 255, 0.06);
+  --mzaC-glow: rgba(130, 160, 255, 0.75);
+  /* slightly wider slides for a more prominent center card */
+  --mzaC-slideW: min(960px, 94vw);
+  --mzaC-peek: 0.15;
+  --mzaPagH: 64px;
+  --mzaCardH: clamp(360px, 62vh, 600px);
+  --green-seaweed: rgb(172, 159, 114);
+  --blue-queen: rgb(162, 162, 161);
+  --red-fire: rgb(209, 146, 151);
+  --card-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background-image: url("/landing-background.png");
+  background-size: cover;
+  background-position: 0%;
+  color: var(--mzaC-fg);
+  /* use the same fonts as Landing */
+  font-size: 16px;
+  line-height: 1.4;
+  font-family: var(--content-font), system-ui, "Segoe UI", Roboto, Ubuntu,
+    "Helvetica Neue", Arial;
+  height: 100vh !important;
+}
+
+main {
+  min-height: 100vh;
+}
+
+h1, h2,
+.title,
+.form-title, .bid-history-subtitle {
+  color: #f6eac5 !important;
+  text-shadow: 7px 7px 5px rgb(0, 0, 0) !important;
+}
+
+/* fix for form button color */
+
+.form-close-btn {
+  color: black !important;
+  border: 1px solid black !important;
+}
+
+.form-close-btn:hover {
+  background-color: rgb(255, 244, 204) !important;
+  border: 1px solid black !important;
+}
+
+select,
+::picker(select) {
+  appearance: base-select;
+}
+
+select {
+  border: 2px solid #dddddd;
+  background: #6d6d6dbc;
+  transition: 0.4s;
+}
+
+select:hover,
+select:focus {
+  background: #454545;
+}
+
+select::picker-icon {
+  color: #ffffff;
+  transition: 0.7s rotate;
+}
+
+select:open::picker-icon {
+  rotate: 180deg;
+}
+
+::picker(select) {
+  border: none;
+}
+
+option {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  border: 2px solid #6d6d6dbc;
+  background: #6d6d6d4e;
+  transition: 0.4s;
+}
+

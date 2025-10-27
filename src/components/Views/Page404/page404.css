@@ -1,0 +1,9 @@
+.container-notfound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 200px;
+    padding-bottom: 200px;
+    margin: 0 auto 0 auto;
+
+}

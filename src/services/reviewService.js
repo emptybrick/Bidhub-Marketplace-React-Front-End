@@ -1,9 +1,9 @@
 import axios from "./axiosConfig";
 const BASE_URL = `${ import.meta.env.VITE_BACK_END_SERVER_URL }/bidhub/seller`;
 
-const getReviews = async (sellerId) => {
+const getReviews = async (sellerId, dateSort, ratingSort) => {
     try {
-        const res = await axios.get(`${ BASE_URL }/${ sellerId }/reviews/`);
+        const res = await axios.get(`${ BASE_URL }/${ sellerId }/reviews/`, {params: {dateSort: dateSort, ratingSort: ratingSort}});
         return res.data;
     } catch (err) {
         console.log(err);
@@ -13,7 +13,7 @@ const getReviews = async (sellerId) => {
 
 const getReviewById = async (sellerId, id) => {
     try {
-        const res = await axios.get(`${ BASE_URL }/${ sellerId }/reviews/${id}`);
+        const res = await axios.get(`${ BASE_URL }/${ sellerId }/reviews/${id}/`);
         return res.data;
     } catch (e) {
         console.log(e);
@@ -23,7 +23,7 @@ const getReviewById = async (sellerId, id) => {
 
 const updateReview = async (sellerId, id, Review) => {
     try {
-        const res = await axios.put(`${ BASE_URL }/${ sellerId }/reviews/${ id }`, Review);
+        const res = await axios.put(`${ BASE_URL }/${ sellerId }/reviews/${ id }/`, Review);
         const data = await res.data;
         return data;
     } catch (error) {
@@ -32,18 +32,19 @@ const updateReview = async (sellerId, id, Review) => {
     }
 };
 
-const deleteReview = async (sellerId, id) => {
+const deleteReview = async (sellerId, reviewId) => {
     try {
-        await axios.delete(`${ BASE_URL }/${ sellerId }/reviews/${ id }`);
+        await axios.delete(`${ BASE_URL }/${ sellerId }/reviews/${ reviewId }/`);
     } catch (error) {
         console.log(error);
         throw error;
     }
 };
 
-const createReview = async (sellerId, Review) => {
+const createReview = async (sellerId, formData) => {
     try {
-        const res = await axios.post(`${ BASE_URL }/${ sellerId }/reviews/`, Review);
+        
+        const res = await axios.post(`${ BASE_URL }/${ sellerId }/reviews/new/`, formData);
         const data = await res.data;
         return data;
     } catch (error) {

@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../../contexts/UserContext.jsx";
+import { login } from "../../../services/authService.js";
+import "../form.css";
 
-const LoginForm = () => {
+const LoginForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,43 +23,63 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Replace with your actual login logic
-      // const response = await login(formData);
-      // setUser(response.user);
-      navigate("/");
+      const user = await login(formData);
+      setUser(user);
+      onClose(); 
+      navigate("/bidhub/home");
     } catch (err) {
       setError("Invalid credentials");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      {error && <p className="error">{error}</p>}
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+    <div className="form-wrapper">
+      <form className="form-container login-form" onSubmit={handleSubmit}>
+        <h1 className="form-title">Login</h1>
+        <button className="form-close-btn" type="button" onClick={onClose}>
+          ×
+        </button>
+        {error && <div className="error-message">{error}</div>}
+        <div className="form-group register-login">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="email">Email</label>
+        </div>
+        <div className="form-group register-login">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="password">Password</label>
+        </div>
+
+        <div className="form-buttons">
+          <button type="submit">Login</button>
+          <button
+            type="button"
+            onClick={() => {
+              if (onClose) {
+                onClose();
+              } else {
+                navigate("/bidhub/home");
+              }
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
