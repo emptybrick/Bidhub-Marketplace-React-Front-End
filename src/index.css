@@ -21,7 +21,7 @@
   --mzaC-slideW: min(960px, 94vw);
   --mzaC-peek: 0.15;
   --mzaPagH: 64px;
-  --mzaCardH: clamp(360px, 62vh, 600px);  
+  --mzaCardH: clamp(360px, 62vh, 600px);
   --green-seaweed: rgb(172, 159, 114);
   --blue-queen: rgb(162, 162, 161);
   --red-fire: rgb(209, 146, 151);
@@ -41,35 +41,38 @@ body {
     ),
     radial-gradient(1500px 800px at 110% 50%, #000000 0%, transparent 80%),
     linear-gradient(100deg, #a9a8a8a4 0%, #b1b1b1 10%); */
-    background-image: url('/landing-background.png');
-    background-size: cover;
-    background-position: 0%;
+  background-image: url("/landing-background.png");
+  background-size: cover;
+  background-position: 0%;
   color: var(--mzaC-fg);
   /* use the same fonts as Landing */
   font-size: 16px;
   line-height: 1.4;
   font-family: var(--content-font), system-ui, "Segoe UI", Roboto, Ubuntu,
     "Helvetica Neue", Arial;
- height: 100vh !important;
+  height: 100vh !important;
 }
 
- main {
-    min-height: 100vh;
- }
+main {
+  min-height: 100vh;
+}
 
- h1, .title, .form-title {
-      color: #f6eac5 !important;
+h1, h2,
+.title,
+.form-title, .bid-history-subtitle {
+  color: #f6eac5 !important;
   text-shadow: 7px 7px 5px rgb(0, 0, 0) !important;
- }
+}
 
- /* fix for form button color */
+/* fix for form button color */
 
- .form-close-btn {
-    color: black !important;
-    border: 1px solid black !important;
- }
+.form-close-btn {
+  color: black !important;
+  border: 1px solid black !important;
+}
 
- .form-close-btn:hover {
-    background-color: rgb(255, 244, 204) !important;
-    border: 1px solid black !important;
- }
+.form-close-btn:hover {
+  background-color: rgb(255, 244, 204) !important;
+  border: 1px solid black !important;
+}
+
