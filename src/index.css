@@ -57,7 +57,7 @@ body {
     min-height: 100vh;
  }
 
- h1, .title {
+ h1, .title, .form-title {
       color: #f6eac5 !important;
   text-shadow: 7px 7px 5px rgb(0, 0, 0) !important;
  }

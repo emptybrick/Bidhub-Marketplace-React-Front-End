@@ -209,7 +209,7 @@ const ItemCard = ({
 
                   {purchased === "true" && (
                     <button className="view-details" onClick={handleCheckout}>
-                      {item.payment_confirmation
+                      {payment
                         ? "Update Shipping or Payment Info"
                         : "Add Shipping and Payment Info"}
                     </button>
