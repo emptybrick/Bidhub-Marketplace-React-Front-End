@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./About.css";
 
+/* JS class from the sample, adapted for React */
 class MzaCarousel {
   constructor(root, opts = {}) {
     this.root = root;
@@ -347,30 +348,29 @@ class MzaCarousel {
 const slides = [
   {
     bg: "https://picsum.photos/id/1015/1600/1000",
-    title: "Welcome to Bidhub, a little something about us.",
-    kicker:
-      "Bidhub — the simple way to buy & sell new and second-hand items online",
-    text: "Fast listings, fair bidding, secure PayPal checkout.",
-    // cta: "See case study",
+    title: "Welcome to Bidhub",
+    kicker: "A trusted place to buy & sell new and second-hand items",
+    text: "Build adaptive UI foundations with tokens, motion, and accessible color ramps. Ship faster without sameness.",
   },
   {
     bg: "https://picsum.photos/id/1011/1600/1000",
-    title: "How's it built?",
-    kicker: "Project development stack",
-    text: "	•	Front end: React (Vite), protected routes, responsive UI,	Back end: Django REST Framework, PostgreSQL, JWT auth, Infra & tooling: Cloudinary images, PayPal Checkout, CORS/Helmet, linting & tests.Quality: Accessible, performant, and designed for maintainability.",
-    // cta: "View live demo",
+    title: "Who we are",
+    kicker:
+      "A pair of aspiring software engineers—product-minded and customer-obsessed.",
+    text: "Open to opportunities—let’s talk: GitHub / LinkedIn / Email",
   },
   {
-    bg: "https://picsum.photos/id/1021/1600/1000",
-    title: "Who we are",
-    kicker: "The folks behind the scenes",
-    text: "A pair of aspiring software engineers—product-minded and customer-obsessed. Open to opportunities—let’s talk: GitHub / LinkedIn / Email",
-    //cta: "See patterns",
+    bg: "https://picsum.photos/id/1018/1600/1000",
+    title: "How it was built",
+    kicker: "The tech stack at a glance",
+    text: [
+      "Front end: React (Vite), protected routes, responsive UI.",
+      "Back end: Django REST Framework, PostgreSQL, JWT auth.",
+      "Infra & tooling: Cloudinary images, PayPal Checkout, CORS/Helmet, linting & tests.",
+      "Quality: Accessible, performant, and designed for maintainability.",
+    ],
   },
 ];
-
-const slidesToShow = 3;
-const slidesData = slides.slice(0, slidesToShow);
 
 export default function About() {
   const rootRef = useRef(null);
@@ -380,12 +380,13 @@ export default function About() {
     if (rootRef.current && !instanceRef.current) {
       instanceRef.current = new MzaCarousel(rootRef.current, {
         transitionMs: 900,
-        activeLeftBias: 0, // center active slide (no left bias)
-        peek: 0.0, // no side “peek” pushing layout visually
+        // tighter layout (3-slide) carousel:
+        peek: 0.04, // less peek so slides fill the viewport
+        gap: 20, // smaller gap between slides
+        activeLeftBias: 0, // center the active slide
       });
     }
     return () => {
-      // basic cleanup to avoid stray RAF/observers in dev
       if (instanceRef.current) {
         try {
           cancelAnimationFrame(instanceRef.current.state?.rafId);
@@ -406,7 +407,7 @@ export default function About() {
     >
       <div className="mzaCarousel-viewport" tabIndex={0}>
         <div className="mzaCarousel-track">
-          {slidesData.map((s, i) => (
+          {slides.map((s, i) => (
             <article
               key={i}
               className="mzaCarousel-slide"
@@ -423,13 +424,20 @@ export default function About() {
                     <h2 className="mzaCard-title">{s.title}</h2>
                     <p className="mzaCard-kicker">{s.kicker}</p>
                   </header>
-                  <p className="mzaCard-text mzaPar-2">{s.text}</p>
+
+                  {Array.isArray(s.text) ? (
+                    <div className="mzaCard-text mzaPar-2">
+                      <ul>
+                        {s.text.map((line, idx) => (
+                          <li key={idx}>{line}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p className="mzaCard-text mzaPar-2">{s.text}</p>
+                  )}
                 </div>
-                <footer className="mzaCard-actions mzaPar-3">
-                  <button className="mzaBtn" type="button">
-                    {s.cta}
-                  </button>
-                </footer>
+                {/* CTA removed */}
               </div>
             </article>
           ))}
