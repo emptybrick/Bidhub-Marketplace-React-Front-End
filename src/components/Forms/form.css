@@ -541,8 +541,8 @@ body {
 }
 
 .error-message {
-  color: var(--red-fire);
-  background: rgba(244, 91, 105, 0.12);
+  color: white;
+  background: rgba(244, 91, 104, 0.478);
   padding: 10px;
   border-radius: 6px;
   text-align: center;

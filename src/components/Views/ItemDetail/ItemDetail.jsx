@@ -18,9 +18,9 @@ const ItemDetail = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
   const [seller, setSeller] = useState(null);
-  const [ message, setMessage ] = useState("");
-    const [showItem, setShowItem] = useState(false);
-  const [messageType, setMessageType] = useState(""); 
+  const [message, setMessage] = useState("");
+  const [showItem, setShowItem] = useState(false);
+  const [messageType, setMessageType] = useState("");
 
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
   const cld = new Cloudinary({ cloud: { cloudName } });
@@ -36,7 +36,7 @@ const ItemDetail = () => {
         const sellerData = await getUsername(itemData.owner.id);
         setSeller(sellerData);
         if (itemData && Array.isArray(itemData.images)) {
-          setImages(itemData.images); 
+          setImages(itemData.images);
           if (itemData.images.length === 0) {
             setCurrentIndex(0);
           } else if (currentIndex > itemData.images.length - 1) {
@@ -166,10 +166,12 @@ const ItemDetail = () => {
             <div className="right-section current-bid-section">
               <div className="bid-info-section">
                 <div className="bid-info-left">
-                  <div className="item-detail-subtitle">Bid Information</div>
+                  <h2 className="item-detail-subtitle">Bid Information</h2>
                   <div className="current-bid">
                     Current Bid:{" "}
-                    <span className="span-bold">${item.current_bid}</span>
+                    <span className="span-bold">
+                      {item.current_bid ? `$${item.current_bid}` : "No Bids"}
+                    </span>
                   </div>
                   <div className="initial-bid">
                     Initial Bid:{" "}
@@ -188,7 +190,7 @@ const ItemDetail = () => {
                 </div>
                 <div className="bid-info-right">
                   {" "}
-                  <div className="item-detail-subtitle">Bid Offer ($)</div>
+                  <h2 className="item-detail-subtitle">Bid Offer ($)</h2>
                   <div className="bid-form-wrap">
                     <form onSubmit={handleSubmitBid} className="bid-form">
                       <label htmlFor="bid-offer-amount"></label>
@@ -197,7 +199,7 @@ const ItemDetail = () => {
                           className="bid-input"
                           type="number"
                           id="bid-offer-amount"
-                          min={item.current_bid}
+                          min={item.current_bid ? item.current_bid : item.initial_bid}
                           onChange={(e) => {
                             e.target.value = Number(e.target.value).toFixed(2);
                           }}
@@ -209,7 +211,7 @@ const ItemDetail = () => {
                       </div>
                     </form>
                     <button
-                      className="bid-offer-button"
+                      className="bid-history-button"
                       onClick={() => setShowItem(true)}
                     >
                       View Bid History
@@ -218,12 +220,6 @@ const ItemDetail = () => {
                   {showItem && (
                     <div className="modal">
                       <div className="modal-content">
-                        <button
-                          className="close-button"
-                          onClick={() => setShowItem(false)}
-                        >
-                          ✕
-                        </button>
                         <BidHistoryModal
                           onClose={() => setShowItem(false)}
                           bidHistory={item.bid_history_json}
@@ -246,51 +242,59 @@ const ItemDetail = () => {
 
             {/* Middle: Item Details */}
             <div className="right-section item-details-section">
-              <div className="item-detail-subtitle">Item Details</div>
               <div className="item-info-section">
-                <ul className="item-info-left">
-                  <li>
-                    Category: <span className="span-bold">{item.category}</span>
-                  </li>
-                  <li>
-                    Condition:{" "}
-                    <span className="span-bold">{item.condition}</span>
-                  </li>
-                  {item.manufacture_year && (
+                <h2 className="item-detail-subtitle">Item Details</h2>
+                <div className="item-info-details-section">
+                  <ul className="item-info-left details">
                     <li>
-                      Manufacture Year:{" "}
-                      <span className="span-bold">{item.manufacture_year}</span>
+                      Category:{" "}
+                      <span className="span-bold">{item.category}</span>
                     </li>
-                  )}
-                  {item.country_of_origin && (
                     <li>
-                      Country of Origin:{" "}
-                      <span className="span-bold">
-                        {item.country_of_origin}
-                      </span>
+                      Condition:{" "}
+                      <span className="span-bold">{item.condition}</span>
                     </li>
-                  )}
-                </ul>
-                <ul className="item-info-right">
-                  <li>
-                    Height: <span className="span-bold">{item.height} cm</span>
-                  </li>
-                  <li>
-                    Width: <span className="span-bold">{item.width} cm</span>
-                  </li>
-                  <li>
-                    Length: <span className="span-bold">{item.length} cm</span>
-                  </li>
-                  <li>
-                    Weight: <span className="span-bold">{item.weight} kg</span>
-                  </li>
-                </ul>
+                    {item.manufacture_year && (
+                      <li>
+                        Manufacture Year:{" "}
+                        <span className="span-bold">
+                          {item.manufacture_year}
+                        </span>
+                      </li>
+                    )}
+                    {item.country_of_origin && (
+                      <li>
+                        Country of Origin:{" "}
+                        <span className="span-bold">
+                          {item.country_of_origin}
+                        </span>
+                      </li>
+                    )}
+                  </ul>
+                  <ul className="item-info-right details">
+                    <li>
+                      Height:{" "}
+                      <span className="span-bold">{item.height} cm</span>
+                    </li>
+                    <li>
+                      Width: <span className="span-bold">{item.width} cm</span>
+                    </li>
+                    <li>
+                      Length:{" "}
+                      <span className="span-bold">{item.length} cm</span>
+                    </li>
+                    <li>
+                      Weight:{" "}
+                      <span className="span-bold">{item.weight} kg</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
 
             {/* Bottom: Item Description */}
             <div className="right-section item-description-section">
-              <div className="item-description-subtitle">Item Description</div>
+              <h2 className="item-description-subtitle">Item Description</h2>
               <div className="item-description">{item.description}</div>
             </div>
           </div>

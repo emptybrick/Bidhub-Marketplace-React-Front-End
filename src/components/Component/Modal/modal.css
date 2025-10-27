@@ -10,7 +10,8 @@
 
 .bid-history-container {
   max-height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  min-height: 80px;
 }
 
 .bid-history {
@@ -23,15 +24,26 @@
 }
 
 .bid-history-modal-subtitle {
-  margin-bottom: -20px;
   font-weight: bold;
 }
 
 .bid-history-subtitle {
   font-size: 20px;
   font-weight: bold;
-  margin-top: -25px;
-  position: absolute;
-  z-index: 1000;
-  margin-left: 225px;
+  text-align: center;
+}
+
+.shipping-address-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.shipping-address-container li {
+  margin-bottom: 10px;
+}
+
+.shipping-address-container ul {
+  margin-top: 20px;
 }

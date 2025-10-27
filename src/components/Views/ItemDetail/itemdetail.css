@@ -7,7 +7,7 @@
 }
 
 .item-detail-section {
-    background: radial-gradient(
+  background: radial-gradient(
       1200px 600px at 10% -10%,
       #7b7b7b 0%,
       transparent 40%
@@ -15,7 +15,6 @@
     radial-gradient(900px 600px at 110% 10%, #ffffffb1 0%, transparent 60%),
     linear-gradient(180deg, #c6c6c600 0%, #666666 100%);
   border-radius: 10px;
-  box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
   padding: 20px;
   font-size: 18px; /* all normal text in this section increased to 18px*/
   line-height: 1.4;
@@ -24,7 +23,7 @@
 /* Headings: style Item Details and Item Description like h2 */
 .item-detail-subtitle,
 .item-description-subtitle {
-  font-size: 32px;   /* h2-like sizing (adjust if you want larger/smaller) */
+  font-size: 32px; /* h2-like sizing (adjust if you want larger/smaller) */
   font-weight: 600;
   margin: 0 0 8px 0;
 }
@@ -46,8 +45,41 @@
   font-size: 18px; /* keep consistent with base size */
 }
 
-.item-info-left ul, .item-info-right ul {
-  padding-bottom: 0 !important;
+.bid-input {
+  background-color: #ffffffc1;
+  padding-top: 3px;
+  padding-bottom: 2px;
+}
+
+.bid-offer-button {
+  border-radius: 0px 5px 5px 0px;
+  background-color: rgb(89, 176, 75);
+  padding-top: 3px;
+  padding-bottom: 2px;
+  color: white;
+}
+
+.bid-history-button {
+  border-radius: 5px;
+  padding-top: 3px;
+  padding-bottom: 2px;
+  background-color: rgb(87, 86, 83);
+  color: white;
+}
+
+.bid-history-button:hover {
+  transform: scale(110%);
+  background-color: rgb(123, 121, 116);
+}
+
+.bid-offer-button:hover {
+  transform: scale(110%);
+  background-color: rgba(70, 138, 59, 0.708);
+}
+
+.item-info-left ul,
+.item-info-right ul {
+  padding-bottom: 0px !important;
 }
 
 .carousel-btn {
@@ -64,9 +96,6 @@
   background-color: azure;
   cursor: pointer;
 }
-
-
-
 
 /* make top area a two-column layout: left = image + bottom details, right = current bid */
 .details-top {
@@ -89,12 +118,12 @@
   border: none;
   background: transparent;
   padding: 0;
-  width: 64px;         /* thumbnail width (adjust here) */
-  height: 88px;        /* thumbnail height (adjust here) */
+  width: 64px; /* thumbnail width (adjust here) */
+  height: 88px; /* thumbnail height (adjust here) */
   aspect-ratio: 3 / 4;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   margin-left: 10px;
 }
@@ -126,8 +155,17 @@
 .item-info-section {
   border-radius: 8px;
   padding: 12px;
-display: flex;
-gap: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #25252576;
+}
+
+.item-info-details-section {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 /* adjust subtitle sizes */
@@ -135,6 +173,10 @@ gap: 60px;
 .item-description-subtitle {
   font-size: 24px;
   padding-top: 6px;
+}
+
+.item-info-section .item-detail-subtitle {
+  padding-left: 10px;
 }
 
 /* keep Current Bid block (top-right) visually unchanged but ensure it aligns top */
@@ -175,7 +217,6 @@ gap: 60px;
   justify-content: center;
 }
 
-
 /* Main image rendered */
 .item-detail-image img,
 .item-detail-image .cld-responsive > * {
@@ -187,36 +228,36 @@ gap: 60px;
 }
 
 .image-left-details {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 /* Thumbnail gallery: center thumbnails in the left column and keep them compact */
 .item-detail-image-gallery {
-  display: block;               /* center thumbnails horizontally */
+  display: block; /* center thumbnails horizontally */
   gap: 8px;
   flex-wrap: wrap;
-  justify-content: center;     /* <-- centered */
+  justify-content: center; /* <-- centered */
   align-items: center;
   width: 100%;
-  flex: 0 0 auto; 
+  flex: 0 0 auto;
   margin-bottom: 4px;
 }
 
 /* Thumbnail sizes + remove left offset so they are centered */
 .item-detail-thumb-btn {
-  width: 56px;   /* thumbnail width (adjust) */
-  height: 80px;  /* thumbnail height (adjust) */
+  width: 56px; /* thumbnail width (adjust) */
+  height: 80px; /* thumbnail height (adjust) */
   padding: 0;
   border: none;
   background: transparent;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
   cursor: pointer;
-  margin: 4px;   /* small margin so grid looks even when centered */
+  margin: 4px; /* small margin so grid looks even when centered */
 }
 
 .item-detail-thumb-btn img {
@@ -275,7 +316,7 @@ gap: 60px;
 
   /* push thumbnails to the bottom and move main image slightly down */
   justify-content: space-between;
-  padding-top: 32px;   /* increased so main image is pushed down from the very top */
+  padding-top: 32px; /* increased so main image is pushed down from the very top */
   padding-bottom: 16px;
 }
 
@@ -286,7 +327,7 @@ gap: 60px;
   flex-wrap: wrap;
   justify-content: space-evenly;
   width: 100%;
-  flex: 0 0 auto;    /* thumbnails do not grow */
+  flex: 0 0 auto; /* thumbnails do not grow */
   align-items: start;
   margin-bottom: 4px; /* small gap from the bottom of the left column */
 }
@@ -301,7 +342,7 @@ gap: 60px;
 
 /* each right section takes equal vertical space and scrolls if content overflows */
 .right-section {
-  background: rgba(0,0,0,0.02);
+  background: rgba(0, 0, 0, 0.02);
   padding: 12px;
   border-radius: 8px;
   display: flex;
@@ -309,7 +350,15 @@ gap: 60px;
 }
 
 .bid-info-section {
+  background-color: #25252576;
+  border-radius: 8px;
+  padding: 10px;
   display: flex;
+}
+
+.item-description-section {
+    background-color: #25252576;
+  border-radius: 8px;
 }
 
 .bid-form {
@@ -343,20 +392,40 @@ gap: 60px;
 }
 
 /* reduce subtitle sizes */
-.item-detail-subtitle, .item-description-subtitle {
+.item-detail-subtitle,
+.item-description-subtitle {
   font-size: 18px;
   margin-bottom: 8px;
 }
 
 /* responsive adjustments (preserve stacking on small screens) */
 @media (max-width: 920px) {
-  .details-top.two-column-equal { grid-template-columns: 1fr; }
-  .left-50, .right-50 { width: 100%; height: auto; }
-  .item-detail-image { width: 100%; max-height: 360px; flex: none; }
-  .item-detail-thumb-btn { width: 48px; height: 72px; }
-  .item-detail-section { font-size: 20px; }
+  .details-top.two-column-equal {
+    grid-template-columns: 1fr;
+  }
+  .left-50,
+  .right-50 {
+    width: 100%;
+    height: auto;
+  }
+  .item-detail-image {
+    width: 100%;
+    max-height: 360px;
+    flex: none;
+  }
+  .item-detail-thumb-btn {
+    width: 48px;
+    height: 72px;
+  }
+  .item-detail-section {
+    font-size: 20px;
+  }
   .current-bid,
   .item-detail-subtitle,
-  .item-description-subtitle { font-size: 28px; }
-  .item-description { font-size: 20px; }
+  .item-description-subtitle {
+    font-size: 28px;
+  }
+  .item-description {
+    font-size: 20px;
+  }
 }

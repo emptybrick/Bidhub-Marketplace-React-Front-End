@@ -69,3 +69,41 @@ h1, h2,
   border: 1px solid black !important;
 }
 
+select,
+::picker(select) {
+  appearance: base-select;
+}
+
+select {
+  border: 2px solid #dddddd;
+  background: #6d6d6dbc;
+  transition: 0.4s;
+}
+
+select:hover,
+select:focus {
+  background: #454545;
+}
+
+select::picker-icon {
+  color: #ffffff;
+  transition: 0.7s rotate;
+}
+
+select:open::picker-icon {
+  rotate: 180deg;
+}
+
+::picker(select) {
+  border: none;
+}
+
+option {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  border: 2px solid #6d6d6dbc;
+  background: #6d6d6d4e;
+  transition: 0.4s;
+}
+
