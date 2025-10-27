@@ -66,14 +66,6 @@ const ItemCard = ({
     if (!isPlaceholder) navigate(`/bidhub/marketplace/${item.id}`);
   };
 
-  const handleShowShippingModal = () => {
-    setShowShippingModal(true);
-  };
-
-  const handleCloseShippingModal = () => {
-    setShowShippingModal(false);
-  };
-
   const handleShowItemForm = () => {
     setShowItemForm(true);
   };
@@ -187,8 +179,8 @@ const ItemCard = ({
               <div>
                 {purchased === "true" || sold === "true"
                   ? "Final Bid: $"
-                  : "Current Bid: $"}
-                {item.current_bid}
+                  : "Current Bid: "}
+                {item.current_bid ? `${item.current_bid}` : "No Bids"}
               </div>
             </div>
 
@@ -198,7 +190,7 @@ const ItemCard = ({
                   {payment && sold === "true" && (
                     <button
                       className="view-details"
-                      onClick={handleShowShippingModal}
+                      onClick={() => setShowShippingModal(true)}
                     >
                       View Shipping Info
                     </button>
@@ -254,11 +246,8 @@ const ItemCard = ({
       {payment && showShippingModal && (
         <div className="modal">
           <div className="modal-content">
-            <button className="close-button" onClick={() => setShowItem(false)}>
-              ✕
-            </button>
             <ShippingDetailsModal
-              onClose={handleCloseShippingModal}
+              onClose={() => setShowShippingModal(false)}
               shipping={payment.shipping_address}
             />
           </div>

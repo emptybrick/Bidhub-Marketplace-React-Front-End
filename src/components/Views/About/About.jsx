@@ -25,7 +25,7 @@ class MzaCarousel {
     this.nextBtn = root.querySelector(".mzaCarousel-next");
     this.pagination = root.querySelector(".mzaCarousel-pagination");
     this.progressBar = root.querySelector(".mzaCarousel-progressBar");
-    this._onDragMove = throttle(this._onDragMove.bind(this), 32);
+    // this._onDragMove = throttle(this._onDragMove.bind(this), 32);
     this._onTilt = throttle(this._onTilt.bind(this), 32);
     this.isFF = typeof InstallTrigger !== "undefined";
     this.n = this.slides.length;
@@ -168,9 +168,6 @@ class MzaCarousel {
       if (e.key === "ArrowLeft") this.prev();
       if (e.key === "ArrowRight") this.next();
     };
-    this._onDragStart = (e) => this._onDragStart(e);
-    this._onDragMove = throttle((e) => this._onDragMove(e), 32);
-    this._onDragEnd = (e) => this._onDragEnd(e);
     this._onMouseEnter = () => {
       this.state.hovering = true;
       this.state.pausedAt = performance.now();
@@ -182,20 +179,13 @@ class MzaCarousel {
       }
       this.state.hovering = false;
     };
-    this._onTilt = throttle((e) => this._onTilt(e), 32);
 
     this.prevBtn.addEventListener("click", this._onPrev);
     this.nextBtn.addEventListener("click", this._onNext);
     if (this.opts.keyboard) {
       this.root.addEventListener("keydown", this._onKeyDown);
     }
-    this.viewport.addEventListener("pointerdown", this._onDragStart);
-    this.viewport.addEventListener("pointermove", this._onDragMove);
-    this.viewport.addEventListener("pointerup", this._onDragEnd);
-    this.viewport.addEventListener("pointercancel", this._onDragEnd);
-    this.root.addEventListener("mouseenter", this._onMouseEnter);
-    this.root.addEventListener("mouseleave", this._onMouseLeave);
-    this.viewport.addEventListener("pointermove", this._onTilt);
+
     this.ro = new ResizeObserver(() => this._measure());
     this.ro.observe(this.viewport);
     this.opts.breakpoints.forEach((bp) => {
@@ -264,17 +254,8 @@ class MzaCarousel {
     this.state.v = 0;
     this.state.pausedAt = performance.now();
   }
-  _onDragMove(e) {
-    if (!this.state.dragging || e.pointerId !== this.state.pointerId) return;
-    const dx = e.clientX - this.state.x0;
-    const dt = Math.max(16, performance.now() - this.state.t0);
-    this.state.v = dx / dt;
-    const slideSpan = this.slideW + this.state.gap;
-    this.state.pos = this._mod(this.state.index - dx / slideSpan, this.n);
-    this._render();
-  }
   _onDragEnd(e) {
-    if (!this.state.dragging || (e && e.pointerId !== this.state.pointerId))
+    if ((e && e.pointerId !== this.state.pointerId))
       return;
     this.state.dragging = false;
     try {

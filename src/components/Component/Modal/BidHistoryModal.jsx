@@ -32,8 +32,8 @@ const BidHistoryModal = ({ bidHistory, onClose }) => {
           </div>
         )}
       </div>
-      <button className="bid-history-close" onClick={() => onClose()}>
-        Close
+      <button className="form-close-btn" onClick={() => onClose()}>
+        X
       </button>
     </div>
   );
