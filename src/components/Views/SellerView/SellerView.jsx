@@ -145,16 +145,14 @@ const SellerView = () => {
           <div className="reviews-subtitle">Reviews</div>
           <div className="sort-container reviews">
             <div className="review-form">
-              {showItem && (
+              {showItem && user.id != sellerId && (
                 <div className="modal">
-
-                    <ReviewForm
-                      onClose={() => setShowItem(false)}
-                      sellerId={sellerId}
-                      refreshReviews={fetchReviews}
-                    />
-                  </div>
-
+                  <ReviewForm
+                    onClose={() => setShowItem(false)}
+                    sellerId={sellerId}
+                    refreshReviews={fetchReviews}
+                  />
+                </div>
               )}
             </div>
             <div className="filters-container">
@@ -189,7 +187,7 @@ const SellerView = () => {
             </div>
           </div>
           <div className="create-review-button">
-            {!hasReviewed && (
+            {!hasReviewed && user.id != sellerId && (
               <button
                 className="create-review"
                 onClick={() => setShowItem(true)}
@@ -207,7 +205,7 @@ const SellerView = () => {
                       Overall Rating: {renderStarRating(review.rating)}
                     </div>
                     <div className="top-section-review">
-                      <p className="review-text">{ review.review }</p>
+                      <p className="review-text">{review.review}</p>
                       <div className="ten-point-ratings">
                         <ul>
                           <li>
@@ -248,14 +246,14 @@ const SellerView = () => {
                       )}
                     </div>
                     <div className="review-form">
-                      {showItem && (
+                      {showItem && user.id != sellerId && (
                         <div className="modal">
-                            <ReviewForm
-                              onClose={() => setShowItem(false)}
-                              sellerId={sellerId}
-                              reviewData={review}
-                              refreshReviews={fetchReviews}
-                            />
+                          <ReviewForm
+                            onClose={() => setShowItem(false)}
+                            sellerId={sellerId}
+                            reviewData={review}
+                            refreshReviews={fetchReviews}
+                          />
                         </div>
                       )}
                     </div>

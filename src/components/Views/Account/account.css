@@ -1,15 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap');
 
-:root {
-  --green-seaweed: rgba(2, 128, 144, 1);
-  --blue-queen: rgba(69, 105, 144, 1);
-  --red-fire: rgba(244, 91, 105, 1);
-  --card-shadow: 5px 10px 10px rgba(2,128,144,0.2);
-}
-
-body {
-  font-family: 'Asap', sans-serif;
-}
 
 /* Modal wrapper */
 .account-section {
@@ -22,12 +11,21 @@ body {
   padding: 40px 20px 60px 20px; /* Increased bottom padding for button space */
   display: flex;
   flex-direction: column;
-  min-height: 100%; /* Ensure it takes full height of parent (modal or page) */
   box-sizing: border-box;
   position: relative; /* For absolute positioning of buttons if needed */
-    background-color: rgba(218, 165, 32, 0.07);
-      border-radius: 10px;
-  box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+  background: radial-gradient(
+      1200px 600px at 10% -10%,
+      #9c9c9c 0%,
+      transparent 40%
+    ),
+    radial-gradient(900px 600px at 110% 10%, #bbbbbb 0%, transparent 40%),
+    linear-gradient(180deg, #6d6d6d 0%, #d9cca5 100%);
+  box-shadow: 5px 5px 7px rgba(255, 255, 255, 0.86);
+  border-radius: 10px;
+}
+
+.account-section h1 {
+  color: #e3e6f0 !important;
 }
 
 .account-update-form {
@@ -59,11 +57,14 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1100;
   transition: all 0.2s ease;
 }
-.form-close-btn:hover { transform: scale(1.1); background: #f8f8f8; }
+.form-close-btn:hover {
+  transform: scale(1.1);
+  background: #f8f8f8;
+}
 
 /* Headings */
 .account-section h1 {
@@ -84,7 +85,7 @@ body {
   font-weight: 400;
   color: #333;
   margin: 15px 0 8px;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Ensure form columns don't overlap the section heading */
@@ -128,13 +129,13 @@ body {
   color: #333;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 0 3px rgba(0,0,0,0.05);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: flex-start;
   text-align: left;
-  background: rgba(255,255,255,0.6);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 /* Form layout */
@@ -158,6 +159,7 @@ body {
   opacity: 0.9;
   text-transform: uppercase;
   transition: all 0.3s ease-in-out;
+  color: #e3e6f0 !important;
 }
 
 /* Inputs styling */
@@ -169,7 +171,7 @@ body {
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.9);
   color: #333;
-  font-family: 'Asap', sans-serif;
+  font-family: "Asap", sans-serif;
   font-size: 14px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.12);
   transition: all 0.3s ease-in-out;
@@ -197,7 +199,7 @@ body {
 /* Button styling */
 .form-buttons button {
   width: 200px;
-  font-family: 'Asap', sans-serif;
+  font-family: "Asap", sans-serif;
   cursor: pointer;
   color: #fff;
   font-size: 16px;
@@ -222,13 +224,13 @@ body {
   background-color: var(--blue-queen);
 }
 .form-buttons button[type="button"]:hover {
-  background-color: rgba(69,105,144,0.8);
+  background-color: rgba(69, 105, 144, 0.8);
 }
 
 /* Error / success messages */
 .error-message {
   color: var(--red-fire);
-  background-color: rgba(244,91,105,0.1);
+  background-color: rgba(244, 91, 105, 0.1);
   padding: 8px;
   border-radius: 4px;
   margin-bottom: 10px;
@@ -238,7 +240,7 @@ body {
 
 .success-message {
   color: #1cc88a;
-  background-color: rgba(28,200,138,0.08);
+  background-color: rgba(28, 200, 138, 0.08);
   padding: 8px;
   border-radius: 4px;
 }

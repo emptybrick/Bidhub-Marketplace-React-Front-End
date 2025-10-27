@@ -1,2 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+:root {
+  /* shared font variables (same as Landing) */
+  --main-font: "Montserrat", sans-serif;
+  --content-font: "Roboto", sans-serif;
+  --h3-font: "Roboto";
+  --main-color: #000000;
+  --icon-color: #95e1d3;
+
+  /* existing carousel variables */
+  --mzaC-fg: #000000;
+  --mzaC-accent: #9ef7d2;
+  --mzaC-accent2: #82a0ff;
+  --mzaC-glass: rgba(255, 255, 255, 0.06);
+  --mzaC-glow: rgba(130, 160, 255, 0.75);
+  /* slightly wider slides for a more prominent center card */
+  --mzaC-slideW: min(960px, 94vw);
+  --mzaC-peek: 0.15;
+  --mzaPagH: 64px;
+  --mzaCardH: clamp(360px, 62vh, 600px);  
+  --green-seaweed: rgba(2, 128, 144, 1);
+  --blue-queen: rgba(69, 105, 144, 1);
+  --red-fire: rgba(244, 91, 105, 1);
+  --card-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+}
+
+html,
 body {
-background-color: rgba(237, 237, 237);}
+  margin: 0;
+}
+
+body {
+  background: radial-gradient(
+      1200px 600px at 10% -10%,
+      #676767 0%,
+      transparent 40%
+    ),
+    radial-gradient(900px 600px at 110% 10%, #909090 0%, transparent 40%),
+    linear-gradient(180deg, #6d6d6d 0%, #e0e0e0 100%);
+  color: var(--mzaC-fg);
+  /* use the same fonts as Landing */
+  font-size: 16px;
+  line-height: 1.4;
+  font-family: var(--content-font), system-ui, "Segoe UI", Roboto, Ubuntu,
+    "Helvetica Neue", Arial;
+ height: 100vh !important;
+}
+ main {
+    min-height: 100vh;
+ }

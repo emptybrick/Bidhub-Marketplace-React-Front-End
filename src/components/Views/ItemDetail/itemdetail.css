@@ -50,12 +50,12 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: rgba(198, 174, 87, 0.999);
   border: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   font-size: 24px;
   font-weight: bolder;
-  color: #ffffff;
+  color: #2e2e2e;
+  background-color: azure;
   cursor: pointer;
 }
 

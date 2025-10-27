@@ -20,6 +20,7 @@ html, body {
   padding: 0;
   font-size: 16px;
   background: var(--main-color);
+  height: 100vh;
   overflow-y: auto; /* Enables scrolling if content overflows */
 }
 
@@ -91,8 +92,8 @@ html, body {
 
 /* Section-1 Styles */
 #section-1 {
-  height: auto; /* or min-height: 38em; */
-  color: var(--main-color);
+  height: 100% !important;
+  color: white;
   background-color: #222;
   position: relative;
 }
@@ -130,7 +131,7 @@ html, body {
 }
 /* Banner Height */
 .banner-inner-wrapper {
-  height: 100%;
+  min-height: 100% !important;
   /* background-image: linear-gradient(rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9)); */
   box-sizing: border-box;
 }
@@ -171,9 +172,9 @@ html, body {
   text-align: center;
   font-family: var(--main-font);
   font-size: 1.5em;
-  color: var(--main-color);
+  color: white;
   text-transform: uppercase;
-  border: 0.1875em solid var(--main-color);
+  border: 0.1875em solid white;
   transition: all 0.3s;
 }
 
@@ -215,9 +216,10 @@ html, body {
 .controls {
   display: block;
   width: 70%;
-  margin: 0 auto;
+  margin: auto;
   font-family: var(--main-font);
-  color: var(--main-color);
+  color: white;
+  margin-bottom: 3em;
 }
 
 .controls label {
@@ -283,7 +285,7 @@ html, body {
 #banner3:checked ~ nav label[for="banner3"],
 #banner4:checked ~ nav label[for="banner4"] {
   cursor: default;
-  color: var(--main-color);
+  color: white;
   transition: all 0.5s;
 }
 

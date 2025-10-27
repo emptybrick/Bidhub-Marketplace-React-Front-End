@@ -41,7 +41,7 @@ const LoginForm = ({ onClose }) => {
           ×
         </button>
         {error && <div className="error-message">{error}</div>}
-        <div className="form-group">
+        <div className="form-group register-login">
           <input
             type="email"
             name="email"
@@ -52,7 +52,7 @@ const LoginForm = ({ onClose }) => {
           />
           <label htmlFor="email">Email</label>
         </div>
-        <div className="form-group">
+        <div className="form-group register-login">
           <input
             type="password"
             name="password"

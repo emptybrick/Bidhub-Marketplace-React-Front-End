@@ -87,7 +87,7 @@ const RegisterForm = ({ onClose }) => {
 
         <form onSubmit={handleSubmit}>
           <div className="form-columns">
-            <div className="form-group">
+            <div className="form-group register-login">
               <input
                 type="email"
                 id="email"
@@ -101,7 +101,7 @@ const RegisterForm = ({ onClose }) => {
               <label htmlFor="email">Email</label>
             </div>
 
-            <div className="form-group">
+            <div className="form-group register-login">
               <input
                 type="text"
                 id="username"
@@ -114,7 +114,7 @@ const RegisterForm = ({ onClose }) => {
               <label htmlFor="username">Username</label>
             </div>
 
-            <div className="form-group">
+            <div className="form-group register-login">
               <input
                 type="password"
                 id="password"
@@ -127,7 +127,7 @@ const RegisterForm = ({ onClose }) => {
               <label htmlFor="password">Password</label>
             </div>
 
-            <div className="form-group">
+            <div className="form-group register-login">
               <input
                 type="text"
                 id="first_name"
@@ -141,7 +141,7 @@ const RegisterForm = ({ onClose }) => {
               <label htmlFor="first_name">First Name</label>
             </div>
 
-            <div className="form-group">
+            <div className="form-group register-login">
               <input
                 type="text"
                 id="last_name"
@@ -154,7 +154,7 @@ const RegisterForm = ({ onClose }) => {
               <label htmlFor="last_name">Last Name</label>
             </div>
 
-            <div className="form-group">
+            <div className="form-group register-login">
               <input
                 type="password"
                 id="password_confirmation"
@@ -167,7 +167,7 @@ const RegisterForm = ({ onClose }) => {
               <label htmlFor="password_confirmation">Confirm Password</label>
             </div>
           </div>
-          <div className="form-group profile-image-picker">
+          <div className="form-group register-login profile-image-picker">
             <label htmlFor="profile-image">Select Profile Image</label>
             <div className="image-grid">
               {profileImages.map((image, index) => (
