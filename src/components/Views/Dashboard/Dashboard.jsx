@@ -80,7 +80,6 @@ const Dashboard = () => {
                 hideFilters={true}
               />
               {showItem && (
-                <div className="modal">
                   <div className="modal-content">
                     <button
                       className="close-button"
@@ -90,7 +89,6 @@ const Dashboard = () => {
                     </button>
                     <ItemForm onClose={() => setShowItem(false)} />
                   </div>
-                </div>
               )}
             </div>
           )}

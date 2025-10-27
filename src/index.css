@@ -73,7 +73,3 @@ body {
     background-color: rgb(255, 244, 204) !important;
     border: 1px solid black !important;
  }
-
- .modal.item-form {
-    z-index: -1000;
- }
