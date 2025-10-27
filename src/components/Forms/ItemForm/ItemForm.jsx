@@ -158,18 +158,14 @@ const ItemForm = ({ onClose, item, handleDeleteItem }) => {
   };
 
   return (
-    <div className="modal">
+    <div className="modal item-form">
       <div className="form-wrapper">
-        <div class="glass-filter"></div>
-        <div class="glass-overlay"></div>
-        <div class="glass-specular"></div>j
         <div className="form-container">
           <button className="form-close-btn" type="button" onClick={onClose}>
             ×
           </button>
           <h1 className="form-title">Create Auction Item</h1>
           {message && <div className="error-message">{message}</div>}
-
           <form onSubmit={handleSubmit}>
             <div className="image-display">
               <div className="image-left">
