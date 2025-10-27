@@ -156,14 +156,14 @@ header {
   width: 100%;
   margin: 0 auto;
   padding: 15px 20px;
-  border: 1px solid var(--gold);
+  /* border: 1px solid var(--gold); */
   border-radius: 20px;
   transition: all ease-in-out 300ms;
   min-height: 200px;
   display: flex;
   flex-direction: column;
   max-height: fit-content;
-  background-color: rgb(203, 203, 203);
+  background-color: rgba(98, 98, 98, 0.54);
 }
 
 .shipping-payment-details {
@@ -201,7 +201,7 @@ header {
   box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.4);
   transform: scale(1.1);
   z-index: 1000;
-  background: rgb(255, 255, 255);
+  background: rgba(171, 171, 171, 0.57);
 }
 
 .item-card .heading {
@@ -337,7 +337,6 @@ header {
 .filter-sort label {
   font-weight: 600;
   font-size: 0.85rem;
-  color: #495057;
   margin-bottom: 0.4rem;
   text-align: center;
   text-transform: uppercase;

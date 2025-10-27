@@ -29,6 +29,13 @@
 
 .banner-h1 {
   color: #f6eac5;
+  /* text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000; */
+         text-shadow: 7px 7px 5px rgb(0, 0, 0);
+    /* -webkit-text-stroke: 1px rgb(0, 0, 0);  */
 }
 
 .about-page h1 {

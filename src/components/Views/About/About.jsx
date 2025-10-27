@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import "./About.css";
+import "./about.css";
 
 class MzaCarousel {
   constructor(root, opts = {}) {

@@ -80,7 +80,7 @@ body {
 .form-container::before {
   left: 70%;
   bottom: -100%;
-  background-color: rgb(17, 41, 107);
+  background-color: #1a2140;
   animation: waves 6s infinite linear;
   z-index: -1;
 }
