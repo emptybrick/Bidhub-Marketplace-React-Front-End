@@ -34,7 +34,6 @@ const updateReview = async (sellerId, id, Review) => {
 
 const deleteReview = async (sellerId, reviewId) => {
     try {
-        console.log(sellerId, reviewId)
         await axios.delete(`${ BASE_URL }/${ sellerId }/reviews/${ reviewId }/`);
     } catch (error) {
         console.log(error);

@@ -1,15 +1,17 @@
-// render popup with shipping details for seller view
-const ShippingDetailsModal = ({shipping}) => {
+const ShippingDetailsModal = ({ shipping }) => {
   return (
-    <ul>
-      <li>{ shipping.fullName}</li>
-      <li>{ shipping.address}</li>
-      <li>{ shipping.city}</li>
-      <li>{ shipping.zipCode}</li>
-      <li>{ shipping.country}</li>
-      <li>{ shipping.phone}</li>
-    </ul>
-  )
+    <div className="shipping-address-container">
+      <ul className="shipping-address">
+        <li>Full Name: {shipping.fullName}</li>
+        <li>Address: {shipping.address}</li>
+        <li>
+          {shipping.zipCode} {shipping.city}, {shipping.state}{" "}
+          {shipping.country}
+        </li>
+        <li>Phone #: {shipping.phone}</li>
+      </ul>
+    </div>
+  );
 };
 
 export default ShippingDetailsModal;

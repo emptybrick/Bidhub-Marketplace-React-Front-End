@@ -1,5 +1,19 @@
 import { useEffect, useRef } from "react";
 import "./about.css";
+import React from "react";
+
+function throttle(func, limit) {
+  let inThrottle;
+  return function () {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+}
 
 /* JS class from the sample, adapted for React */
 class MzaCarousel {
@@ -12,6 +26,8 @@ class MzaCarousel {
     this.nextBtn = root.querySelector(".mzaCarousel-next");
     this.pagination = root.querySelector(".mzaCarousel-pagination");
     this.progressBar = root.querySelector(".mzaCarousel-progressBar");
+    this._onDragMove = throttle(this._onDragMove.bind(this), 32);
+    this._onTilt = throttle(this._onTilt.bind(this), 32);
     this.isFF = typeof InstallTrigger !== "undefined";
     this.n = this.slides.length;
     this.state = {
@@ -89,6 +105,14 @@ class MzaCarousel {
       this.opts.zDepth = 0;
       this.opts.blurMax = 0;
     }
+    this.isLowPower = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (this.isLowPower || this.isFF) {
+      this.opts.rotateY = 0;
+      this.opts.zDepth = 0;
+      this.opts.blurMax = 0;
+    }
     this._init();
   }
   _init() {
@@ -101,15 +125,29 @@ class MzaCarousel {
     this._loop();
   }
   _preloadImages() {
-    this.slides.forEach((sl) => {
-      const card = sl.querySelector(".mzaCard");
-      const bg = getComputedStyle(card).getPropertyValue("--mzaCard-bg");
-      const m = /url\((?:'|")?([^'")]+)(?:'|")?\)/.exec(bg);
-      if (m && m[1]) {
-        const img = new Image();
-        img.src = m[1];
-      }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const slide = entry.target;
+          const card = slide.querySelector(".mzaCard");
+          const bg = getComputedStyle(card).getPropertyValue("--mzaCard-bg");
+          const m = /url\((?:'|")?([^'")]+)(?:'|")?\)/.exec(bg);
+          if (m && m[1]) {
+            card.style.backgroundImage = `url('${m[1]}?w=800&h=600&q=80&f=webp')`;
+            observer.unobserve(slide);
+          }
+        }
+      });
     });
+    this.slides.forEach((sl, i) => {
+      if (i !== 0) observer.observe(sl); 
+    });
+    const firstCard = this.slides[0].querySelector(".mzaCard");
+    const bg = getComputedStyle(firstCard).getPropertyValue("--mzaCard-bg");
+    const m = /url\((?:'|")?([^'")]+)(?:'|")?\)/.exec(bg);
+    if (m && m[1]) {
+      firstCard.style.backgroundImage = `url('${m[1]}?w=800&h=600&q=80&f=webp')`;
+    }
   }
   _setupDots() {
     this.pagination.innerHTML = "";
@@ -124,31 +162,41 @@ class MzaCarousel {
       return b;
     });
   }
-  _bind() {
-    this.prevBtn.addEventListener("click", () => this.prev());
-    this.nextBtn.addEventListener("click", () => this.next());
-    if (this.opts.keyboard) {
-      this.root.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") this.prev();
-        if (e.key === "ArrowRight") this.next();
-      });
-    }
-    const pe = this.viewport;
-    pe.addEventListener("pointerdown", (e) => this._onDragStart(e));
-    pe.addEventListener("pointermove", (e) => this._onDragMove(e));
-    pe.addEventListener("pointerup", (e) => this._onDragEnd(e));
-    pe.addEventListener("pointercancel", (e) => this._onDragEnd(e));
-    this.root.addEventListener("mouseenter", () => {
+ _bind() {
+    this._onPrev = () => this.prev();
+    this._onNext = () => this.next();
+    this._onKeyDown = (e) => {
+      if (e.key === "ArrowLeft") this.prev();
+      if (e.key === "ArrowRight") this.next();
+    };
+    this._onDragStart = (e) => this._onDragStart(e);
+    this._onDragMove = throttle((e) => this._onDragMove(e), 32);
+    this._onDragEnd = (e) => this._onDragEnd(e);
+    this._onMouseEnter = () => {
       this.state.hovering = true;
       this.state.pausedAt = performance.now();
-    });
-    this.root.addEventListener("mouseleave", () => {
+    };
+    this._onMouseLeave = () => {
       if (this.state.pausedAt) {
         this.state.startTime += performance.now() - this.state.pausedAt;
         this.state.pausedAt = 0;
       }
       this.state.hovering = false;
-    });
+    };
+    this._onTilt = throttle((e) => this._onTilt(e), 32);
+
+    this.prevBtn.addEventListener("click", this._onPrev);
+    this.nextBtn.addEventListener("click", this._onNext);
+    if (this.opts.keyboard) {
+      this.root.addEventListener("keydown", this._onKeyDown);
+    }
+    this.viewport.addEventListener("pointerdown", this._onDragStart);
+    this.viewport.addEventListener("pointermove", this._onDragMove);
+    this.viewport.addEventListener("pointerup", this._onDragEnd);
+    this.viewport.addEventListener("pointercancel", this._onDragEnd);
+    this.root.addEventListener("mouseenter", this._onMouseEnter);
+    this.root.addEventListener("mouseleave", this._onMouseLeave);
+    this.viewport.addEventListener("pointermove", this._onTilt);
     this.ro = new ResizeObserver(() => this._measure());
     this.ro.observe(this.viewport);
     this.opts.breakpoints.forEach((bp) => {
@@ -160,15 +208,27 @@ class MzaCarousel {
         this._measure();
         this._render();
       };
-      if (m.addEventListener) m.addEventListener("change", apply);
-      else m.addListener(apply);
+      m.addEventListener("change", apply);
       if (m.matches) apply();
     });
-    this.viewport.addEventListener("pointermove", (e) => this._onTilt(e));
-    window.addEventListener("orientationchange", () =>
-      setTimeout(() => this._measure(), 250)
-    );
   }
+
+  destroy() {
+    cancelAnimationFrame(this.state.rafId);
+    this.ro.disconnect();
+    this.prevBtn.removeEventListener("click", this._onPrev);
+    this.nextBtn.removeEventListener("click", this._onNext);
+    this.root.removeEventListener("keydown", this._onKeyDown);
+    this.viewport.removeEventListener("pointerdown", this._onDragStart);
+    this.viewport.removeEventListener("pointermove", this._onDragMove);
+    this.viewport.removeEventListener("pointerup", this._onDragEnd);
+    this.viewport.removeEventListener("pointercancel", this._onDragEnd);
+    this.root.removeEventListener("mouseenter", this._onMouseEnter);
+    this.root.removeEventListener("mouseleave", this._onMouseLeave);
+    this.viewport.removeEventListener("pointermove", this._onTilt);
+    this.dots.forEach((dot) => dot.removeEventListener("click", this.goTo));
+  }
+
   _measure() {
     const viewRect = this.viewport.getBoundingClientRect();
     const rootRect = this.root.getBoundingClientRect();
@@ -236,6 +296,9 @@ class MzaCarousel {
   }
   _startCycle() {
     this.state.startTime = performance.now();
+    this.progressBar.style.animation = "none";
+    void this.progressBar.offsetWidth; 
+    this.progressBar.style.animation = "progress 4500ms linear forwards";
     this._renderProgress(0);
   }
   _loop() {
@@ -248,14 +311,19 @@ class MzaCarousel {
         const elapsed = t - this.state.startTime;
         const p = Math.min(1, elapsed / this.opts.interval);
         this._renderProgress(p);
-        if (elapsed >= this.opts.interval) this.next();
+        if (elapsed >= this.opts.interval) {
+          this.next();
+          return;
+        }
       }
       this.state.rafId = requestAnimationFrame(step);
     };
     this.state.rafId = requestAnimationFrame(step);
   }
   _renderProgress(p) {
-    this.progressBar.style.transform = `scaleX(${p})`;
+    this.progressBar.style.animationPlayState = this.state.hovering
+      ? "paused"
+      : "running";
   }
   prev() {
     this.goTo(this._mod(this.state.index - 1, this.n));
@@ -304,7 +372,8 @@ class MzaCarousel {
     const tiltY = parseFloat(
       this.root.style.getPropertyValue("--mzaTiltY") || 0
     );
-    for (let i = 0; i < this.n; i++) {
+
+    this.slides.forEach((s, i) => {
       let d = i - this.state.pos;
       if (d > this.n / 2) d -= this.n;
       if (d < -this.n / 2) d += this.n;
@@ -316,32 +385,46 @@ class MzaCarousel {
       const scale = 1 - Math.min(Math.abs(d) * this.opts.scaleDrop, 0.42);
       const blur = Math.min(Math.abs(d) * this.opts.blurMax, this.opts.blurMax);
       const z = Math.round(1000 - Math.abs(d) * 10);
-      const s = this.slides[i];
-      if (this.isFF) {
-        s.style.transform = `translate(${tx}px,-50%) scale(${scale})`;
-        s.style.filter = "none";
-      } else {
-        s.style.transform = `translate3d(${tx}px,-50%,${depth}px) rotateY(${rot}deg) scale(${scale})`;
-        s.style.filter = `blur(${blur}px)`;
+
+      const transform = this.isFF
+        ? `translate(${tx}px, -50%) scale(${scale})`
+        : `translate3d(${tx}px, -50%, ${depth}px) rotateY(${rot}deg) scale(${scale})`;
+      if (s.style.transform !== transform) {
+        s.style.transform = transform;
+        s.style.filter = this.isFF ? "none" : `blur(${blur}px)`;
+        s.style.zIndex = z;
       }
-      s.style.zIndex = z;
-      if (markActive)
+
+      if (markActive) {
         s.dataset.state =
           Math.round(this.state.index) === i ? "active" : "rest";
+      }
+
       const card = s.querySelector(".mzaCard");
       const parBase = Math.max(-1, Math.min(1, -d));
       const parX = parBase * 48 + tiltY * 2.0;
       const parY = tiltX * -1.5;
       const bgX = parBase * -64 + tiltY * -2.4;
-      card.style.setProperty("--mzaParX", `${parX.toFixed(2)}px`);
-      card.style.setProperty("--mzaParY", `${parY.toFixed(2)}px`);
-      card.style.setProperty("--mzaParBgX", `${bgX.toFixed(2)}px`);
-      card.style.setProperty("--mzaParBgY", `${(parY * 0.35).toFixed(2)}px`);
-    }
+      const newStyles = {
+        "--mzaParX": `${parX.toFixed(2)}px`,
+        "--mzaParY": `${parY.toFixed(2)}px`,
+        "--mzaParBgX": `${bgX.toFixed(2)}px`,
+        "--mzaParBgY": `${(parY * 0.35).toFixed(2)}px`,
+      };
+      Object.entries(newStyles).forEach(([key, value]) => {
+        if (card.style.getPropertyValue(key) !== value) {
+          card.style.setProperty(key, value);
+        }
+      });
+    });
+
     const active = this._mod(Math.round(this.state.pos), this.n);
-    this.dots.forEach((d, i) =>
-      d.setAttribute("aria-selected", i === active ? "true" : "false")
-    );
+    this.dots.forEach((d, i) => {
+      const selected = i === active ? "true" : "false";
+      if (d.getAttribute("aria-selected") !== selected) {
+        d.setAttribute("aria-selected", selected);
+      }
+    });
   }
 }
 
@@ -353,7 +436,7 @@ const slides = [
     text: [
       "List items in minutes with our intuitive upload system.",
       "Place real-time bids and track your favorites instantly.",
-      "Pay securely with PayPal or manage funds in your wallet.",
+      "Pay securely with PayPal.",
       "Browse curated categories from electronics to vintage collectibles.",
     ],
   },
@@ -366,7 +449,7 @@ const slides = [
       { img: "/Portrait_Quan_Bball.png" },
       { img: "/Portrait_Quan.png", name: "Quan" },
       { img: "/Portrait_David.jpg", name: "David" },
-      { img: "/Portrait_David_Fishing.jpg"},
+      { img: "/Portrait_David_Fishing.jpg" },
     ],
   },
   {
@@ -375,37 +458,33 @@ const slides = [
     kicker: "Everything you need in one platform",
     text: [
       "🛒 For Buyers: Browse categories, track favorites, place bids in real-time, and checkout securely with PayPal.",
-      "📦 For Sellers: Upload multiple images, enter shipping details, manage listings, and build your seller rating.",
+      "📦 For Sellers: Upload multiple images to build item profiles, manage listings, and build your seller rating.",
       "🔒 Security: Optional two-factor authentication, secure JWT login, and encrypted PayPal payments.",
       "⚡ Performance: Fast-loading React interface, reliable backend, and optimized image delivery via Cloudinary.",
     ],
   },
 ];
 
-export default function About() {
+const About = () => {
   const rootRef = useRef(null);
   const instanceRef = useRef(null);
 
-  useEffect(() => {
-    if (rootRef.current && !instanceRef.current) {
-      instanceRef.current = new MzaCarousel(rootRef.current, {
-        transitionMs: 900,
-        // tighter layout (3-slide) carousel:
-        peek: 0.04, // less peek so slides fill the viewport
-        gap: 20, // smaller gap between slides
-        activeLeftBias: 0, // center the active slide
-      });
+useEffect(() => {
+  if (rootRef.current && !instanceRef.current) {
+    instanceRef.current = new MzaCarousel(rootRef.current, {
+      transitionMs: 900,
+      peek: 0.04,
+      gap: 20,
+      activeLeftBias: 0,
+    });
+  }
+  return () => {
+    if (instanceRef.current) {
+      instanceRef.current.destroy();
+      instanceRef.current = null;
     }
-    return () => {
-      if (instanceRef.current) {
-        try {
-          cancelAnimationFrame(instanceRef.current.state?.rafId);
-          instanceRef.current.ro?.disconnect();
-        } catch {}
-        instanceRef.current = null;
-      }
-    };
-  }, []);
+  };
+}, []);
 
   return (
     <div
@@ -427,7 +506,9 @@ export default function About() {
             >
               <div
                 className="mzaCard"
-                style={{ "--mzaCard-bg": `url('${s.bg}')` }}
+                style={{
+                  "--mzaCard-bg": `url('${s.bg}?w=800&h=600&q=80&f=webp')`,
+                }}
               >
                 <div className="mzaCard-copy">
                   <header className="mzaCard-head mzaPar-1">
@@ -454,9 +535,10 @@ export default function About() {
                     {s.portraits.map((p, idx) => (
                       <figure key={idx} className="portrait">
                         <img
-                          src={p.img}
+                          src={`${p.img}?w=160&h=200&q=80&f=webp`}
                           alt={p.name}
                           className="portrait-img"
+                          loading="lazy"
                         />
                         <figcaption className="portrait-name">
                           {p.name}
@@ -500,3 +582,5 @@ export default function About() {
     </div>
   );
 }
+
+export default React.memo(About);

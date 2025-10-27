@@ -23,11 +23,10 @@ const LoginForm = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // API call and set the user
       const user = await login(formData);
       setUser(user);
-      onClose(); // Close modal after successful login
-      navigate("/bidhub/home"); // Navigate to home page after login
+      onClose(); 
+      navigate("/bidhub/home");
     } catch (err) {
       setError("Invalid credentials");
     }

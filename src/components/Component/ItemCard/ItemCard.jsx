@@ -36,7 +36,6 @@ const ItemCard = ({
 
   const fetchPayment = async (itemId) => {
     const paymentData = await getPaymentByItemId(itemId);
-    console.log("Fetched payment data:", paymentData);
     if (paymentData) {
       setPayment(paymentData);
     }
@@ -57,7 +56,7 @@ const ItemCard = ({
       setImages([]);
       setCurrentIndex(0);
     }
-  }, [item, toggleRefresh]); // keep dependency minimal
+  }, [item, toggleRefresh]);
 
   const prevImage = () => setCurrentIndex((i) => Math.max(0, i - 1));
   const nextImage = () =>
@@ -80,12 +79,10 @@ const ItemCard = ({
   };
 
   const handleCheckout = () => {
-    console.log("Item being passed:", item); // Debug: check if item exists
     setShowShippingForm(true);
   };
 
   const handlePaymentSuccess = (result) => {
-    console.log("Payment completed:", result);
     setShowShippingForm(false);
     onUpdate?.(); // Refresh item list
   };

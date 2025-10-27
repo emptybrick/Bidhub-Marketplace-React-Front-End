@@ -11,7 +11,6 @@ const StarRating = ({ name, value, onChange, required, fivePointRating }) => {
         value: rating,
       },
     };
-    console.log("handleRatingChange:", { name, value: rating });
     onChange(event);
   };
 
@@ -19,8 +18,8 @@ const StarRating = ({ name, value, onChange, required, fivePointRating }) => {
     <div className="star-rating">
       {[...fivePointRating].reverse().map((ratingValue) => {
         const inputId = `${name}-${ratingValue}`;
-        const isFilled = Number(value) >= ratingValue; // For selection
-        const isHovered = hoveredRating && Number(hoveredRating) >= ratingValue; // For hover
+        const isFilled = Number(value) >= ratingValue; 
+        const isHovered = hoveredRating && Number(hoveredRating) >= ratingValue; 
         return (
           <label
             key={ratingValue}

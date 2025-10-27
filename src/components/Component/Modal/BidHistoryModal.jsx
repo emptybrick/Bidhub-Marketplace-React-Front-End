@@ -1,7 +1,6 @@
 import "./modal.css";
 
 const BidHistoryModal = ({ bidHistory, onClose }) => {
-  console.log(bidHistory);
   return (
     <div className="bid-history-container">
       <div className="bid-history-subtitle">Bid History</div>

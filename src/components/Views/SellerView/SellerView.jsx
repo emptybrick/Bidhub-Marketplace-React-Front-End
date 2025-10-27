@@ -47,7 +47,6 @@ const SellerView = () => {
 
   const handleDeleteReview = async (reviewId) => {
     try {
-      console.log(sellerId, reviewId);
       await deleteReview(sellerId, reviewId);
       fetchReviews();
     } catch (err) {
@@ -55,12 +54,11 @@ const SellerView = () => {
     }
   };
 
-  // Function to render star rating (0.01 to 5.00 as 5 stars)
   const renderStarRating = (rating) => {
     if (rating == null || isNaN(rating)) {
       return <span>No rating available</span>;
     }
-    const normalizedRating = Math.min(Math.max(Number(rating), 1), 5); // Ensure rating is a number and between 0 and 5
+    const normalizedRating = Math.min(Math.max(Number(rating), 1), 5);
     const fullStars = Math.floor(normalizedRating);
     const partialStar = normalizedRating - fullStars;
     const stars = [];

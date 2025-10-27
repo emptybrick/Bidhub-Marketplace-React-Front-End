@@ -1,4 +1,3 @@
-// src/components/Forms/ShippingAndPaymentForm/ShippingAndPaymentForm.jsx
 import { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import {

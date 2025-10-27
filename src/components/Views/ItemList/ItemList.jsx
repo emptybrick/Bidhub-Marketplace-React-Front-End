@@ -17,12 +17,12 @@ const ItemList = ({
   sold = "false",
   auctionFailed = 'false',
   messageText,
-  hideFilters = false, // if dashboard render this will hide filter ui as needed
+  hideFilters = false, 
 }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // default choices: 10,20,40,50,100
+  const [pageSize, setPageSize] = useState(10); 
   const [totalCount, setTotalCount] = useState(0);
   const [nextPageUrl, setNextPageUrl] = useState(null);
   const [prevPageUrl, setPrevPageUrl] = useState(null);
@@ -37,7 +37,7 @@ const ItemList = ({
   const fetchItems = async () => {
     try {
       const data = await getFilteredItems(
-        hideFilters && !isFiltered() ? "all" : categoryFilter, // ignore filters in dashboard only if no filters applied
+        hideFilters && !isFiltered() ? "all" : categoryFilter, 
         hideFilters && !isFiltered() ? "all" : conditionFilter,
         hideFilters && !isFiltered() ? "none" : endTimeSort,
         hideFilters && !isFiltered() ? "none" : createdSort,
@@ -51,7 +51,7 @@ const ItemList = ({
         page,
         pageSize
       );
-      // data is paginated: { count, next, previous, results }
+   
       setItems(data.results || []);
       setTotalCount(data.count || 0);
       setNextPageUrl(data.next || null);
@@ -319,7 +319,7 @@ const ItemList = ({
                         value={pageSize}
                         onChange={(e) => {
                           setPageSize(Number(e.target.value));
-                          setPage(1); // reset to first page when size changes
+                          setPage(1); 
                         }}
                         style={{ marginLeft: 8 }}
                       >

@@ -1,4 +1,3 @@
-// frontend/src/App.jsx
 import { Routes, Route, useParams } from "react-router";
 import { UserContext } from "./contexts/UserContext";
 import { useContext } from "react";
@@ -6,7 +5,6 @@ import About from "./components/Views/About/About.jsx";
 import Account from "./components/Views/Account/Account.jsx";
 import Dashboard from "./components/Views/Dashboard/Dashboard.jsx";
 import Footer from "./components/Component/Footer/Footer.jsx";
-import ItemListPage from "./components/Views/ItemList/ItemList.jsx";
 import ItemDetail from "./components/Views/ItemDetail/ItemDetail.jsx";
 import Landing from "./components/Views/Landing/Landing.jsx";
 import NavBar from "./components/Component/NavBar/NavBar.jsx";

@@ -22,16 +22,14 @@ const ReviewForm = ({
     shipping_rating: reviewData?.shipping_rating || "",
     overall_rating: reviewData?.overall_rating || "",
   });
-  const [errorMessage, setErrorMessage] = useState(""); // Define errorMessage state
+  const [errorMessage, setErrorMessage] = useState(""); 
 
   const fivePointRating = [1, 2, 3, 4, 5];
 
 const handleChange = (evt) => {
   const { name, value } = evt.target;
-  console.log("handleChange:", { name, value, formDataBefore: formData });
   setFormData((prev) => {
     const newFormData = { ...prev, [name]: value };
-    console.log("formData after:", newFormData);
     return newFormData;
   });
 };
@@ -53,7 +51,6 @@ const handleChange = (evt) => {
   const handleUpdate = async (evt) => {
     evt.preventDefault();
     try {
-      console.log(formData);
       await updateReview(sellerId, reviewData.id, formData);
       refreshReviews();
       onClose();
@@ -106,7 +103,7 @@ const handleChange = (evt) => {
                  value={formData.service_rating || ""}
                  onChange={handleChange}
                  required
-                 fivePointRating={fivePointRating} // Pass as prop
+                 fivePointRating={fivePointRating} 
                />
              </div>
              <div className="form-group rating-input">
@@ -116,7 +113,7 @@ const handleChange = (evt) => {
                  value={formData.product_rating || ""}
                  onChange={handleChange}
                  required
-                 fivePointRating={fivePointRating} // Pass as prop
+                 fivePointRating={fivePointRating} 
                />
              </div>
              <div className="form-group rating-input">
@@ -126,7 +123,7 @@ const handleChange = (evt) => {
                  value={formData.packaging_rating || ""}
                  onChange={handleChange}
                  required
-                 fivePointRating={fivePointRating} // Pass as prop
+                 fivePointRating={fivePointRating} 
                />
              </div>
              <div className="form-group rating-input">
@@ -136,7 +133,7 @@ const handleChange = (evt) => {
                  value={formData.shipping_rating || ""}
                  onChange={handleChange}
                  required
-                 fivePointRating={fivePointRating} // Pass as prop
+                 fivePointRating={fivePointRating} 
                />
              </div>
              <div className="form-group rating-input">
@@ -146,7 +143,7 @@ const handleChange = (evt) => {
                  value={formData.overall_rating || ""}
                  onChange={handleChange}
                  required
-                 fivePointRating={fivePointRating} // Pass as prop
+                 fivePointRating={fivePointRating} 
                />
              </div>
            </div>

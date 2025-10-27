@@ -8,12 +8,14 @@
   contain: layout paint;
   touch-action: none;
 }
+
 .mzaCarousel-viewport {
   position: relative;
   outline: none;
   overflow: hidden;
   height: 100%;
 }
+
 .mzaCarousel-track {
   position: relative;
   height: calc(100% - var(--mzaPagH) - max(env(safe-area-inset-bottom), 12px));
@@ -21,6 +23,7 @@
   perspective: 1200px;
   overflow: hidden;
 }
+
 .mzaCarousel-slide {
   position: absolute;
   top: calc(50% + 5px);
@@ -32,26 +35,37 @@
   place-items: center;
   border-radius: 22px;
   overflow: hidden;
-  will-change: transform, filter;
-  margin-left: calc(var(--mzaC-slideW) / -2); /* center horizontally */
+  will-change: auto;
+  margin-left: calc(var(--mzaC-slideW) / -2);
 }
 
-/* make the inner card transition smoothly and scale up the active (center) slide */
 .mzaCarousel-slide .mzaCard {
   transition: transform 350ms cubic-bezier(0.2,0.7,0,1), box-shadow 350ms ease;
   transform: translateZ(0);
 }
 
-/* scale the active card slightly wider and lift its shadow */
 .mzaCarousel-slide[data-state="active"] .mzaCard {
-  transform: translateZ(0) scale(1.06);
-  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.65);
+  will-change: transform, filter;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  transform: translateZ(0) scale(1.00);
 }
 
-/* optionally slightly reduce non-active card size for contrast */
 .mzaCarousel-slide[data-state="rest"] .mzaCard {
-  transform: translateZ(0) scale(0.98);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  transform: translateZ(0) scale(0.92);
+}
+
+.mzaCarousel-slide[data-state="active"] .mzaCard::before {
+  filter: contrast(1.06) saturate(1.12) brightness(1.02);
+}
+
+.mzaCarousel-progressBar {
+  animation: progress 4500ms linear forwards;
+}
+
+@keyframes progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 .mzaCard {
@@ -60,12 +74,13 @@
   height: 100%;
   border-radius: inherit;
   overflow: hidden;
-  background: var(--mzaC-glass);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-  backdrop-filter: saturate(120%) blur(4px);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: none;
   transform: translateZ(0);
   cursor: grab;
 }
+
 .mzaCard::before {
   content: "";
   position: absolute;
@@ -74,417 +89,17 @@
   background-size: cover;
   background-position: center;
   filter: contrast(1.02) saturate(1.08) brightness(0.9);
-  transform: translateZ(-60px) scale(1.18)
-    translate3d(var(--mzaParBgX, 0px), var(--mzaParBgY, 0px), 0);
-  transition: transform 800ms cubic-bezier(0.2, 0.7, 0, 1),
-    filter 800ms cubic-bezier(0.2, 0.7, 0, 1);
+  transform: translateZ(-60px) scale(1.18) translate3d(var(--mzaParBgX, 0px), var(--mzaParBgY, 0px), 0);
+  transition: transform 800ms cubic-bezier(0.2, 0.7, 0, 1), filter 800ms cubic-bezier(0.2, 0.7, 0, 1);
 }
+
 .mzaCard::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.25),
-    rgba(0, 0, 0, 0.45) 45%,
-    rgba(0, 0, 0, 0.25) 100%
-  );
-}
-.mzaCard-head {
-  position: static;          /* ensure it flows in document */
-  inset: auto;
-  margin: 0;
-  display: flex;             /* stack title + kicker */
-  flex-direction: column;
-  align-items: flex-start;   /* left align */
-  text-align: left;
-  gap: 6px;
-}
-.mzaCard-title {
-  margin: 0;
-  text-align: center;       /* center the title text */
-  align-self: center;       /* center the title within the column flex container */
-  font-family: var(--main-font); /* Montserrat */
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: clamp(36px, 8.1vw, 54px); /* slightly larger for prominence */
-  color: #f6eac5; /* match Landing banner-h1 */
-  text-shadow: 7px 7px 5px rgb(0, 0, 0);
-  line-height: 1.1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.45) 45%, rgba(0, 0, 0, 0.25) 100%);
 }
 
-.mzaCard-kicker {
-  position: static;          /* sit directly under title */
-  display: block;
-  margin: 2px 0 0 0;         /* small space below title */
-  color: var(--mzaC-accent); /* keep accent green */
-  text-align: left;
-  /* Match Landing.jsx h2 styling */
-  font-family: var(--h3-font); /* Roboto */
-  font-weight: 400;
-  font-size: clamp(20px, 5.4vw, 26px); /* increased from 18-20px */
-  text-transform: none; /* Landing h2 has text-transform: none for subtitle */
-}
-
-.mzaCard-text {
-  position: static;
-  inset: auto;
-  margin-top: 12px;
-  z-index: 2;
-  max-width: 100%;
-  background-color: rgba(0, 0, 0, 0.0);
-  padding: 0;
-  /* Match Landing.jsx paragraph styling - INCREASED SIZE */
-  font-family: var(--content-font); /* Roboto */
-  font-size: 1.375rem; /* 22px - increased from 1.125rem (18px) */
-  line-height: 1.65; /* slightly more breathing room */
-  color: #ddd;
-  font-weight: 400; /* ensure regular weight for readability */
-}
-
-/* List styling - match Landing paragraph style */
-.mzaCard-text ul {
-  list-style: disc inside;
-  margin: 0;
-  padding-left: 1.5rem; /* slightly more inset for larger text */
-  color: #ddd;
-  line-height: 1.65;
-}
-.mzaCard-text li {
-  margin-bottom: 0.75rem; /* more spacing between bullet points */
-}
-
-.mzaCard-actions { display: none !important; }
-.mzaBtn { display: none !important; }
-
-.mzaCarousel-controls {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  pointer-events: none;
-}
-.mzaCarousel-prev,
-.mzaCarousel-next {
-  pointer-events: auto;
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 0;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px);
-  color: var(--mzaC-fg);
-  font-size: 22px;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-.mzaCarousel-prev {
-  margin-left: 6px;
-}
-.mzaCarousel-next {
-  margin-right: 6px;
-}
-.mzaCarousel-prev:hover,
-.mzaCarousel-next:hover {
-  background: rgba(255, 255, 255, 0.14);
-}
-.mzaCarousel-prev:active,
-.mzaCarousel-next:active {
-  transform: scale(0.98);
-}
-
-.mzaCarousel-pagination {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: max(27px, env(safe-area-inset-bottom));
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  pointer-events: auto;
-}
-.mzaCarousel-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.25);
-  border: 0;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-.mzaCarousel-dot[aria-selected="true"] {
-  background: linear-gradient(180deg, var(--mzaC-accent2), var(--mzaC-accent));
-  transform: scale(1.35);
-}
-
-.mzaCarousel-progress {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  z-index: 9999;
-  overflow: hidden;
-}
-.mzaCarousel-progressBar {
-  display: block;
-  height: 100%;
-  width: 100vw;
-  transform-origin: left;
-  transform: scaleX(0);
-  will-change: transform;
-  background: linear-gradient(90deg, var(--mzaC-accent), var(--mzaC-accent2));
-}
-
-.mzaCarousel-slide[data-state="active"] .mzaCard::before {
-  filter: contrast(1.06) saturate(1.12) brightness(1.02);
-}
-.mzaCarousel-slide[data-state="active"] .mzaCard {
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
-}
-
-.mzaPar-1,
-.mzaPar-2,
-.mzaPar-3 {
-  will-change: transform;
-  transition: transform 500ms cubic-bezier(0.2, 0.7, 0, 1);
-}
-.mzaPar-1 {
-  transform: translate3d(
-    calc(var(--mzaParX, 0px) * 0.35),
-    calc(var(--mzaParY, 0px) * 0.35),
-    0
-  );
-}
-.mzaPar-2 {
-  transform: translate3d(
-    calc(var(--mzaParX, 0px) * 0.25),
-    calc(var(--mzaParY, 0px) * 0.25),
-    0
-  );
-}
-.mzaPar-3 {
-  transform: translate3d(
-    calc(var(--mzaParX, 0px) * 0.18),
-    calc(var(--mzaParY, 0px) * 0.18),
-    0
-  );
-}
-
-/* Stack title, kicker, and text left justified */
-.mzaCard-copy {
-  position: absolute;
-  top: 40px;
-  left: 36px;
-  right: 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  text-align: left;
-  max-width: min(1000px, 100%);
-  z-index: 2;
-}
-
-.mzaCard-head {
-  position: static;
-  inset: auto;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 6px;
-  width: 100%; /* ensure head takes full copy width */
-}
-
-.mzaCard-title {
-  margin: 0;
-  text-align: center;
-  align-self: center;
-  /* Match Landing.jsx h1 styling */
-  font-family: var(--main-font); /* Montserrat */
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: clamp(36px, 8.1vw, 54px); /* slightly larger for prominence */
-  color: #f6eac5; /* match Landing banner-h1 */
-  text-shadow: 7px 7px 5px rgb(0, 0, 0);
-  line-height: 1.1;
-}
-
-.mzaCard-kicker {
-  position: static;
-  display: block;
-  margin: 2px 0 0 0;
-  color: var(--mzaC-accent); /* keep accent green */
-  text-align: left;
-  /* Match Landing.jsx h2 styling */
-  font-family: var(--h3-font); /* Roboto */
-  font-weight: 400;
-  font-size: clamp(20px, 5.4vw, 26px); /* increased from 18-20px */
-  text-transform: none; /* Landing h2 has text-transform: none for subtitle */
-}
-
-.mzaCard-text {
-  position: static;
-  inset: auto;
-  margin-top: 12px;
-  z-index: 2;
-  max-width: 100%;
-  background-color: rgba(0, 0, 0, 0.0);
-  padding: 0;
-  /* Match Landing.jsx paragraph styling - INCREASED SIZE */
-  font-family: var(--content-font); /* Roboto */
-  font-size: 1.375rem; /* 22px - increased from 1.125rem (18px) */
-  line-height: 1.65; /* slightly more breathing room */
-  color: #ddd;
-  font-weight: 400; /* ensure regular weight for readability */
-}
-
-/* List styling - match Landing paragraph style */
-.mzaCard-text ul {
-  list-style: disc inside;
-  margin: 0;
-  padding-left: 1.5rem; /* slightly more inset for larger text */
-  color: #ddd;
-  line-height: 1.65;
-}
-.mzaCard-text li {
-  margin-bottom: 0.75rem; /* more spacing between bullet points */
-}
-
-.mzaCard-actions { display: none !important; }
-.mzaBtn { display: none !important; }
-
-.mzaCarousel-controls {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  pointer-events: none;
-}
-.mzaCarousel-prev,
-.mzaCarousel-next {
-  pointer-events: auto;
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 0;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px);
-  color: var(--mzaC-fg);
-  font-size: 22px;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-.mzaCarousel-prev {
-  margin-left: 6px;
-}
-.mzaCarousel-next {
-  margin-right: 6px;
-}
-.mzaCarousel-prev:hover,
-.mzaCarousel-next:hover {
-  background: rgba(255, 255, 255, 0.14);
-}
-.mzaCarousel-prev:active,
-.mzaCarousel-next:active {
-  transform: scale(0.98);
-}
-
-.mzaCarousel-pagination {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: max(27px, env(safe-area-inset-bottom));
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  pointer-events: auto;
-}
-.mzaCarousel-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.25);
-  border: 0;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-.mzaCarousel-dot[aria-selected="true"] {
-  background: linear-gradient(180deg, var(--mzaC-accent2), var(--mzaC-accent));
-  transform: scale(1.35);
-}
-
-.mzaCarousel-progress {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  z-index: 9999;
-  overflow: hidden;
-}
-.mzaCarousel-progressBar {
-  display: block;
-  height: 100%;
-  width: 100vw;
-  transform-origin: left;
-  transform: scaleX(0);
-  will-change: transform;
-  background: linear-gradient(90deg, var(--mzaC-accent), var(--mzaC-accent2));
-}
-
-.mzaCarousel-slide[data-state="active"] .mzaCard::before {
-  filter: contrast(1.06) saturate(1.12) brightness(1.02);
-}
-.mzaCarousel-slide[data-state="active"] .mzaCard {
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
-}
-
-.mzaPar-1,
-.mzaPar-2,
-.mzaPar-3 {
-  will-change: transform;
-  transition: transform 500ms cubic-bezier(0.2, 0.7, 0, 1);
-}
-.mzaPar-1 {
-  transform: translate3d(
-    calc(var(--mzaParX, 0px) * 0.35),
-    calc(var(--mzaParY, 0px) * 0.35),
-    0
-  );
-}
-.mzaPar-2 {
-  transform: translate3d(
-    calc(var(--mzaParX, 0px) * 0.25),
-    calc(var(--mzaParY, 0px) * 0.25),
-    0
-  );
-}
-.mzaPar-3 {
-  transform: translate3d(
-    calc(var(--mzaParX, 0px) * 0.18),
-    calc(var(--mzaParY, 0px) * 0.18),
-    0
-  );
-}
-
-/* Stack title, kicker, and text left justified */
 .mzaCard-copy {
   position: absolute;
   top: 20px;
@@ -495,7 +110,7 @@
   align-items: flex-start;
   gap: 8px;
   text-align: left;
-  max-width: min(780px, 72%); /* WIDENED from 640px/58% to 780px/72% */
+  max-width: min(780px, 72%);
   z-index: 2;
 }
 
@@ -508,19 +123,18 @@
   align-items: flex-start;
   text-align: left;
   gap: 6px;
-  width: 100%; /* ensure head takes full copy width */
+  width: 100%;
 }
 
 .mzaCard-title {
   margin: 0;
   text-align: center;
   align-self: center;
-  /* Match Landing.jsx h1 styling */
-  font-family: var(--main-font); /* Montserrat */
+  font-family: var(--main-font);
   font-weight: 700;
   text-transform: uppercase;
-  font-size: clamp(36px, 8.1vw, 54px); /* slightly larger for prominence */
-  color: #f6eac5; /* match Landing banner-h1 */
+  font-size: clamp(36px, 8.1vw, 54px);
+  color: #f6eac5;
   text-shadow: 7px 7px 5px rgb(0, 0, 0);
   line-height: 1.1;
 }
@@ -529,13 +143,12 @@
   position: static;
   display: block;
   margin: 2px 0 0 0;
-  color: var(--mzaC-accent); /* keep accent green */
+  color: var(--mzaC-accent);
   text-align: left;
-  /* Match Landing.jsx h2 styling */
-  font-family: var(--h3-font); /* Roboto */
+  font-family: var(--h3-font);
   font-weight: 400;
-  font-size: clamp(20px, 5.4vw, 26px); /* increased from 18-20px */
-  text-transform: none; /* Landing h2 has text-transform: none for subtitle */
+  font-size: clamp(20px, 5.4vw, 26px);
+  text-transform: none;
 }
 
 .mzaCard-text {
@@ -546,27 +159,27 @@
   max-width: 100%;
   background-color: rgba(0, 0, 0, 0.0);
   padding: 0;
-  /* Match Landing.jsx paragraph styling - INCREASED SIZE */
-  font-family: var(--content-font); /* Roboto */
-  font-size: 1.375rem; /* 22px - increased from 1.125rem (18px) */
-  line-height: 1.65; /* slightly more breathing room */
+  font-family: var(--content-font);
+  font-size: 1.375rem;
+  line-height: 1.65;
   color: #ddd;
-  font-weight: 400; /* ensure regular weight for readability */
+  font-weight: 400;
 }
 
-/* List styling - match Landing paragraph style */
 .mzaCard-text ul {
   list-style: disc inside;
   margin: 0;
-  padding-left: 1.5rem; /* slightly more inset for larger text */
+  padding-left: 1.5rem;
   color: #ddd;
   line-height: 1.65;
 }
+
 .mzaCard-text li {
-  margin-bottom: 0.75rem; /* more spacing between bullet points */
+  margin-bottom: 0.75rem;
 }
 
 .mzaCard-actions { display: none !important; }
+
 .mzaBtn { display: none !important; }
 
 .mzaCarousel-controls {
@@ -577,6 +190,7 @@
   justify-content: space-between;
   pointer-events: none;
 }
+
 .mzaCarousel-prev,
 .mzaCarousel-next {
   pointer-events: auto;
@@ -585,8 +199,8 @@
   height: 44px;
   border-radius: 50%;
   border: 0;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: none;
   color: var(--mzaC-fg);
   font-size: 22px;
   display: grid;
@@ -594,16 +208,20 @@
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
 }
+
 .mzaCarousel-prev {
   margin-left: 6px;
 }
+
 .mzaCarousel-next {
   margin-right: 6px;
 }
+
 .mzaCarousel-prev:hover,
 .mzaCarousel-next:hover {
   background: rgba(255, 255, 255, 0.14);
 }
+
 .mzaCarousel-prev:active,
 .mzaCarousel-next:active {
   transform: scale(0.98);
@@ -620,6 +238,7 @@
   align-items: center;
   pointer-events: auto;
 }
+
 .mzaCarousel-dot {
   width: 12px;
   height: 12px;
@@ -629,6 +248,7 @@
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease;
 }
+
 .mzaCarousel-dot[aria-selected="true"] {
   background: linear-gradient(180deg, var(--mzaC-accent2), var(--mzaC-accent));
   transform: scale(1.35);
@@ -644,6 +264,7 @@
   z-index: 9999;
   overflow: hidden;
 }
+
 .mzaCarousel-progressBar {
   display: block;
   height: 100%;
@@ -654,125 +275,25 @@
   background: linear-gradient(90deg, var(--mzaC-accent), var(--mzaC-accent2));
 }
 
-.mzaCarousel-slide[data-state="active"] .mzaCard::before {
-  filter: contrast(1.06) saturate(1.12) brightness(1.02);
-}
-.mzaCarousel-slide[data-state="active"] .mzaCard {
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
-}
-
 .mzaPar-1,
 .mzaPar-2,
 .mzaPar-3 {
   will-change: transform;
   transition: transform 500ms cubic-bezier(0.2, 0.7, 0, 1);
 }
+
 .mzaPar-1 {
-  transform: translate3d(
-    calc(var(--mzaParX, 0px) * 0.35),
-    calc(var(--mzaParY, 0px) * 0.35),
-    0
-  );
+  transform: translate3d(calc(var(--mzaParX, 0px) * 0.35), calc(var(--mzaParY, 0px) * 0.35), 0);
 }
+
 .mzaPar-2 {
-  transform: translate3d(
-    calc(var(--mzaParX, 0px) * 0.25),
-    calc(var(--mzaParY, 0px) * 0.25),
-    0
-  );
+  transform: translate3d(calc(var(--mzaParX, 0px) * 0.25), calc(var(--mzaParY, 0px) * 0.25), 0);
 }
+
 .mzaPar-3 {
-  transform: translate3d(
-    calc(var(--mzaParX, 0px) * 0.18),
-    calc(var(--mzaParY, 0px) * 0.18),
-    0
-  );
+  transform: translate3d(calc(var(--mzaParX, 0px) * 0.18), calc(var(--mzaParY, 0px) * 0.18), 0);
 }
 
-/* Stack title, kicker, and text left justified */
-.mzaCard-copy {
-  position: absolute;
-  top: 20px;
-  left: 36px;
-  right: 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  text-align: left;
-  max-width: min(780px, 72%); /* WIDENED from 640px/58% to 780px/72% */
-  z-index: 2;
-}
-
-.mzaCard-head {
-  position: static;
-  inset: auto;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 6px;
-  width: 100%; /* ensure head takes full copy width */
-}
-
-.mzaCard-title {
-  margin: 0;
-  text-align: center;
-  align-self: center;
-  /* Match Landing.jsx h1 styling */
-  font-family: var(--main-font); /* Montserrat */
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: clamp(36px, 8.1vw, 54px); /* slightly larger for prominence */
-  color: #f6eac5; /* match Landing banner-h1 */
-  text-shadow: 7px 7px 5px rgb(0, 0, 0);
-  line-height: 1.1;
-}
-
-.mzaCard-kicker {
-  position: static;
-  display: block;
-  margin: 2px 0 0 0;
-  color: var(--mzaC-accent); /* keep accent green */
-  text-align: left;
-  /* Match Landing.jsx h2 styling */
-  font-family: var(--h3-font); /* Roboto */
-  font-weight: 400;
-  font-size: clamp(20px, 5.4vw, 26px); /* increased from 18-20px */
-  text-transform: none; /* Landing h2 has text-transform: none for subtitle */
-}
-
-.mzaCard-text {
-  position: static;
-  inset: auto;
-  margin-top: 12px;
-  z-index: 2;
-  max-width: 100%;
-  background-color: rgba(0, 0, 0, 0.0);
-  padding: 0;
-  /* Match Landing.jsx paragraph styling - INCREASED SIZE */
-  font-family: var(--content-font); /* Roboto */
-  font-size: 1.375rem; /* 22px - increased from 1.125rem (18px) */
-  line-height: 1.65; /* slightly more breathing room */
-  color: #ddd;
-  font-weight: 400; /* ensure regular weight for readability */
-}
-
-/* List styling - match Landing paragraph style */
-.mzaCard-text ul {
-  list-style: disc inside;
-  margin: 0;
-  padding-left: 1.5rem; /* slightly more inset for larger text */
-  color: #ddd;
-  line-height: 1.65;
-}
-.mzaCard-text li {
-  margin-bottom: 0.75rem; /* more spacing between bullet points */
-}
-
-/* Responsive adjustments */
 @media (max-width: 1200px) {
   .mzaCard-copy {
     max-width: min(700px, 68%);
@@ -784,7 +305,7 @@
     font-size: clamp(18px, 5vw, 24px);
   }
   .mzaCard-text {
-    font-size: 1.25rem; /* 20px */
+    font-size: 1.25rem;
   }
 }
 
@@ -809,7 +330,7 @@
   .mzaCard-text {
     inset: auto 16px 62px 16px;
     font-family: var(--content-font);
-    font-size: 1.125rem; /* 18px */
+    font-size: 1.125rem;
   }
   .mzaCard-head {
     position: static;
@@ -828,7 +349,7 @@
   }
   .mzaCard-text {
     inset: auto 16px 62px 16px;
-    font-size: 1.0625rem; /* 17px */
+    font-size: 1.0625rem;
   }
   .mzaCard-title {
     font-size: clamp(24px, 6.5vw, 36px);
@@ -852,39 +373,36 @@
     font-size: clamp(13px, 3.8vw, 18px);
   }
   .mzaCard-text {
-    font-size: 1rem; /* 16px */
+    font-size: 1rem;
   }
 }
 
-/* Portraits overlay */
 .mzaCard-portraits {
   position: absolute;
   left: 50%;
-  top: 35%;                        /* portrait positions */
-  transform: translateX(-50%);     /* center horizontally */
+  top: 35%;
+  transform: translateX(-50%);
   display: flex;
   gap: 2.5rem;
   justify-content: center;
   align-items: flex-start;
   width: min(80%, 980px);
-  z-index: 6;                       /* above .mzaCard::after overlay */
+  z-index: 6;
   pointer-events: auto;
 }
 
-/* individual portrait */
 .portrait {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: rgba(0,0,0,0.28);     /* subtle backdrop so faces read on any bg */
+  background: rgba(0,0,0,0.28);
   padding: 0.6rem;
   border-radius: 10px;
   backdrop-filter: blur(6px);
   min-width: 120px;
 }
 
-/* image */
 .portrait-img {
   width: 160px;
   height: 200px;
@@ -894,7 +412,6 @@
   display: block;
 }
 
-/* name text under portrait */
 .portrait-name {
   margin-top: 0.5rem;
   color: #fff;
@@ -903,7 +420,6 @@
   font-size: 1rem;
 }
 
-/* responsive: stack portraits on small screens */
 @media (max-width: 700px) {
   .mzaCard-portraits {
     top: 60%;
@@ -918,6 +434,5 @@
   }
 }
 
-/* ensure the overlay is visible above the card gradient */
 .mzaCard-portraits,
 .mzaCard-portraits * { z-index: 6; }

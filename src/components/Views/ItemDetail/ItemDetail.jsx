@@ -20,7 +20,7 @@ const ItemDetail = () => {
   const [seller, setSeller] = useState(null);
   const [ message, setMessage ] = useState("");
     const [showItem, setShowItem] = useState(false);
-  const [messageType, setMessageType] = useState(""); // "success" or "error"
+  const [messageType, setMessageType] = useState(""); 
 
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
   const cld = new Cloudinary({ cloud: { cloudName } });
@@ -36,14 +36,14 @@ const ItemDetail = () => {
         const sellerData = await getUsername(itemData.owner.id);
         setSeller(sellerData);
         if (itemData && Array.isArray(itemData.images)) {
-          setImages(itemData.images); // itemData.images is already an array
+          setImages(itemData.images); 
           if (itemData.images.length === 0) {
             setCurrentIndex(0);
           } else if (currentIndex > itemData.images.length - 1) {
             setCurrentIndex(itemData.images.length - 1);
           }
         } else {
-          setImages([]); // Set to empty array if no images
+          setImages([]);
           setCurrentIndex(0);
         }
       } catch (error) {

@@ -15,7 +15,6 @@ import { image } from "@cloudinary/url-gen/qualifiers/source";
 const ItemForm = ({ onClose, item, handleDeleteItem }) => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  // Cloudinary config (use Vite env or fallback)
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dxvxebkhe";
   const uploadPreset =
     import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "web_unsigned";
@@ -89,7 +88,6 @@ const ItemForm = ({ onClose, item, handleDeleteItem }) => {
     end_time: null,
     images: item?.images || [],
   });
-  console.log(item);
   const {
     item_name,
     category,

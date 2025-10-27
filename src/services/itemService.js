@@ -85,7 +85,6 @@ const deleteItem = async (id) => {
 
 const createItem = async (formData) => {
   try {
-    console.log("Payload sent to Django:", formData);
     const res = await axios.post(`${ BASE_URL }/new/`, formData);
     return res.data;
   } catch (err) {

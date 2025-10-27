@@ -19,7 +19,6 @@ const RegisterForm = ({ onClose }) => {
     profile_image: "",
   });
 
-  // Destructure formData
   const {
     email,
     password,

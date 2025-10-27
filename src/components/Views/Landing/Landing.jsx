@@ -5,7 +5,7 @@ const Landing = () => {
   const [activeBanner, setActiveBanner] = useState("banner1");
   const banners = ["banner1", "banner2", "banner3", "banner4"];
 
-  // Auto-switch banners every 5 seconds
+
   useEffect(() => {
     const bannerTimer = setInterval(() => {
       setActiveBanner((current) => {
@@ -18,7 +18,7 @@ const Landing = () => {
     return () => clearInterval(bannerTimer);
   }, []);
 
-  // Reset timer when user manually clicks a banner
+  
   const handleBannerClick = (banner) => {
     setActiveBanner(banner);
   };
