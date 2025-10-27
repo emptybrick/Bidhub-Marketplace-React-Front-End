@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import "./About.css";
+import "./about.css";
 
 /* JS class from the sample, adapted for React */
 class MzaCarousel {
