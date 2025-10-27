@@ -428,7 +428,7 @@ export default function About() {
               >
                 <div className="mzaCard-copy">
                   <header className="mzaCard-head mzaPar-1">
-                    <h2 className="mzaCard-title">{s.title}</h2>
+                    <h1 className="mzaCard-title">{s.title}</h1>
                     <p className="mzaCard-kicker">{s.kicker}</p>
                   </header>
 
