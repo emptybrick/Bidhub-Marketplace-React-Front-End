@@ -22,9 +22,9 @@
   --mzaC-peek: 0.15;
   --mzaPagH: 64px;
   --mzaCardH: clamp(360px, 62vh, 600px);  
-  --green-seaweed: rgba(2, 128, 144, 1);
-  --blue-queen: rgba(69, 105, 144, 1);
-  --red-fire: rgba(244, 91, 105, 1);
+  --green-seaweed: rgb(172, 159, 114);
+  --blue-queen: rgb(162, 162, 161);
+  --red-fire: rgb(209, 146, 151);
   --card-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
 }
 

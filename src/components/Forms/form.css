@@ -504,7 +504,7 @@ body {
 }
 
 .form-buttons button[type="submit"]:hover {
-  background-color: rgba(2, 128, 144, 0.85);
+  background-color: rgba(249, 227, 139, 0.85);
 }
 
 .form-buttons button[type="button"] {
@@ -512,7 +512,7 @@ body {
 }
 
 .form-buttons button[type="button"]:hover {
-  background-color: rgba(69, 105, 144, 0.85);
+  background-color: rgba(144, 69, 69, 0.85);
 }
 
 .form-close-btn {
