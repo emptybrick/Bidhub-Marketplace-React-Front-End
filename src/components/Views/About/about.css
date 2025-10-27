@@ -15,8 +15,8 @@
   --mzaC-accent2: #82a0ff;
   --mzaC-glass: rgba(255, 255, 255, 0.06);
   --mzaC-glow: rgba(130, 160, 255, 0.75);
-  /* slightly wider slides for a more prominent center card */
-  --mzaC-slideW: min(960px, 94vw);
+  /* increased slide width so mzaCard becomes wider */
+  --mzaC-slideW: min(1100px, 96vw);
   --mzaC-peek: 0.15;
   --mzaPagH: 64px;
   --mzaCardH: clamp(360px, 62vh, 600px);
@@ -144,10 +144,10 @@ body {
   gap: 6px;
 }
 .mzaCard-title {
-  margin: 0;                 /* remove extra space */
-  text-align: left;
+  margin: 0;
+  text-align: center;       /* center the title text */
+  align-self: center;       /* center the title within the column flex container */
   font-family: 'Montserrat', sans-serif;
-  /* increased by 50% */
   font-size: clamp(30px, 8.1vw, 45px);
 }
 
@@ -173,7 +173,6 @@ body {
   padding: 0;
   color: #ddd;
   font-family: 'Roboto', sans-serif;
-  /* increased by 50% (16px -> 24px) */
   font-size: 1.5rem;
 }
 
@@ -313,7 +312,7 @@ body {
   );
 }
 
-/* Stack title, kicker, and text on the left */
+/* Stack title, kicker, and text left justiified */
 .mzaCard-copy {
   position: absolute;
   top: 20px;
@@ -393,7 +392,7 @@ body {
 }
 @media (max-width: 768px) {
   :root {
-    --mzaC-slideW: min(94vw, 560px);
+    --mzaC-slideW: min(760px, 94vw);
   }
   .mzaCard-text,
   .mzaCard-title,
@@ -434,3 +433,69 @@ body {
     display: none;
   }
 }
+
+/* Portraits overlay */
+.mzaCard-portraits {
+  position: absolute;
+  left: 50%;
+  top: 35%;                        /* portrait positions */
+  transform: translateX(-50%);     /* center horizontally */
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  width: min(80%, 980px);
+  z-index: 6;                       /* above .mzaCard::after overlay */
+  pointer-events: auto;
+}
+
+/* individual portrait */
+.portrait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: rgba(0,0,0,0.28);     /* subtle backdrop so faces read on any bg */
+  padding: 0.6rem;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  min-width: 120px;
+}
+
+/* image */
+.portrait-img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.06);
+  display: block;
+}
+
+/* name text under portrait */
+.portrait-name {
+  margin-top: 0.5rem;
+  color: #fff;
+  font-family: var(--main-font);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* responsive: stack portraits on small screens */
+@media (max-width: 700px) {
+  .mzaCard-portraits {
+    top: 60%;
+    width: 92%;
+    gap: 1rem;
+    flex-direction: column;
+    transform: translateX(-50%) translateY(-10%);
+  }
+  .portrait-img {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* ensure the overlay is visible above the card gradient */
+.mzaCard-portraits,
+.mzaCard-portraits * { z-index: 6; }
