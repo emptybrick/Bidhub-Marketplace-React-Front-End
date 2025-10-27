@@ -15,7 +15,6 @@ function throttle(func, limit) {
   };
 }
 
-/* JS class from the sample, adapted for React */
 class MzaCarousel {
   constructor(root, opts = {}) {
     this.root = root;
@@ -528,8 +527,6 @@ useEffect(() => {
                     <p className="mzaCard-text mzaPar-2">{s.text}</p>
                   )}
                 </div>
-
-                {/* optional portraits overlay (renders when slide has portraits[]) */}
                 {Array.isArray(s.portraits) && (
                   <div className="mzaCard-portraits" aria-hidden="false">
                     {s.portraits.map((p, idx) => (
@@ -547,7 +544,6 @@ useEffect(() => {
                     ))}
                   </div>
                 )}
-                {/* CTA removed */}
               </div>
             </article>
           ))}

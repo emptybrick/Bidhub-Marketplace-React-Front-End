@@ -85,7 +85,6 @@ const handleChange = (evt) => {
          <div className="form-inputs">
            <div className="form-group review-input">
              <label htmlFor="review">Review</label>{" "}
-             {/* Added text for accessibility */}
              <textarea
                name="review"
                id="review"

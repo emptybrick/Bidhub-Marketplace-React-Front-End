@@ -45,7 +45,7 @@ const Footer = () => {
               <Link to="/register">Register</Link>
             </li>
              <li>
-              <Link to="http://localhost:8000/admin/login/?next=/admin/">Admin</Link>
+              <Link to="http://localhost:8000/admin/">Admin</Link>
             </li>
           </ul>
         </div>

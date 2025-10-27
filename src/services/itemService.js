@@ -45,7 +45,7 @@ const getFilteredItems = async (
         page_size: pageSize,
       },
     });
-    // Return the full paginated response (count, next, previous, results)
+ 
     return res.data;
   } catch (err) {
     console.log(err);

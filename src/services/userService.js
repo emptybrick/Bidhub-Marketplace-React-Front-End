@@ -15,7 +15,7 @@ const getUser = async () => {
 
 const updateUser = async (userData) => {
   try {
-    // Use PATCH for partial update
+
     const res = await axios.patch(`${BASE_URL}/user/`, userData, {
       headers: { "Content-Type": "application/json" },
     });
@@ -24,7 +24,6 @@ const updateUser = async (userData) => {
     console.error("Error updating user:", err);
     console.error("Response data:", err.response?.data);
     console.error("Response status:", err.response?.status);
-    // log Allow header if present (shows which methods are allowed)
     console.error("Allow header:", err.response?.headers?.allow);
     const serverMsg =
       err.response?.data?.detail ||

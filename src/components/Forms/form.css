@@ -129,7 +129,6 @@ body {
 /* Adjust label positioning */
 .form-group label {
   display: block;
-  /* margin-bottom: 8px; */
   font-weight: 600;
   color: #333;
   position: absolute;

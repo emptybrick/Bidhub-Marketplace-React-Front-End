@@ -7,7 +7,7 @@ export const createOrder = async (itemId, shippingAddress) => {
     item_id: itemId,
     shipping_address: shippingAddress,
   });
-  return data; // expect { order_id, ... }
+  return data;
 };
 
 export const captureOrder = async (orderId, payerId) => {

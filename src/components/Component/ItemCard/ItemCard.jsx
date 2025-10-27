@@ -84,7 +84,7 @@ const ItemCard = ({
 
   const handlePaymentSuccess = (result) => {
     setShowShippingForm(false);
-    onUpdate?.(); // Refresh item list
+    onUpdate?.(); 
   };
 
   const handleDeleteItem = async (itemId) => {
@@ -240,7 +240,6 @@ const ItemCard = ({
         </div>
       </div>
 
-      {/* Render modal only when showShippingForm is true AND item exists */}
       {showShippingForm && item && (
         <ShippingAndPaymentForm
           item={item}

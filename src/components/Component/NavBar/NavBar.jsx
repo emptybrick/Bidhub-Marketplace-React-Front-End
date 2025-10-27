@@ -92,7 +92,6 @@ const NavBar = () => {
             <>
               <li className="nav-bar-link">
                 <Link onClick={() => setShowLogin(!showLogin)}>
-                  {/* { showLogin ? "Click x to close" : "Login" } */}
                   Login
                 </Link>
               </li>
@@ -103,7 +102,6 @@ const NavBar = () => {
               )}
               <li className="nav-bar-link">
                 <Link onClick={() => setShowRegister(!showRegister)}>
-                  {/* { showRegister ? "Click x to close" : "Register" } */}
                   Register
                 </Link>
               </li>

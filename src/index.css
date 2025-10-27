@@ -34,13 +34,6 @@ body {
 }
 
 body {
-  /* background: radial-gradient(
-      2000px 900px at 10% 10%,
-      #000000 0%,
-      transparent 80%
-    ),
-    radial-gradient(1500px 800px at 110% 50%, #000000 0%, transparent 80%),
-    linear-gradient(100deg, #a9a8a8a4 0%, #b1b1b1 10%); */
   background-image: url("/landing-background.png");
   background-size: cover;
   background-position: 0%;

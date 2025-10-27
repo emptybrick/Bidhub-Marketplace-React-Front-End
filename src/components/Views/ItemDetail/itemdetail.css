@@ -170,12 +170,8 @@ gap: 60px;
 
 /* Main image: reduce size so it can't overflow the top */
 .item-detail-image {
-  /* width: 100%; */
-  /* min-height: 120px;
-  max-height: 480px; */
   border-radius: 8px;
   display: flex;
-  /* align-items: center; */
   justify-content: center;
 }
 

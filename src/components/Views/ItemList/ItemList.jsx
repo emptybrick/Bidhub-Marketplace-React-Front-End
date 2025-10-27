@@ -293,7 +293,6 @@ const ItemList = ({
                     </div>
                   </div>
 
-                  {/* Pagination controls centered beneath the cards */}
                   <div className="pagination-controls">
                     <button
                       onClick={() => setPage((p) => Math.max(1, p - 1))}
