@@ -349,32 +349,35 @@ const slides = [
   {
     bg: "/about_welcome.jpg",
     title: "Welcome to Bidhub",
-    kicker: "A trusted place to buy & sell new and second-hand items",
+    kicker: "Your trusted marketplace for new and pre-loved treasures",
     text: [
-      "List in minutes, bid live, and pay securely with PayPal.",
-      "Explore diverse categories: electronics, fashion, collectibles, and more.",
+      "List items in minutes with our intuitive upload system.",
+      "Place real-time bids and track your favorites instantly.",
+      "Pay securely with PayPal or manage funds in your wallet.",
+      "Browse curated categories from electronics to vintage collectibles.",
     ],
   },
   {
     bg: "/about_who.jpg",
-    title: "Who we are",
-    kicker:
-      "A pair of aspiring software engineers—product-minded and customer-obsessed.",
-    text: "Open to opportunities—let's talk: GitHub / LinkedIn / Email",
+    title: "About the team",
+    kicker: "Two aspiring software engineers",
+    text: "Passionate about solving real problems with code. Open to new opportunities—let's connect!",
     portraits: [
+      { img: "/Portrait_Quan_Bball.png" },
       { img: "/Portrait_Quan.png", name: "Quan" },
       { img: "/Portrait_David.jpg", name: "David" },
+      { img: "/Portrait_David_Fishing.jpg"},
     ],
   },
   {
     bg: "/about_how.jpg",
-    title: "How Bidhub was built",
-    kicker: "The tech stack at a glance",
+    title: "Bidhub Features",
+    kicker: "Everything you need in one platform",
     text: [
-      "Front end: React (Vite), protected routes, responsive UI.",
-      "Back end: Django REST Framework, PostgreSQL, JWT auth.",
-      "Infra & tooling: Cloudinary images, PayPal Checkout, CORS/Helmet, linting & tests.",
-      "Quality: Accessible, performant, and designed for maintainability.",
+      "🛒 For Buyers: Browse categories, track favorites, place bids in real-time, and checkout securely with PayPal.",
+      "📦 For Sellers: Upload multiple images, enter shipping details, manage listings, and build your seller rating.",
+      "🔒 Security: Optional two-factor authentication, secure JWT login, and encrypted PayPal payments.",
+      "⚡ Performance: Fast-loading React interface, reliable backend, and optimized image delivery via Cloudinary.",
     ],
   },
 ];
