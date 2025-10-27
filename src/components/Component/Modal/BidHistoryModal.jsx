@@ -5,7 +5,7 @@ const BidHistoryModal = ({ bidHistory, onClose }) => {
     <div className="bid-history-container">
       <div className="bid-history-subtitle">Bid History</div>
       <div className="bid-history">
-        {bidHistory.length > 1 ? (
+        {bidHistory.length > 0 ? (
           <>
             <div className="bid-history-left">
               <div className="bid-history-modal-subtitle">Bid Amount</div>
