@@ -132,7 +132,6 @@ html, body {
 /* Banner Height */
 .banner-inner-wrapper {
   min-height: 100% !important;
-  /* background-image: linear-gradient(rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9)); */
   box-sizing: border-box;
 }
 
@@ -159,7 +158,6 @@ html, body {
   width: 4em;
   height: 0.1875em;
   margin: 2.5em auto;
-  /* background: var(--main-color); */
 }
 
 .marketplace-button {

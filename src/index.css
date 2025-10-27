@@ -8,11 +8,11 @@
   --main-font: "Montserrat", sans-serif;
   --content-font: "Roboto", sans-serif;
   --h3-font: "Roboto";
-  --main-color: #000000;
+  --main-color: #ffffff;
   --icon-color: #95e1d3;
 
   /* existing carousel variables */
-  --mzaC-fg: #000000;
+  --mzaC-fg: #ffffff;
   --mzaC-accent: #9ef7d2;
   --mzaC-accent2: #82a0ff;
   --mzaC-glass: rgba(255, 255, 255, 0.06);
@@ -34,13 +34,16 @@ body {
 }
 
 body {
-  background: radial-gradient(
-      1200px 600px at 10% -10%,
+  /* background: radial-gradient(
+      2000px 900px at 10% 10%,
       #000000 0%,
-      transparent 40%
+      transparent 80%
     ),
-    radial-gradient(900px 600px at 110% 10%, #ffffff 0%, transparent 40%),
-    linear-gradient(180deg, #aeaeae71 0%, #6c6c6c 100%);
+    radial-gradient(1500px 800px at 110% 50%, #000000 0%, transparent 80%),
+    linear-gradient(100deg, #a9a8a8a4 0%, #b1b1b1 10%); */
+    background-image: url('/landing-background.png');
+    background-size: cover;
+    background-position: 0%;
   color: var(--mzaC-fg);
   /* use the same fonts as Landing */
   font-size: 16px;
@@ -54,7 +57,19 @@ body {
     min-height: 100vh;
  }
 
- h1 {
+ h1, .title {
       color: #f6eac5 !important;
   text-shadow: 7px 7px 5px rgb(0, 0, 0) !important;
+ }
+
+ /* fix for form button color */
+
+ .form-close-btn {
+    color: black !important;
+    border: 1px solid black !important;
+ }
+
+ .form-close-btn:hover {
+    background-color: rgb(255, 244, 204) !important;
+    border: 1px solid black !important;
  }

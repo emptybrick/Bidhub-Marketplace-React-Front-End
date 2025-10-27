@@ -45,7 +45,13 @@ body {
 
 .form-container {
   overflow: hidden;
-  background-color: rgba(208, 175, 66, 0.712);
+  background: radial-gradient(
+      1200px 600px at 10% -10%,
+      #7b7b7b 0%,
+      transparent 40%
+    ),
+    radial-gradient(900px 600px at 110% 10%, #ffffffb1 0%, transparent 60%),
+    linear-gradient(180deg, #c6c6c600 0%, #666666 100%);
   padding: 40px 30px 30px 30px;
   border-radius: 10px;
   position: absolute;
@@ -55,41 +61,12 @@ body {
   max-width: 95vw;
   transform: translate(-50%, -50%);
   transition: transform 300ms, box-shadow 300ms;
-  box-shadow: 5px 5px 7px rgba(97, 97, 97, 0.841);
   color: #333;
   box-sizing: border-box;
 }
 
 .form-container.login-form {
   width: 500px !important;
-}
-
-.form-container::before,
-.form-container::after {
-  content: "";
-  position: absolute;
-  width: 2000px;
-  height: 2000px;
-  border-top-left-radius: 200%;
-  border-top-right-radius: 250%;
-  border-bottom-left-radius: 250%;
-  border-bottom-right-radius: 200%;
-  z-index: -2;
-}
-
-.form-container::before {
-  left: 70%;
-  bottom: -100%;
-  background-color: #363636;
-  animation: waves 6s infinite linear;
-  z-index: -1;
-}
-
-.form-container::after {
-  left: 35%;
-  bottom: -125%;
-  background-color: rgb(126, 109, 47);
-  animation: waves 7s infinite;
 }
 
 .form-title {
@@ -341,7 +318,7 @@ body {
 .upload-guidance {
   text-align: center;
   font-size: 12px;
-  color: #666;
+  color: #ffffff;
   margin-top: 6px;
   width: 100%;
   max-width: 320px;
@@ -370,7 +347,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  color: #666;
+  color: #ffffff;
   background: transparent;
   box-sizing: border-box;
 }

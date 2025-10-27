@@ -15,12 +15,11 @@
   position: relative; /* For absolute positioning of buttons if needed */
   background: radial-gradient(
       1200px 600px at 10% -10%,
-      #9c9c9c 0%,
+      #7b7b7b 0%,
       transparent 40%
     ),
-    radial-gradient(900px 600px at 110% 10%, #bbbbbb 0%, transparent 40%),
-    linear-gradient(180deg, #6d6d6d 0%, #d9cca5 100%);
-  box-shadow: 5px 5px 7px rgba(255, 255, 255, 0.86);
+    radial-gradient(900px 600px at 110% 10%, #ffffffb1 0%, transparent 60%),
+    linear-gradient(180deg, #c6c6c600 0%, #666666 100%);
   border-radius: 10px;
 }
 
