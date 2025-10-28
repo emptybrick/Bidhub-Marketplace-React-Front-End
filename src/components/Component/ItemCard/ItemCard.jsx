@@ -244,7 +244,11 @@ const ItemCard = ({
         />
       )}
       {showItemForm && item && (
-        <ItemForm item={item} handleDeleteItem={handleDeleteItem} />
+        <ItemForm
+          onClose={() => setShowItemForm(false)}
+          item={item}
+          handleDeleteItem={handleDeleteItem}
+        />
       )}
 
       {payment && showShippingModal && (
