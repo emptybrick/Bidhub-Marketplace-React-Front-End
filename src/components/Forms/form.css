@@ -43,6 +43,13 @@ body {
   overflow: visible;
 }
 
+.login-register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
 .form-container {
   overflow: hidden;
   background: radial-gradient(
@@ -141,8 +148,8 @@ body {
   margin-top: 23px;
 }
 
-.form-group.register-login label {
-  margin-top: 0px;
+.form-title.register-form {
+  margin-bottom: 10px;
 }
 
 .form-group.rating-input label {
