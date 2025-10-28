@@ -112,9 +112,12 @@ const ItemDetail = () => {
                   <div className="gallery-placeholder">No images uploaded</div>
                 ) : (
                   <AdvancedImage
+                    key={images[currentIndex]}
                     cldImg={cld
                       .image(images[currentIndex])
-                      .resize(fill().width(420).height(420))}
+                      .resize(fill().width(420).height(420))
+                      .quality("auto")
+                      .format("auto")}
                     plugins={[responsive(), placeholder()]}
                   />
                 )}
@@ -147,12 +150,14 @@ const ItemDetail = () => {
                     onClick={() => setCurrentIndex(idx)}
                     aria-label={`Show image ${idx + 1}`}
                   >
-                    <img
-                      src={cld
+                    <AdvancedImage
+                      cldImg={cld
                         .image(pid)
                         .resize(fill().width(200).height(260))
-                        .toURL()}
-                      alt={`upload-${idx}`}
+                        .quality("auto:low")
+                        .format("auto")}
+                      plugins={[placeholder()]}
+                      loading={idx === currentIndex ? "eager" : "lazy"}
                     />
                   </button>
                 ))
@@ -199,7 +204,11 @@ const ItemDetail = () => {
                           className="bid-input"
                           type="number"
                           id="bid-offer-amount"
-                          min={item.current_bid ? item.current_bid : item.initial_bid}
+                          min={
+                            item.current_bid
+                              ? item.current_bid
+                              : item.initial_bid
+                          }
                           onChange={(e) => {
                             e.target.value = Number(e.target.value).toFixed(2);
                           }}

@@ -276,9 +276,9 @@ body {
 
 .image-display {
   display: flex;
-  gap: 40px;
-  align-items: flex-start;
-  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
   padding: 8px 12px;
   flex: 0 0 50%;
   box-sizing: border-box;
@@ -299,6 +299,8 @@ body {
 
 .image-card {
   width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
   height: 100%;
   border-radius: 8px;
   overflow: hidden;
@@ -306,6 +308,35 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  aspect-ratio: 3 / 4;           /* 3:4 container */
+  overflow: hidden;
+  border-radius: 8px;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-wrapper .cld-image {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block;
+}
+
+.thumb-btn .cld-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
 }
 
 .image-right {
@@ -332,19 +363,14 @@ body {
 }
 
 .image-gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  align-items: start;
-  justify-items: stretch;
-  padding: 0px;
-  box-sizing: border-box;
-  width: 450px;
-  max-width: 500px;
-  margin-top: 6px;
-  height: calc(100% - 40px);
-  overflow-y: auto;
-  align-self: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 8px 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .gallery-placeholder {
@@ -359,18 +385,16 @@ body {
 }
 
 .thumb-btn {
-  width: 96px;
-  height: 128px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  width: calc(33.333% - 6px); /* 3 per row */
+  max-width: 90px;
+  aspect-ratio: 3 / 4;
+  border: 2px solid transparent;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  transition: border 0.2s;
 }
 
 .thumb-btn img {
@@ -381,8 +405,7 @@ body {
 }
 
 .thumb-btn.active {
-  outline: 3px solid rgba(2, 128, 144, 0.14);
-  transform: scale(1.02);
+  border-color: #007bff;
 }
 
 .form-area {
