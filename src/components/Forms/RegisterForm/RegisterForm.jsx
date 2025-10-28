@@ -76,133 +76,135 @@ const RegisterForm = ({ onClose }) => {
   };
 
   return (
-    <div className="form-wrapper">
-      <div className="form-container">
-        <button className="form-close-btn" type="button" onClick={onClose}>
-          ×
-        </button>
-        <h1 className="form-title">Register</h1>
-        {message && <p className="error-message">{message}</p>}
+    <div className="login-register-container">
+      <div className="form-wrapper">
+        <div className="form-container">
+          <button className="form-close-btn" type="button" onClick={onClose}>
+            ×
+          </button>
+          <h1 className="form-title register-form">Register</h1>
+          {message && <p className="error-message">{message}</p>}
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-columns">
-            <div className="form-group register-login">
-              <input
-                type="email"
-                id="email"
-                value={email}
-                name="email"
-                onChange={handleChange}
-                className="short-input"
-                placeholder="Email"
-                required
-              />
-              <label htmlFor="email">Email</label>
+          <form onSubmit={handleSubmit}>
+            <div className="form-columns">
+              <div className="form-group register-login">
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  name="email"
+                  onChange={handleChange}
+                  className="short-input"
+                  placeholder="Email"
+                  required
+                />
+                <label htmlFor="email">Email</label>
+              </div>
+
+              <div className="form-group register-login">
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  name="username"
+                  onChange={handleChange}
+                  placeholder="Username"
+                  required
+                />
+                <label htmlFor="username">Username</label>
+              </div>
+
+              <div className="form-group register-login">
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  name="password"
+                  onChange={handleChange}
+                  placeholder="Password"
+                  required
+                />
+                <label htmlFor="password">Password</label>
+              </div>
+
+              <div className="form-group register-login">
+                <input
+                  type="text"
+                  id="first_name"
+                  value={first_name}
+                  name="first_name"
+                  onChange={handleChange}
+                  className="short-input"
+                  placeholder="First Name"
+                  required
+                />
+                <label htmlFor="first_name">First Name</label>
+              </div>
+
+              <div className="form-group register-login">
+                <input
+                  type="text"
+                  id="last_name"
+                  value={last_name}
+                  name="last_name"
+                  onChange={handleChange}
+                  placeholder="Last Name"
+                  required
+                />
+                <label htmlFor="last_name">Last Name</label>
+              </div>
+
+              <div className="form-group register-login">
+                <input
+                  type="password"
+                  id="password_confirmation"
+                  value={password_confirmation}
+                  name="password_confirmation"
+                  onChange={handleChange}
+                  placeholder="Confirm Password"
+                  required
+                />
+                <label htmlFor="password_confirmation">Confirm Password</label>
+              </div>
+            </div>
+            <div className="form-group register-login profile-image-picker">
+              <label htmlFor="profile-image">Select Profile Image</label>
+              <div className="image-grid">
+                {profileImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`image-option ${
+                      formData.profile_image === image.src ? "selected" : ""
+                    }`}
+                    onClick={() =>
+                      setFormData({ ...formData, profile_image: image.src })
+                    }
+                  >
+                    <img src={image.src} alt={`Profile icon ${index + 1}`} />
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="form-group register-login">
-              <input
-                type="text"
-                id="username"
-                value={username}
-                name="username"
-                onChange={handleChange}
-                placeholder="Username"
-                required
-              />
-              <label htmlFor="username">Username</label>
-            </div>
-
-            <div className="form-group register-login">
-              <input
-                type="password"
-                id="password"
-                value={password}
-                name="password"
-                onChange={handleChange}
-                placeholder="Password"
-                required
-              />
-              <label htmlFor="password">Password</label>
-            </div>
-
-            <div className="form-group register-login">
-              <input
-                type="text"
-                id="first_name"
-                value={first_name}
-                name="first_name"
-                onChange={handleChange}
-                className="short-input"
-                placeholder="First Name"
-                required
-              />
-              <label htmlFor="first_name">First Name</label>
-            </div>
-
-            <div className="form-group register-login">
-              <input
-                type="text"
-                id="last_name"
-                value={last_name}
-                name="last_name"
-                onChange={handleChange}
-                placeholder="Last Name"
-                required
-              />
-              <label htmlFor="last_name">Last Name</label>
-            </div>
-
-            <div className="form-group register-login">
-              <input
-                type="password"
-                id="password_confirmation"
-                value={password_confirmation}
-                name="password_confirmation"
-                onChange={handleChange}
-                placeholder="Confirm Password"
-                required
-              />
-              <label htmlFor="password_confirmation">Confirm Password</label>
-            </div>
-          </div>
-          <div className="form-group register-login profile-image-picker">
-            <label htmlFor="profile-image">Select Profile Image</label>
-            <div className="image-grid">
-              {profileImages.map((image, index) => (
-                <div
-                  key={index}
-                  className={`image-option ${
-                    formData.profile_image === image.src ? "selected" : ""
-                  }`}
-                  onClick={() =>
-                    setFormData({ ...formData, profile_image: image.src })
+            <div className="form-buttons">
+              <button type="submit" disabled={isFormInvalid()}>
+                Register
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (onClose) {
+                    onClose();
+                  } else {
+                    navigate("/bidhub/home");
                   }
-                >
-                  <img src={image.src} alt={`Profile icon ${index + 1}`} />
-                </div>
-              ))}
+                }}
+              >
+                Cancel
+              </button>
             </div>
-          </div>
-
-          <div className="form-buttons">
-            <button type="submit" disabled={isFormInvalid()}>
-              Register
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                if (onClose) {
-                  onClose();
-                } else {
-                  navigate("/bidhub/home");
-                }
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
