@@ -8,8 +8,15 @@
   min-width: 150px;
 }
 
+.ratings-grid {
+  display: grid;
+  grid-template-columns: 1 1fr;
+  gap: 8px 12px;
+  align-items: center;
+}
+
 .star-rating input {
-  display: none;
+  display: contents;
 }
 
 .star-rating .star {

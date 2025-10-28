@@ -105,57 +105,59 @@ const ReviewForm = ({
               />
             </div>
             <div className="rating-inputs">
-              <div className="form-group rating-input">
-                <label htmlFor="service_rating">Customer Service: </label>
-                <StarRating
-                  name="service_rating"
-                  value={formData.service_rating || ""}
-                  onChange={handleChange}
-                  required
-                  fivePointRating={fivePointRating}
-                />
-              </div>
-              <div className="form-group rating-input">
-                <label htmlFor="product_rating">Product Quality: </label>
-                <StarRating
-                  name="product_rating"
-                  value={formData.product_rating || ""}
-                  onChange={handleChange}
-                  required
-                  fivePointRating={fivePointRating}
-                />
-              </div>
-              <div className="form-group rating-input">
-                <label htmlFor="packaging_rating">Shipping Packaging: </label>
-                <StarRating
-                  name="packaging_rating"
-                  value={formData.packaging_rating || ""}
-                  onChange={handleChange}
-                  required
-                  fivePointRating={fivePointRating}
-                />
-              </div>
-              <div className="form-group rating-input">
-                <label htmlFor="shipping_rating">
-                  Shipping Speed & Costs:{" "}
-                </label>
-                <StarRating
-                  name="shipping_rating"
-                  value={formData.shipping_rating || ""}
-                  onChange={handleChange}
-                  required
-                  fivePointRating={fivePointRating}
-                />
-              </div>
-              <div className="form-group rating-input">
-                <label htmlFor="overall_rating">Overall Experience: </label>
-                <StarRating
-                  name="overall_rating"
-                  value={formData.overall_rating || ""}
-                  onChange={handleChange}
-                  required
-                  fivePointRating={fivePointRating}
-                />
+              <div className="ratings-grid">
+                <div className="form-group rating-input">
+                  <label htmlFor="service_rating">Customer Service: </label>
+                  <StarRating
+                    name="service_rating"
+                    value={formData.service_rating || ""}
+                    onChange={handleChange}
+                    required
+                    fivePointRating={fivePointRating}
+                  />
+                </div>
+                <div className="form-group rating-input">
+                  <label htmlFor="product_rating">Product Quality: </label>
+                  <StarRating
+                    name="product_rating"
+                    value={formData.product_rating || ""}
+                    onChange={handleChange}
+                    required
+                    fivePointRating={fivePointRating}
+                  />
+                </div>
+                <div className="form-group rating-input">
+                  <label htmlFor="packaging_rating">Shipping Packaging: </label>
+                  <StarRating
+                    name="packaging_rating"
+                    value={formData.packaging_rating || ""}
+                    onChange={handleChange}
+                    required
+                    fivePointRating={fivePointRating}
+                  />
+                </div>
+                <div className="form-group rating-input">
+                  <label htmlFor="shipping_rating">
+                    Shipping Speed & Costs:{" "}
+                  </label>
+                  <StarRating
+                    name="shipping_rating"
+                    value={formData.shipping_rating || ""}
+                    onChange={handleChange}
+                    required
+                    fivePointRating={fivePointRating}
+                  />
+                </div>
+                <div className="form-group rating-input">
+                  <label htmlFor="overall_rating">Overall Experience: </label>
+                  <StarRating
+                    name="overall_rating"
+                    value={formData.overall_rating || ""}
+                    onChange={handleChange}
+                    required
+                    fivePointRating={fivePointRating}
+                  />
+                </div>
               </div>
             </div>
           </div>

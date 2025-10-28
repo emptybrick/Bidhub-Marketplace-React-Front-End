@@ -234,7 +234,7 @@ body {
 .rating-input {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 5px;
   align-items: center;
   min-height: 40px;
