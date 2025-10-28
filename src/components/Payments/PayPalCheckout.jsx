@@ -4,7 +4,6 @@ import { useState } from "react";
 
 const PayPalCheckout = ({
   itemId,
-  amount,
   shippingAddress,
   onSuccess,
   onError,

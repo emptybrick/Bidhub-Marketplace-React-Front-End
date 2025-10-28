@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { deleteReview, getReviews } from "../../../services/reviewService.js";
 import Hero from "../../Component/Hero/Hero.jsx";
 import "./sellerview.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getSellerProfile } from "../../../services/userService.js";
 import { UserContext } from "../../../contexts/UserContext.jsx";
 import ReviewForm from "../../Forms/ReviewForm/ReviewForm.jsx";
@@ -15,8 +15,8 @@ const SellerView = () => {
   const [hasReviewed, setHasReviewed] = useState(false);
   const { sellerId } = useParams();
   const { user } = useContext(UserContext);
-  const [showItem, setShowItem] = useState(false);
-  const navigate = useNavigate();
+  const [ showItem, setShowItem ] = useState(false);
+  const [editingReview, setEditingReview] = useState(null);
 
   const fetchReviews = async () => {
     try {
@@ -234,7 +234,7 @@ const SellerView = () => {
                     <div className="review-buttons">
                       {review.author.id === user.id && (
                         <>
-                          <button onClick={() => setShowItem(true)}>
+                          <button onClick={() => setEditingReview(review)}>
                             Edit
                           </button>
                           <button onClick={() => handleDeleteReview(review.id)}>
@@ -244,12 +244,12 @@ const SellerView = () => {
                       )}
                     </div>
                     <div className="review-form">
-                      {showItem && user.id != sellerId && (
+                      {editingReview && (
                         <div className="modal">
                           <ReviewForm
-                            onClose={() => setShowItem(false)}
+                            onClose={() => setEditingReview(null)}
                             sellerId={sellerId}
-                            reviewData={review}
+                            reviewData={editingReview}
                             refreshReviews={fetchReviews}
                           />
                         </div>

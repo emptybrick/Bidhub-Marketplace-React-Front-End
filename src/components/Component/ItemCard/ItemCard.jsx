@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
-import { fill } from "@cloudinary/url-gen/actions/resize";
+import { scale } from "@cloudinary/url-gen/actions/resize";
 import ShippingAndPaymentForm from "../../Forms/ShippingAndPaymentForm/ShippingAndPaymentForm";
 import ItemForm from "../../Forms/ItemForm/ItemForm";
 import { deleteItem } from "../../../services/itemService";
@@ -138,12 +138,16 @@ const ItemCard = ({
               {images.length === 0 ? (
                 <div className="gallery-placeholder">No images uploaded</div>
               ) : (
-                <AdvancedImage
-                  cldImg={cld
-                    .image(images[currentIndex])
-                    .resize(fill().width(300).height(400))}
-                  plugins={[responsive(), placeholder()]}
-                />
+                <div className="image-wrapper">
+                  <AdvancedImage
+                    cldImg={cld
+                      .image(images[currentIndex])
+                      .resize(scale().width(300))
+                      .quality("auto")
+                      .format("auto")}
+                    plugins={[responsive(), placeholder()]}
+                  />
+                </div>
               )}
             </div>
 

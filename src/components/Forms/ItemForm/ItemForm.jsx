@@ -7,10 +7,9 @@ import { createItem } from "../../../services/itemService";
 import { categories } from "../../../common/utils";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
-import { fill } from "@cloudinary/url-gen/actions/resize";
+import { fill, scale } from "@cloudinary/url-gen/actions/resize";
 import UploadWidget from "../../Component/UploadWidget/UploadWidget";
 import "../form.css";
-import { image } from "@cloudinary/url-gen/qualifiers/source";
 
 const ItemForm = ({ onClose, item, handleDeleteItem }) => {
   const { user } = useContext(UserContext);
@@ -182,12 +181,16 @@ const ItemForm = ({ onClose, item, handleDeleteItem }) => {
                       No images uploaded
                     </div>
                   ) : (
-                    <AdvancedImage
-                      cldImg={cld
-                        .image(images[currentIndex])
-                        .resize(fill().width(1200).height(1600))}
-                      plugins={[responsive(), placeholder()]}
-                    />
+                    <div className="image-wrapper">
+                      <AdvancedImage
+                        cldImg={cld
+                          .image(images[currentIndex])
+                          .resize(scale().width(300))
+                          .quality("auto")
+                          .format("auto")}
+                        plugins={[responsive(), placeholder()]}
+                      />
+                    </div>
                   )}
                 </div>
                 <button
@@ -223,14 +226,14 @@ const ItemForm = ({ onClose, item, handleDeleteItem }) => {
                         idx === currentIndex ? "active" : ""
                       }`}
                       onClick={() => setCurrentIndex(idx)}
-                      aria-label={`Show image ${idx + 1}`}
                     >
-                      <img
-                        src={cld
+                      <AdvancedImage
+                        cldImg={cld
                           .image(pid)
-                          .resize(fill().width(300).height(400))
-                          .toURL()}
-                        alt={`upload-${idx}`}
+                          .resize(fill().width(180).height(240))
+                          .quality("auto:low")
+                          .format("auto")}
+                        plugins={[placeholder()]}
                       />
                     </button>
                   ))}

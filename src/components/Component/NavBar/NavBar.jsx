@@ -1,15 +1,13 @@
 import { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContext.jsx";
 import "./navbar.css";
-import RegisterForm from "../../Forms/RegisterForm/RegisterForm.jsx";
-import LoginForm from "../../Forms/LoginForm/LoginForm.jsx";
-import Dashboard from "../../Views/Dashboard/Dashboard.jsx";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [ scrolled, setScrolled ] = useState(false);
+  const navigate = useNavigate()
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -34,6 +32,7 @@ const NavBar = () => {
     localStorage.removeItem("token");
     // Close the menu if it's open
     setMenuOpen(false);
+    navigate('/bidhub/home')
   };
 
   const toggleMenu = () => {
@@ -89,12 +88,18 @@ const NavBar = () => {
           ) : (
             <>
               <li className="nav-bar-link">
-                <Link to="/bidhub/login" onClick={() => setMenuOpen(false)}>
+                <Link
+                  to={user ? "/bidhub/home" : "/bidhub/login"}
+                  onClick={() => setMenuOpen(false)}
+                >
                   Login
                 </Link>
               </li>
               <li className="nav-bar-link">
-                <Link to="/bidhub/register" onClick={() => setMenuOpen(false)}>
+                <Link
+                  to={user ? "/bidhub/home" : "/bidhub/register"}
+                  onClick={() => setMenuOpen(false)}
+                >
                   Register
                 </Link>
               </li>
