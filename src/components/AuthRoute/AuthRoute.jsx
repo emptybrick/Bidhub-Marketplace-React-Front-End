@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { Navigate } from "react-router";
+import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
+const AuthRoute = ({ children }) => {
   const { user, loading } = useContext(UserContext);
 
 if (loading) {
@@ -20,11 +20,11 @@ if (loading) {
   );
 }
 
-  if (!user) {
-    return <Navigate to="/bidhub/login" replace />;
+  if (user) {
+    return <Navigate to="/bidhub/home" replace />;
   }
-
+    
   return children;
 };
 
-export default ProtectedRoute;
+export default AuthRoute;

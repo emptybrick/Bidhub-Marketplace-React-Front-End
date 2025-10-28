@@ -16,6 +16,7 @@ import PayPalCheckout from "./components/Component/Payments/PayPalCheckout.jsx";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import RegisterForm from "./components/Forms/RegisterForm/RegisterForm.jsx";
 import LoginForm from "./components/Forms/LoginForm/LoginForm.jsx";
+import AuthRoute from "./components/AuthRoute/AuthRoute.jsx";
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -40,9 +41,23 @@ const App = () => {
             element={user ? <Dashboard /> : <Landing />}
           />
           <Route path="/bidhub/about" element={<About />} />
-          <Route path="/bidhub/login" element={<LoginForm />} />
-          <Route path="/bidhub/register" element={<RegisterForm />} />
           <Route path="/bidhub/marketplace" element={<ItemList />} />
+          <Route
+            path="/bidhub/login"
+            element={
+              <AuthRoute>
+                <LoginForm />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/bidhub/register"
+            element={
+              <AuthRoute>
+                <RegisterForm />
+              </AuthRoute>
+            }
+          />
           <Route
             path="/bidhub/marketplace/:itemId"
             element={
