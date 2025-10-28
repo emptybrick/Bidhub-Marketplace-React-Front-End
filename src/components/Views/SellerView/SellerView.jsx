@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { deleteReview, getReviews } from "../../../services/reviewService.js";
 import Hero from "../../Component/Hero/Hero.jsx";
 import "./sellerview.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getSellerProfile } from "../../../services/userService.js";
 import { UserContext } from "../../../contexts/UserContext.jsx";
 import ReviewForm from "../../Forms/ReviewForm/ReviewForm.jsx";
@@ -16,7 +16,6 @@ const SellerView = () => {
   const { sellerId } = useParams();
   const { user } = useContext(UserContext);
   const [showItem, setShowItem] = useState(false);
-  const navigate = useNavigate();
 
   const fetchReviews = async () => {
     try {

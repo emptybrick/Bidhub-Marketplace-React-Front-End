@@ -10,7 +10,6 @@ import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import UploadWidget from "../../Component/UploadWidget/UploadWidget";
 import "../form.css";
-import { image } from "@cloudinary/url-gen/qualifiers/source";
 
 const ItemForm = ({ onClose, item, handleDeleteItem }) => {
   const { user } = useContext(UserContext);

@@ -1,10 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
-import { Link } from "react-router-dom";
 import "./dashboard.css";
 import ItemList from "../ItemList/ItemList.jsx";
 import ItemForm from "../../Forms/ItemForm/ItemForm.jsx";
-import Account from "../Account/Account.jsx";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);

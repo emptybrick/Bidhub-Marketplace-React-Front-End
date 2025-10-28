@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./StarRating.css";
 
 const StarRating = ({ name, value, onChange, required, fivePointRating }) => {
