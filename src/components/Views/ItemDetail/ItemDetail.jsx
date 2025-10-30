@@ -22,7 +22,7 @@ const ItemDetail = () => {
   const [showItem, setShowItem] = useState(false);
   const [messageType, setMessageType] = useState("");
 
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const cld = new Cloudinary({ cloud: { cloudName } });
 
   const [images, setImages] = useState([]);

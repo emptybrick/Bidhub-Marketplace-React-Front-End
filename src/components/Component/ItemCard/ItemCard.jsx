@@ -23,7 +23,7 @@ const ItemCard = ({
 }) => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "hzxyensd5";
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const cld = new Cloudinary({ cloud: { cloudName } });
 
   const [images, setImages] = useState([]);

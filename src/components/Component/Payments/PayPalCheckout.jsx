@@ -3,7 +3,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "");
 const CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID;
-const CURRENCY = import.meta.env.VITE_PAYPAL_CURRENCY || "USD";
+const CURRENCY = import.meta.env.VITE_PAYPAL_CURRENCY;
 
 
 const api = axios.create({
